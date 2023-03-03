@@ -1,0 +1,3 @@
+/mnt/d/Code/C++/CW/Project/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/Code/C++/CW/Project/build/CMakeFiles/edit_cache.dir
+/mnt/d/Code/C++/CW/Project/build/CMakeFiles/SDL2_App.dir
