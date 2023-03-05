@@ -4,15 +4,8 @@
 
 
 // Needs one of the following #includes, to include the class definition
-#include "SimpleDemo.h"
-#include "BouncingBallMain.h"
-#include "MazeDemoMain.h"
 
-#include "FlashingDemo.h"
-#include "StarfieldDemo.h"
-#include "ImageMappingDemo.h"
-#include "ZoomingDemo.h"
-#include "DraggingDemo.h"
+
 
 
 // These are passed to initialise to determine the window size
@@ -26,25 +19,7 @@ int doProgram(int argc, char *argv[])
 { 
 	int iResult = 0;
 
-	// Uncomment only ONE of the following lines - to choose which object to create - ENSURE ONLY ONE IS CREATED.
-	SimpleDemo oMainDemoObject;
-	//BouncingBallMain oMainDemoObject;
-	//MazeDemoMain oMainDemoObject;
 
-	// Advanced demos showing one or more facilities...
-	//FlashingDemo oMainDemoObject;
-	//StarfieldDemo oMainDemoObject;
-	//ImageMappingDemo oMainDemoObject;
-	//ZoomingDemo oMainDemoObject;
-	//DraggingDemo oMainDemoObject;
-
-	char buf[1024];
-	// Screen caption can be set on following line...
-	sprintf(buf, "C++ Coursework Framework Program : Size %d x %d", BaseScreenWidth, BaseScreenHeight);
-	iResult = oMainDemoObject.initialise(buf, BaseScreenWidth, BaseScreenHeight, "Cornerstone Regular.ttf", 24);
-
-	iResult = oMainDemoObject.mainLoop();
-	oMainDemoObject.deinitialise();
 	return iResult;
 } // Main object (created on the stack) gets destroyed at this point, so it will free its memory
 
@@ -63,7 +38,7 @@ int main(int argc, char *argv[])
 	// Free the cached images by destroying the image manager
 	// Ensure that you do this AFTER the main object and any other objects have been destroyed
 	// The game object is a stack object inside doProgram() so will have been 
-	ImageManager::destroyImageManager();
+	// ImageManager::destroyImageManager();
 	
 	// Uncomment the following line to introduce a memory leak!
 	// new int();

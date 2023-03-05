@@ -7,12 +7,12 @@
 #include "SimpleDemo.h"
 #include "BouncingBallMain.h"
 #include "MazeDemoMain.h"
-
 #include "FlashingDemo.h"
 #include "StarfieldDemo.h"
 #include "ImageMappingDemo.h"
 #include "ZoomingDemo.h"
 #include "DraggingDemo.h"
+#include "DemoA.h"
 
 
 // These are passed to initialise to determine the window size
@@ -27,9 +27,11 @@ int doProgram(int argc, char *argv[])
 	int iResult = 0;
 
 	// Uncomment only ONE of the following lines - to choose which object to create - ENSURE ONLY ONE IS CREATED.
-	SimpleDemo oMainDemoObject;
+	//SimpleDemo oMainDemoObject;
 	//BouncingBallMain oMainDemoObject;
 	//MazeDemoMain oMainDemoObject;
+
+	DemoA oMainDemoObject;
 
 	// Advanced demos showing one or more facilities...
 	//FlashingDemo oMainDemoObject;
@@ -47,9 +49,6 @@ int doProgram(int argc, char *argv[])
 	oMainDemoObject.deinitialise();
 	return iResult;
 } // Main object (created on the stack) gets destroyed at this point, so it will free its memory
-
-
-
 
 
 /* Separate main function, so we can check for memory leaks after objects are destroyed */

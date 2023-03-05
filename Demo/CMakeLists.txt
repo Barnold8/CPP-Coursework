@@ -33,6 +33,7 @@ src/SimpleImage.cpp
 src/StarfieldDemo.cpp
 src/TileManager.cpp
 src/ZoomingDemo.cpp
+src/DemoA.cpp
 )
 
 add_executable(SDL2_App ${SOURCE_FILES})

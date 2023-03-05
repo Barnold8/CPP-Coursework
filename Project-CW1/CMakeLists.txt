@@ -16,23 +16,6 @@ find_package(SDL2_image REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
 set(SOURCE_FILES src/mainfunction.cpp 
-src/BaseEngine.cpp
-src/BouncingBall.cpp
-src/BouncingBallMain.cpp
-src/DisplayableObject.cpp
-src/DraggingDemo.cpp
-src/DrawingSurface.cpp
-src/FlashingDemo.cpp
-src/FontManager.cpp
-src/ImageMappingDemo.cpp
-src/MazeDemoMain.cpp
-src/MazeDemoObject.cpp
-src/MazeDemoTileManager.cpp
-src/SimpleDemo.cpp
-src/SimpleImage.cpp
-src/StarfieldDemo.cpp
-src/TileManager.cpp
-src/ZoomingDemo.cpp
 )
 
 add_executable(SDL2_App ${SOURCE_FILES})

@@ -63,8 +63,14 @@ int SimpleDemo::virtInitialiseObjects()
 	storeObjectInArray(0, new BouncingObject(this,200,100,100.0, 100.0));
 
 	// Append a second object to the array as well
-	appendObjectToArray(new BouncingObject(this, 100, 200, 300.0, 200.0, 3.5, 1.0 ));
 	
+	
+		// With some speckled colours on it
+	for ( int i = 0 ; i < 10 ; i++ ){
+
+		appendObjectToArray(new BouncingObject(this, rand()%100 *100, rand()%100 *100, rand()%100 *100, rand()%100 , rand()%100 , rand()%100 ));
+	}
+
 	return 0;
 }
 
@@ -81,7 +87,7 @@ void SimpleDemo::virtDrawStringsUnderneath()
 {
 	// Build the string to print
 	char buf[128];
-	sprintf(buf, "Changing random number %6d - underneath objects", rand() );
+	sprintf(buf, "Changing underwear %6d - underneath sniff", rand() );
 	drawForegroundString(50, 10, buf, 0x00ffff, NULL);
 	drawForegroundString(450, 50, "Underneath the objects", 0xff0000, NULL);
 }
