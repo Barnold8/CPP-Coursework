@@ -1,0 +1,17 @@
+In inheritence, remember to use the public keyword.
+
+
+e.g
+
+
+class SomeClass: public SomeOtherClass
+
+
+remember that overriden function still need virtual at the start of them
+
+e.g
+
+
+virtual void SomeInheritedFunction
+
+
