@@ -72,9 +72,21 @@ void DemoA::virtKeyDown(int iKeyCode){
             virtSetupBackgroundBuffer();
             unlockBackgroundForDrawing();
             this->virtSetupBackgroundBuffer();
+            this->drawImage("demo.jpg",getCurrentMouseX(),getCurrentMouseY());
             redrawDisplay();
             std::cout << "Pressed space " << std::endl;
         break;
     }
  
+}
+
+
+void DemoA::drawImage(std::string path,int x, int y){
+
+
+    SimpleImage image = ImageManager::loadImage(path,true);
+    image.renderImage(getBackgroundSurface(),x,y,x+100,y+100,200,200);
+    std::cout << "X : " << x << " Y: " << y << std::endl;
+
+
 }

@@ -13,7 +13,7 @@
 #include "ZoomingDemo.h"
 #include "DraggingDemo.h"
 #include "DemoA.h"
-
+#include "MyTileManager.h"
 
 // These are passed to initialise to determine the window size
 const int BaseScreenWidth = 1300;
