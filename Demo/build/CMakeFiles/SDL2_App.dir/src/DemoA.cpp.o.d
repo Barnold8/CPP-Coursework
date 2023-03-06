@@ -300,4 +300,6 @@ CMakeFiles/SDL2_App.dir/src/DemoA.cpp.o: \
  /usr/include/c++/12.2.0/bits/stl_map.h \
  /usr/include/c++/12.2.0/bits/stl_multimap.h \
  /usr/include/c++/12.2.0/bits/erase_if.h \
- /home/barnold/Code/C++/CPP-Coursework/Demo/src/ImageManager.h
+ /home/barnold/Code/C++/CPP-Coursework/Demo/src/ImageManager.h \
+ /home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h \
+ /home/barnold/Code/C++/CPP-Coursework/Demo/src/TileManager.h

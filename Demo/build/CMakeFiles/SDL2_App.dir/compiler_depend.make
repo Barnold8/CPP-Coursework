@@ -1577,7 +1577,9 @@ CMakeFiles/SDL2_App.dir/src/DemoA.cpp.o: /home/barnold/Code/C++/CPP-Coursework/D
   /usr/include/c++/12.2.0/bits/stl_map.h \
   /usr/include/c++/12.2.0/bits/stl_multimap.h \
   /usr/include/c++/12.2.0/bits/erase_if.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/ImageManager.h
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/ImageManager.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/TileManager.h
 
 CMakeFiles/SDL2_App.dir/src/DisplayableObject.cpp.o: /home/barnold/Code/C++/CPP-Coursework/Demo/src/DisplayableObject.cpp \
   /usr/include/stdc-predef.h \
@@ -5092,23 +5094,6 @@ CMakeFiles/SDL2_App.dir/src/MazeDemoTileManager.cpp.o: /home/barnold/Code/C++/CP
 
 CMakeFiles/SDL2_App.dir/src/MyTileManager.cpp.o: /home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.cpp \
   /usr/include/stdc-predef.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/TileManager.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/BaseEngine.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DisplayableObject.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DrawingSurface.h \
-  /usr/include/assert.h \
-  /usr/include/features.h \
-  /usr/include/features-time64.h \
-  /usr/include/bits/wordsize.h \
-  /usr/include/bits/timesize.h \
-  /usr/include/sys/cdefs.h \
-  /usr/include/bits/long-double.h \
-  /usr/include/gnu/stubs.h \
-  /usr/include/gnu/stubs-64.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/FilterPoints.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/FontManager.h \
-  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DisplayableObjectContainer.h \
   /home/barnold/Code/C++/CPP-Coursework/Demo/src/header.h \
   /usr/include/SDL2/SDL.h \
   /usr/include/SDL2/SDL_main.h \
@@ -5118,6 +5103,14 @@ CMakeFiles/SDL2_App.dir/src/MyTileManager.cpp.o: /home/barnold/Code/C++/CPP-Cour
   /usr/include/SDL2/begin_code.h \
   /usr/include/SDL2/close_code.h \
   /usr/include/sys/types.h \
+  /usr/include/features.h \
+  /usr/include/features-time64.h \
+  /usr/include/bits/wordsize.h \
+  /usr/include/bits/timesize.h \
+  /usr/include/sys/cdefs.h \
+  /usr/include/bits/long-double.h \
+  /usr/include/gnu/stubs.h \
+  /usr/include/gnu/stubs-64.h \
   /usr/include/bits/types.h \
   /usr/include/bits/typesizes.h \
   /usr/include/bits/time64.h \
@@ -5446,6 +5439,15 @@ CMakeFiles/SDL2_App.dir/src/MyTileManager.cpp.o: /home/barnold/Code/C++/CPP-Cour
   /usr/include/c++/12.2.0/bits/ostream.tcc \
   /usr/include/c++/12.2.0/istream \
   /usr/include/c++/12.2.0/bits/istream.tcc \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/TileManager.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/BaseEngine.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DisplayableObject.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DrawingSurface.h \
+  /usr/include/assert.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/FilterPoints.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/FontManager.h \
+  /home/barnold/Code/C++/CPP-Coursework/Demo/src/DisplayableObjectContainer.h \
   /usr/include/c++/12.2.0/vector \
   /usr/include/c++/12.2.0/bits/stl_uninitialized.h \
   /usr/include/c++/12.2.0/bits/stl_vector.h \
@@ -7873,8 +7875,6 @@ CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: /home/barnold/Code/C++/CPP-Cours
 
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/SimpleImage.cpp:
 
-/home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h:
-
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/MazeDemoTileManager.h:
 
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/ImageMappingDemo.h:
@@ -7886,6 +7886,8 @@ CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: /home/barnold/Code/C++/CPP-Cours
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/ExampleDragableObjects.h:
 
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/DraggingDemo.h:
+
+/home/barnold/Code/C++/CPP-Coursework/Demo/src/MyTileManager.h:
 
 /home/barnold/Code/C++/CPP-Coursework/Demo/src/DemoA.cpp:
 

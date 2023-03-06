@@ -18,6 +18,13 @@ void DemoA::virtSetupBackgroundBuffer(){
     //     }    
     //     indexMAX += 0x010101 + rand()%1;
     // }
+
+
+    for (int i = 0; i < 15; i++) 
+        for (int j = 0; j < 15; j++) 
+            tm.setMapValue(i, j, rand()); 
+            tm.setTopLeftPositionOnScreen(50, 50); 
+            tm.drawAllTiles( this, getBackgroundSurface() );
 }
 
 
