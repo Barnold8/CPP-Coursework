@@ -28,7 +28,11 @@ int Main::virtInitialiseObjects(){
     createObjectArray(1);
     // You MUST set the array entry after the last one that you create to NULL,
     // so that the system knows when to stop.
-    storeObjectInArray(0, new Bird(this,50,50,false,50,50,4,2));
+    storeObjectInArray(0, new Bird(
+        this,50,50,false,
+        getForegroundSurface()->getSurfaceWidth()/2-25,
+        getForegroundSurface()->getSurfaceHeight()/2-25,
+        2,1));
 
     // NOTE: We also need to destroy the objects, but the method at the
     // top of this function will destroy all objects pointed at by the
@@ -44,5 +48,19 @@ void Main::drawImage(std::string path,int x, int y){
     SimpleImage image = ImageManager::loadImage(path,true);
     image.renderImage(getBackgroundSurface(),x,y,x+100,y+100,200,200);
     std::cout << "X : " << x << " Y: " << y << std::endl;
+
+}
+
+
+void Main::virtKeyDown(int iKeyCode){
+    
+    switch (iKeyCode)
+    {
+        case SDLK_SPACE:
+            Bird* bird = dynamic_cast<Bird*>(getDisplayableObject(0));
+            bird->applyJump();
+            break;
+
+    }
 
 }

@@ -9,7 +9,7 @@ public:
 
     // virtual void virtMouseDown(int button, int iX, int iY) override;
 
-    // virtual void virtKeyDown(int iKeyCode) override;
+    virtual void virtKeyDown(int iKeyCode) override;
 
     virtual int virtInitialiseObjects() override;
 

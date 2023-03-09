@@ -29,7 +29,7 @@ void Bird::virtDoUpdate(int iCurrentTime){
 
 void Bird::applyVelocity(){
 
-    const int MAXVELOCITY = 4;
+    const int MAXVELOCITY = 7;
 
     this->m_yVel += this->m_grav;
     if(this->m_yVel >= MAXVELOCITY){
@@ -43,7 +43,7 @@ void Bird::applyVelocity(){
 
 void Bird::applyJump(){
 
-    const int spring = 5;
+    const int spring = 20;
 
     this->m_yVel -= this->m_yVel + spring;
 
