@@ -1,18 +1,6 @@
 #include "header.h"
-
+#include "../ProjectSrc/cw1_main.h"
 #include <ctime>
-
-
-// Needs one of the following #includes, to include the class definition
-// #include "SimpleDemo.h"
-// #include "BouncingBallMain.h"
-// #include "MazeDemoMain.h"
-// #include "FlashingDemo.h"
-// #include "StarfieldDemo.h"
-// #include "ImageMappingDemo.h"
-// #include "ZoomingDemo.h"
-// #include "DraggingDemo.h"
-
 
 
 // These are passed to initialise to determine the window size
@@ -26,26 +14,15 @@ int doProgram(int argc, char *argv[])
 { 
 	int iResult = 0;
 
-	// Uncomment only ONE of the following lines - to choose which object to create - ENSURE ONLY ONE IS CREATED.
-	//SimpleDemo oMainDemoObject;
-	//BouncingBallMain oMainDemoObject;
-	//MazeDemoMain oMainDemoObject;
-	// DemoA oMainDemoObject;
-
-	// Advanced demos showing one or more facilities...
-	//FlashingDemo oMainDemoObject;
-	//StarfieldDemo oMainDemoObject;
-	//ImageMappingDemo oMainDemoObject;
-	//ZoomingDemo oMainDemoObject;
-	//DraggingDemo oMainDemoObject;
-
+	Main mainObject;
 	char buf[1024];
+	
 	// Screen caption can be set on following line...
-	sprintf(buf, "C++ Coursework Framework Program : Size %d x %d", BaseScreenWidth, BaseScreenHeight);
-	// iResult = oMainDemoObject.initialise(buf, BaseScreenWidth, BaseScreenHeight, "Cornerstone Regular.ttf", 24);
+	sprintf(buf, "Brandon Wright CW1 - psybw7 | Size %d x %d", BaseScreenWidth, BaseScreenHeight);
+	iResult = mainObject.initialise(buf, BaseScreenWidth, BaseScreenHeight, "Cornerstone Regular.ttf", 24);
 
-	// iResult = oMainDemoObject.mainLoop();
-	// oMainDemoObject.deinitialise();
+	iResult = mainObject.mainLoop();
+	mainObject.deinitialise();
 	return iResult;
 } // Main object (created on the stack) gets destroyed at this point, so it will free its memory
 
@@ -80,6 +57,8 @@ int main(int argc, char *argv[])
 	_CrtDumpMemoryLeaks();
 #endif
 #endif
+
+	std::cout << "Hello world " << std::endl;
 
 	return iResult;
 }
