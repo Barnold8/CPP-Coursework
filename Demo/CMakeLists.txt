@@ -35,6 +35,7 @@ src/TileManager.cpp
 src/ZoomingDemo.cpp
 src/DemoA.cpp
 src/MyTileManager.cpp
+src/MyObject.cpp
 )
 
 add_executable(SDL2_App ${SOURCE_FILES})

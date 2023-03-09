@@ -1,31 +1,34 @@
 #include "header.h"
 #include "DemoA.h"
-
+#include "ImageManager.h"
+#include "MyObject.h"
 
 
 void DemoA::virtSetupBackgroundBuffer(){
 
     int colIndex = 0;
-    int colours[12] = {0xFF0000,0x00FF00,0x000FF};
-    int indexMAX = 0;
+    int colour = 0;
+    int iters = (getWindowHeight()/8)/0xF;
     
-    // for(int iY = 0; iY < getWindowHeight(); iY++){      
-    //     for(int iX = 0; iX < getWindowWidth(); iX++){   
-    //         if(iX % (22*4) == 0){
-    //             colIndex = (colIndex > 3) ? 0 : colIndex + 1;
-    //         }
-    //         setBackgroundPixel(iX,iY,0x000000+indexMAX);
-    //     }    
-    //     indexMAX += 0x010101 + rand()%1;
-    // }
+    for(int iY = 0; iY < getWindowHeight(); iY++){      
+        for(int iX = 0; iX < getWindowWidth(); iX++){   
+            setBackgroundPixel(iX,iY,colour);
+        }    
+        if(iY % iters == 0){colour += 0x010101;}
+         
+    }
 
 
     for (int i = 0; i < 15; i++) 
         for (int j = 0; j < 15; j++) 
             tm.setMapValue(i, j, rand()); 
-            tm.setTopLeftPositionOnScreen(50, 50); 
+            tm.setTopLeftPositionOnScreen(10,10); 
             tm.drawAllTiles( this, getBackgroundSurface() );
+
+    this->drawImage("demo.jpg",100,10);
 }
+ 
+
 
 
 void DemoA::virtMouseDown(int button, int iX, int iY){
@@ -52,10 +55,15 @@ void DemoA::virtMouseDown(int button, int iX, int iY){
 
     if (button == SDL_BUTTON_LEFT)
     {
-        lockBackgroundForDrawing();
-        drawBackgroundRectangle(iX - 10, iY - 10, iX + 10, iY + 10, 0xff0000);
-        unlockBackgroundForDrawing();
-        redrawDisplay(); // Force background to be redrawn to foreground
+        if (tm.isValidTilePosition(iX, iY)) // Clicked within tiles?
+        {
+            int mapX = tm.getMapXForScreenX(iX); // Which column?
+            int mapY = tm.getMapYForScreenY(iY); // Which row?
+            int value = tm.getMapValue(mapX, mapY); // Current value?
+            tm.setAndRedrawMapValueAt(mapX, mapY, value+rand(), this, getBackgroundSurface() );
+            redrawDisplay(); // Force background to be redrawn to foreground
+        }
+
     }
     else if (button == SDL_BUTTON_RIGHT)
     {
@@ -78,8 +86,7 @@ void DemoA::virtKeyDown(int iKeyCode){
             lockBackgroundForDrawing();
             virtSetupBackgroundBuffer();
             unlockBackgroundForDrawing();
-            this->virtSetupBackgroundBuffer();
-            this->drawImage("demo.jpg",getCurrentMouseX(),getCurrentMouseY());
+            virtSetupBackgroundBuffer();
             redrawDisplay();
             std::cout << "Pressed space " << std::endl;
         break;
@@ -96,4 +103,29 @@ void DemoA::drawImage(std::string path,int x, int y){
     std::cout << "X : " << x << " Y: " << y << std::endl;
 
 
+}
+
+int DemoA::virtInitialiseObjects(){
+
+    // Record the fact that we are about to change the array
+    // so it doesn't get used elsewhere without reloading it
+    drawableObjectsChanged();
+    // Destroy any existing objects
+    destroyOldObjects(true);
+    // Creates an array big enough for the number of objects that you want.
+    createObjectArray(5);
+    // You MUST set the array entry after the last one that you create to NULL,
+    // so that the system knows when to stop.
+    storeObjectInArray(0, new MyObject(this,100,100,false,100,100));
+    storeObjectInArray(1, new MyObject(this,100,100,false,200,200));
+    storeObjectInArray(2, new MyObject(this,100,100,false,300,300));
+    storeObjectInArray(3, new MyObject(this,100,100,false,400,400));
+    storeObjectInArray(4, new MyObject(this,100,100,false,500,500));
+    // NOTE: We also need to destroy the objects, but the method at the
+    // top of this function will destroy all objects pointed at by the
+    // array elements so we can ignore that here.
+    setAllObjectsVisible(true);
+
+
+    return 0;
 }

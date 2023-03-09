@@ -1,3 +1,3 @@
-/home/barnold/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/SDL2_App.dir
-/home/barnold/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/edit_cache.dir
-/home/barnold/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/rebuild_cache.dir
+/mnt/d/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/edit_cache.dir
+/mnt/d/Code/C++/CPP-Coursework/Demo/build/CMakeFiles/SDL2_App.dir
