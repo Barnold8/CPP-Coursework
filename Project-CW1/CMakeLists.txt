@@ -15,7 +15,22 @@ find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
 
-set(SOURCE_FILES src/mainfunction.cpp 
+set(SOURCE_FILES 
+
+# NEEDED TO MAKE ENGINE WORK
+src/mainfunction.cpp 
+src/BaseEngine.cpp
+src/DisplayableObject.cpp
+src/DrawingSurface.cpp
+src/FontManager.cpp
+src/SimpleImage.cpp
+src/TileManager.cpp
+# NEEDED TO MAKE ENGINE WORK
+
+# My code
+ProjectSrc/cw1_main.cpp
+
+# My code
 )
 
 add_executable(SDL2_App ${SOURCE_FILES})

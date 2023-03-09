@@ -31,6 +31,8 @@ int doProgram(int argc, char *argv[])
 	//BouncingBallMain oMainDemoObject;
 	//MazeDemoMain oMainDemoObject;
 
+	// DemoA oMainDemoObject;
+
 	DemoA oMainDemoObject;
 
 	// Advanced demos showing one or more facilities...
