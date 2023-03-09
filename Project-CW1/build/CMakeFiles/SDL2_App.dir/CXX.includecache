@@ -122,14 +122,6 @@ iostream
 string
 -
 
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/mainfunction.cpp
-header.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
-../ProjectSrc/cw1_main.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.h
-ctime
--
-
 /usr/include/SDL2/SDL.h
 SDL_main.h
 /usr/include/SDL2/SDL_main.h
