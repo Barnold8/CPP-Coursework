@@ -142,6 +142,33 @@ SDL2_App/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/build
 .PHONY : SDL2_App/fast
 
+ProjectSrc/Bird.o: ProjectSrc/Bird.cpp.o
+
+.PHONY : ProjectSrc/Bird.o
+
+# target to build an object file
+ProjectSrc/Bird.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o
+.PHONY : ProjectSrc/Bird.cpp.o
+
+ProjectSrc/Bird.i: ProjectSrc/Bird.cpp.i
+
+.PHONY : ProjectSrc/Bird.i
+
+# target to preprocess a source file
+ProjectSrc/Bird.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.i
+.PHONY : ProjectSrc/Bird.cpp.i
+
+ProjectSrc/Bird.s: ProjectSrc/Bird.cpp.s
+
+.PHONY : ProjectSrc/Bird.s
+
+# target to generate assembly for a file
+ProjectSrc/Bird.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s
+.PHONY : ProjectSrc/Bird.cpp.s
+
 ProjectSrc/cw1_main.o: ProjectSrc/cw1_main.cpp.o
 
 .PHONY : ProjectSrc/cw1_main.o
@@ -367,6 +394,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... SDL2_App"
+	@echo "... ProjectSrc/Bird.o"
+	@echo "... ProjectSrc/Bird.i"
+	@echo "... ProjectSrc/Bird.s"
 	@echo "... ProjectSrc/cw1_main.o"
 	@echo "... ProjectSrc/cw1_main.i"
 	@echo "... ProjectSrc/cw1_main.s"

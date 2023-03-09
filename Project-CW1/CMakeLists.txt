@@ -29,7 +29,7 @@ src/TileManager.cpp
 
 # My code
 ProjectSrc/cw1_main.cpp
-
+ProjectSrc/Bird.cpp
 # My code
 )
 

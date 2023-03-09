@@ -11,13 +11,8 @@ public:
 
     // virtual void virtKeyDown(int iKeyCode) override;
 
-    // virtual int virtInitialiseObjects() override;
+    virtual int virtInitialiseObjects() override;
 
-    // void drawImage(std::string path,int x, int y);
-
-protected:
-
-
-    
+    void drawImage(std::string path,int x, int y);
 
 };

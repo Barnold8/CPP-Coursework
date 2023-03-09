@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.cpp" "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o"
   "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.cpp" "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles/SDL2_App.dir/ProjectSrc/cw1_main.cpp.o"
   "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.cpp" "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles/SDL2_App.dir/src/BaseEngine.cpp.o"
   "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.cpp" "/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles/SDL2_App.dir/src/DisplayableObject.cpp.o"

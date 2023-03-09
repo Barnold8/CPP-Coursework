@@ -1,5 +1,6 @@
 #include "../src/header.h"
 #include "cw1_main.h"
+#include "Bird.h"
 
 
 void Main::virtSetupBackgroundBuffer(){
@@ -15,7 +16,33 @@ void Main::virtSetupBackgroundBuffer(){
         if(iY % iters == 0){colour += 0x010100;}
         
     }
+}
 
 
+int Main::virtInitialiseObjects(){
+
+     drawableObjectsChanged();
+    // Destroy any existing objects
+    destroyOldObjects(true);
+    // Creates an array big enough for the number of objects that you want.
+    createObjectArray(1);
+    // You MUST set the array entry after the last one that you create to NULL,
+    // so that the system knows when to stop.
+    storeObjectInArray(0, new Bird(this,50,50,false,50,50,4,2));
+
+    // NOTE: We also need to destroy the objects, but the method at the
+    // top of this function will destroy all objects pointed at by the
+    // array elements so we can ignore that here.
+    setAllObjectsVisible(true);
+
+    return 0;
 }
  
+
+void Main::drawImage(std::string path,int x, int y){
+
+    SimpleImage image = ImageManager::loadImage(path,true);
+    image.renderImage(getBackgroundSurface(),x,y,x+100,y+100,200,200);
+    std::cout << "X : " << x << " Y: " << y << std::endl;
+
+}
