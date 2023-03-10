@@ -16,6 +16,17 @@ void Main::virtSetupBackgroundBuffer(){
         if(iY % iters == 0){colour += 0x010100;}
         
     }
+
+    // SimpleImage image = ImageManager::loadImage("../src/resources/FBirdMask.png",true);
+
+    // image.renderImageWithMask(
+    //         this->getBackgroundSurface(),
+    //         0,0,0,400,
+    //         image.getWidth(),
+    //         image.getHeight(),
+    //         0x08ff00
+    // );
+
 }
 
 
