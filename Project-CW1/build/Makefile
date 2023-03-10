@@ -169,6 +169,33 @@ ProjectSrc/Bird.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s
 .PHONY : ProjectSrc/Bird.cpp.s
 
+ProjectSrc/TileMap.o: ProjectSrc/TileMap.cpp.o
+
+.PHONY : ProjectSrc/TileMap.o
+
+# target to build an object file
+ProjectSrc/TileMap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o
+.PHONY : ProjectSrc/TileMap.cpp.o
+
+ProjectSrc/TileMap.i: ProjectSrc/TileMap.cpp.i
+
+.PHONY : ProjectSrc/TileMap.i
+
+# target to preprocess a source file
+ProjectSrc/TileMap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.i
+.PHONY : ProjectSrc/TileMap.cpp.i
+
+ProjectSrc/TileMap.s: ProjectSrc/TileMap.cpp.s
+
+.PHONY : ProjectSrc/TileMap.s
+
+# target to generate assembly for a file
+ProjectSrc/TileMap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.s
+.PHONY : ProjectSrc/TileMap.cpp.s
+
 ProjectSrc/cw1_main.o: ProjectSrc/cw1_main.cpp.o
 
 .PHONY : ProjectSrc/cw1_main.o
@@ -397,6 +424,9 @@ help:
 	@echo "... ProjectSrc/Bird.o"
 	@echo "... ProjectSrc/Bird.i"
 	@echo "... ProjectSrc/Bird.s"
+	@echo "... ProjectSrc/TileMap.o"
+	@echo "... ProjectSrc/TileMap.i"
+	@echo "... ProjectSrc/TileMap.s"
 	@echo "... ProjectSrc/cw1_main.o"
 	@echo "... ProjectSrc/cw1_main.i"
 	@echo "... ProjectSrc/cw1_main.s"

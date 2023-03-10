@@ -193,6 +193,19 @@ CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.cpp -o CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s
 
+CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o: CMakeFiles/SDL2_App.dir/flags.make
+CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o: ../ProjectSrc/TileMap.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o -c /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.cpp
+
+CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.cpp > CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.i
+
+CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.cpp -o CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.s
+
 # Object files for target SDL2_App
 SDL2_App_OBJECTS = \
 "CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o" \
@@ -203,7 +216,8 @@ SDL2_App_OBJECTS = \
 "CMakeFiles/SDL2_App.dir/src/SimpleImage.cpp.o" \
 "CMakeFiles/SDL2_App.dir/src/TileManager.cpp.o" \
 "CMakeFiles/SDL2_App.dir/ProjectSrc/cw1_main.cpp.o" \
-"CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o"
+"CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o" \
+"CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o"
 
 # External object files for target SDL2_App
 SDL2_App_EXTERNAL_OBJECTS =
@@ -217,13 +231,14 @@ SDL2_App: CMakeFiles/SDL2_App.dir/src/SimpleImage.cpp.o
 SDL2_App: CMakeFiles/SDL2_App.dir/src/TileManager.cpp.o
 SDL2_App: CMakeFiles/SDL2_App.dir/ProjectSrc/cw1_main.cpp.o
 SDL2_App: CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o
+SDL2_App: CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o
 SDL2_App: CMakeFiles/SDL2_App.dir/build.make
 SDL2_App: /usr/lib/x86_64-linux-gnu/libSDL2main.a
 SDL2_App: /usr/lib/x86_64-linux-gnu/libSDL2.so
 SDL2_App: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
 SDL2_App: /usr/lib/x86_64-linux-gnu/libSDL2_image.so
 SDL2_App: CMakeFiles/SDL2_App.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable SDL2_App"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/d/Code/C++/CPP-Coursework/Project-CW1/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable SDL2_App"
 	/usr/bin/cmake -E copy_directory /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/resources /mnt/d/Code/C++/CPP-Coursework/Project-CW1/build
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/SDL2_App.dir/link.txt --verbose=$(VERBOSE)
 

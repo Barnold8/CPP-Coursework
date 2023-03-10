@@ -6,19 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.cpp
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.cpp
 ../src/header.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
-../src/BaseEngine.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
-../src/SimpleImage.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/SimpleImage.h
-Bird.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+TileMap.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
 
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
-../src/DisplayableObject.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
+../src/TileManager.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/TileManager.h
 
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
 DisplayableObject.h
@@ -85,6 +81,10 @@ memory
 -
 RawImageData.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/RawImageData.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/TileManager.h
+BaseEngine.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
 
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
 crtdbg.h

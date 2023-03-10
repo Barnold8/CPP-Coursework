@@ -30,6 +30,7 @@ src/TileManager.cpp
 # My code
 ProjectSrc/cw1_main.cpp
 ProjectSrc/Bird.cpp
+ProjectSrc/TileMap.cpp
 # My code
 )
 

@@ -17,6 +17,49 @@ void Main::virtSetupBackgroundBuffer(){
         
     }
 
+    // Clouds
+    m_tile_map.drawClouds(this);
+    // Clouds 
+
+    // SUN
+    this->drawBackgroundOval(
+        -100,
+        -100,
+        100,
+        100,
+        0xFFFF00
+        );
+
+    // SUN
+
+
+    // SUN RAYS
+    this->drawBackgroundLine(
+        100,
+        100,
+        200,
+        200,
+        0xFFFF00
+    );
+
+    this->drawBackgroundLine(
+        140,
+        50,
+        250,
+        50,
+        0xFFFF00
+    );
+
+    this->drawBackgroundLine(
+        40,
+        120,
+        40,
+        240,
+        0xFFFF00
+    );
+    
+    // SUN RAYS
+
     // SimpleImage image = ImageManager::loadImage("../src/resources/FBirdMask.png",true);
 
     // image.renderImageWithMask(
@@ -73,5 +116,13 @@ void Main::virtKeyDown(int iKeyCode){
             break;
 
     }
+
+}
+
+
+
+void Main::virtMainLoopStartIteration(){
+
+    
 
 }
