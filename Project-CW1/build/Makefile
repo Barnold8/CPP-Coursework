@@ -169,6 +169,60 @@ ProjectSrc/Bird.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.s
 .PHONY : ProjectSrc/Bird.cpp.s
 
+ProjectSrc/Pipe.o: ProjectSrc/Pipe.cpp.o
+
+.PHONY : ProjectSrc/Pipe.o
+
+# target to build an object file
+ProjectSrc/Pipe.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Pipe.cpp.o
+.PHONY : ProjectSrc/Pipe.cpp.o
+
+ProjectSrc/Pipe.i: ProjectSrc/Pipe.cpp.i
+
+.PHONY : ProjectSrc/Pipe.i
+
+# target to preprocess a source file
+ProjectSrc/Pipe.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Pipe.cpp.i
+.PHONY : ProjectSrc/Pipe.cpp.i
+
+ProjectSrc/Pipe.s: ProjectSrc/Pipe.cpp.s
+
+.PHONY : ProjectSrc/Pipe.s
+
+# target to generate assembly for a file
+ProjectSrc/Pipe.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/Pipe.cpp.s
+.PHONY : ProjectSrc/Pipe.cpp.s
+
+ProjectSrc/PipePair.o: ProjectSrc/PipePair.cpp.o
+
+.PHONY : ProjectSrc/PipePair.o
+
+# target to build an object file
+ProjectSrc/PipePair.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/PipePair.cpp.o
+.PHONY : ProjectSrc/PipePair.cpp.o
+
+ProjectSrc/PipePair.i: ProjectSrc/PipePair.cpp.i
+
+.PHONY : ProjectSrc/PipePair.i
+
+# target to preprocess a source file
+ProjectSrc/PipePair.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/PipePair.cpp.i
+.PHONY : ProjectSrc/PipePair.cpp.i
+
+ProjectSrc/PipePair.s: ProjectSrc/PipePair.cpp.s
+
+.PHONY : ProjectSrc/PipePair.s
+
+# target to generate assembly for a file
+ProjectSrc/PipePair.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SDL2_App.dir/build.make CMakeFiles/SDL2_App.dir/ProjectSrc/PipePair.cpp.s
+.PHONY : ProjectSrc/PipePair.cpp.s
+
 ProjectSrc/TileMap.o: ProjectSrc/TileMap.cpp.o
 
 .PHONY : ProjectSrc/TileMap.o
@@ -424,6 +478,12 @@ help:
 	@echo "... ProjectSrc/Bird.o"
 	@echo "... ProjectSrc/Bird.i"
 	@echo "... ProjectSrc/Bird.s"
+	@echo "... ProjectSrc/Pipe.o"
+	@echo "... ProjectSrc/Pipe.i"
+	@echo "... ProjectSrc/Pipe.s"
+	@echo "... ProjectSrc/PipePair.o"
+	@echo "... ProjectSrc/PipePair.i"
+	@echo "... ProjectSrc/PipePair.s"
 	@echo "... ProjectSrc/TileMap.o"
 	@echo "... ProjectSrc/TileMap.i"
 	@echo "... ProjectSrc/TileMap.s"

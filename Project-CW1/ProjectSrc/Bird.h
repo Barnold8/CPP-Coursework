@@ -2,6 +2,7 @@
 
 #include "../src/DisplayableObject.h"
 
+// TODO: add function which looks at all pipes and checks for collisions between
 
 class Bird: public DisplayableObject{
 

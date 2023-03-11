@@ -6,15 +6,39 @@
 
 #IncludeRegexTransform: 
 
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.cpp
-../src/header.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
-TileMap.h
-/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+../src/DisplayableObject.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/PipePair.h
+../src/DisplayableObject.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
+Pipe.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
 
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
 ../src/TileManager.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/TileManager.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.cpp
+../src/header.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
+cw1_main.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.h
+Bird.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+Pipe.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
+PipePair.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/PipePair.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.h
+../src/BaseEngine.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
+TileMap.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
 
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
 DisplayableObject.h

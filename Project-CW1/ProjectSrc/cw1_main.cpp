@@ -1,6 +1,8 @@
 #include "../src/header.h"
 #include "cw1_main.h"
 #include "Bird.h"
+#include "Pipe.h"
+#include "PipePair.h"
 
 
 void Main::virtSetupBackgroundBuffer(){
@@ -75,11 +77,13 @@ void Main::virtSetupBackgroundBuffer(){
 
 int Main::virtInitialiseObjects(){
 
+    const int PAIRAMOUNT = 10;
+
      drawableObjectsChanged();
     // Destroy any existing objects
     destroyOldObjects(true);
     // Creates an array big enough for the number of objects that you want.
-    createObjectArray(1);
+    createObjectArray(2);
     // You MUST set the array entry after the last one that you create to NULL,
     // so that the system knows when to stop.
     storeObjectInArray(0, new Bird(
@@ -87,6 +91,35 @@ int Main::virtInitialiseObjects(){
         getForegroundSurface()->getSurfaceWidth()/2-25,
         getForegroundSurface()->getSurfaceHeight()/2-25,
         2,1));
+
+    // storeObjectInArray(1,new Pipe(this,50,200,false,
+    // this->getForegroundSurface()->getSurfaceWidth()/2 - 25,
+    // this->getForegroundSurface()->getSurfaceWidth()/2, 0x21b040));
+
+    // GENERATE PIPES IN ARRAY
+    int surfWidth = this->getForegroundSurface()->getSurfaceWidth();
+    for(int i = 0; i < PAIRAMOUNT;i++){
+        int x =  rand()%surfWidth + surfWidth/2;
+        std::cout << x << std::endl;
+        storeObjectInArray(i+1, new PipePair(this,
+                x,        // x1
+                100,        // y1
+                100,        // x2
+                400,        // y2
+                100,        // w1
+                100,        // w2
+                100,        // h1
+                100,        // h2
+                0xFF0000,   // col1
+                0x0000FF    // col2
+        ));
+
+
+    }
+
+
+    // GENERATE PIPES IN ARRAY
+
 
     // NOTE: We also need to destroy the objects, but the method at the
     // top of this function will destroy all objects pointed at by the
@@ -123,6 +156,6 @@ void Main::virtKeyDown(int iKeyCode){
 
 void Main::virtMainLoopStartIteration(){
 
-    
+    redrawDisplay();
 
 }

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o"
+  "CMakeFiles/SDL2_App.dir/ProjectSrc/Pipe.cpp.o"
+  "CMakeFiles/SDL2_App.dir/ProjectSrc/PipePair.cpp.o"
   "CMakeFiles/SDL2_App.dir/ProjectSrc/TileMap.cpp.o"
   "CMakeFiles/SDL2_App.dir/ProjectSrc/cw1_main.cpp.o"
   "CMakeFiles/SDL2_App.dir/src/BaseEngine.cpp.o"

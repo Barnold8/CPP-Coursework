@@ -31,6 +31,8 @@ src/TileManager.cpp
 ProjectSrc/cw1_main.cpp
 ProjectSrc/Bird.cpp
 ProjectSrc/TileMap.cpp
+ProjectSrc/Pipe.cpp
+ProjectSrc/PipePair.cpp
 # My code
 )
 

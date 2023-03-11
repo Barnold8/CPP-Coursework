@@ -32,8 +32,6 @@ void TileMap::drawClouds(BaseEngine* p_engine){
             this->virtDrawTileAt(p_engine,p_engine->getBackgroundSurface(),0,0,i+ADJ,80);
             // Cloud
         }
-        
-
     }
 
 }
