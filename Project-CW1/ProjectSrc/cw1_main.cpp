@@ -9,7 +9,7 @@
 // NOTE!!!!!: Make sure the text for the score is on the 1st z axis. I.E it is rendering above everything else. Also, follow the other requirements to ensure top grades
 
 
-void Main::virtSetupBackgroundBuffer(){
+void psybw7Engine::virtSetupBackgroundBuffer(){
 
     int colIndex = 0;
     int colour = 0x478aed;
@@ -24,7 +24,10 @@ void Main::virtSetupBackgroundBuffer(){
     }
 
     // Clouds
-    m_tile_map.drawClouds(this);
+    for(int i = 0; i < 10; i++){
+        m_tile_map.drawCloud(this,i*300,100,i);
+    }
+    
     // Clouds 
 
     // SUN
@@ -69,20 +72,20 @@ void Main::virtSetupBackgroundBuffer(){
     
     // SUN RAYS
 
-    // SimpleImage image = ImageManager::loadImage("../src/resources/FBirdMask.png",true);
+    SimpleImage image = ImageManager::loadImage("../src/resources/FB_Funny.png",true);
 
-    // image.renderImageWithMask(
-    //         this->getBackgroundSurface(),
-    //         0,0,0,400,
-    //         image.getWidth(),
-    //         image.getHeight(),
-    //         0x08ff00
-    // );
-
+    image.renderImageWithMask(
+            this->getBackgroundSurface(),
+            0,0,0,300,
+            image.getWidth(),
+            image.getHeight(),
+            0x000000
+    );
+    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/2-100,this->getBackgroundSurface()->getSurfaceHeight()/4,bgStrings[strIndex].data(),0xFF0000);
 }
 
 
-int Main::virtInitialiseObjects(){
+int psybw7Engine::virtInitialiseObjects(){
 
     const int PAIRAMOUNT = 10;
 
@@ -92,12 +95,12 @@ int Main::virtInitialiseObjects(){
 
     createObjectArray(PAIRAMOUNT+1);
 
-    // storeObjectInArray(0, new Bird(
-    //     this,50,50,false,
-    //     getForegroundSurface()->getSurfaceWidth()/2-25,
-    //     getForegroundSurface()->getSurfaceHeight()/2-25,
-    //     2,1,
-    //     "../src/resources/FBirdMask.png"));
+    storeObjectInArray(0, new Bird(
+        this,50,50,false,
+        getForegroundSurface()->getSurfaceWidth()/2-25,
+        getForegroundSurface()->getSurfaceHeight()/2-25,
+        2,1,
+        "../src/resources/FBirdMask.png"));
 
 
     // GENERATE PIPES IN ARRAY
@@ -112,15 +115,12 @@ int Main::virtInitialiseObjects(){
                 y_random_one,        // y1
                 100+i*400,           // x2
                 y_random_two,        // y2
-                100,        // w1
-                100,        // w2
-                500,        // h1
-                600,        // h2
-                y_random_one + y_random_two,
-                y_random_one + y_random_two
-                // 0xFF0000,   // col1
-                // 0x00FF00,
-                // 0x0000FF    // col2
+                100,                 // w1
+                100,                 // w2
+                500,                 // h1
+                600,                 // h2
+                0x11AA11,            // col1
+                0x11AA11             // col2
         ));
     }
     // GENERATE PIPES IN ARRAY
@@ -135,7 +135,7 @@ int Main::virtInitialiseObjects(){
 }
  
 
-void Main::drawImage(std::string path,int x, int y){
+void psybw7Engine::drawImage(std::string path,int x, int y){
 
     SimpleImage image = ImageManager::loadImage(path,true);
     image.renderImage(getBackgroundSurface(),x,y,x+100,y+100,200,200);
@@ -144,7 +144,7 @@ void Main::drawImage(std::string path,int x, int y){
 }
 
 
-void Main::virtKeyDown(int iKeyCode){
+void psybw7Engine::virtKeyDown(int iKeyCode){
     
     switch (iKeyCode)
     {
@@ -158,9 +158,29 @@ void Main::virtKeyDown(int iKeyCode){
 }
 
 
+void psybw7Engine::virtMouseDown(int iButton, int iX, int iY){
 
-void Main::virtMainLoopStartIteration(){
+
+    if(iButton == 3){
+        std::cout << "X = " << iX << " Y = " << iY << std::endl;
+        std::cout << std::hex << m_tile_map.getMapValue(2, 0) << std::endl;
+    }
+
+    strIndex = (strIndex >= bgStrings.size()-1) ? 0 : strIndex + 1;
+    strIndexY++;
+    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/2-100,this->getBackgroundSurface()->getSurfaceHeight()/4+(strIndexY*20),bgStrings[strIndex].data(),0xFF0000);
+    
+
+}
+
+void psybw7Engine::virtMainLoopStartIteration(){
 
     redrawDisplay();
+
+}
+
+void psybw7Engine::virtDrawStringsOnTop(){
+
+    drawForegroundString(100,100,foreground_label.data(),0xFF0000);
 
 }

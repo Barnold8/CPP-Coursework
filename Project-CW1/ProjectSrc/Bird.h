@@ -13,9 +13,6 @@ private:
     int m_score = 0;
     SimpleImage m_image;
 
-
-
-
 public:
 
     Bird(BaseEngine* pEngine): DisplayableObject(pEngine){
@@ -57,8 +54,8 @@ public:
         m_yVel = velocity;
         m_grav = gravity;
         m_image = ImageManager::loadImage(imgPath,true);
-    }
 
+    }
 
     virtual void virtDraw() override;
 
@@ -71,6 +68,6 @@ public:
     bool checkCollisions();
 
     int getScore(){return m_score;} // ensures value is copied for string formatting and pass by reference isnt forced
-
-
+    
+    
 };

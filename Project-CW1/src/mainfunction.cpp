@@ -14,7 +14,7 @@ int doProgram(int argc, char *argv[])
 { 
 	int iResult = 0;
 
-	Main mainObject;
+	psybw7Engine mainObject;
 	char buf[1024];
 	
 	// Screen caption can be set on following line...

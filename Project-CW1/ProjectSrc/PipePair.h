@@ -35,6 +35,6 @@ public:
     virtual void virtDoUpdate(int iCurrentTime) override;
   
     void setTopPipeX(int x){m_top_pipe->setX(x);}
-
+ 
 
 };

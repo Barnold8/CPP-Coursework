@@ -3,7 +3,7 @@
 #include "../src/TileManager.h"
 
 
-class TileMap :  public TileManager{
+class psybw7TileManager :  public TileManager{
 
     // Tilemap is an overlay kind of thing that works as a grid for drawing to for easy GUI management
 
@@ -11,12 +11,21 @@ class TileMap :  public TileManager{
 
 public:
 
-    TileMap() 
+    psybw7TileManager() 
         : TileManager(40, 40, 100, 100) 
     { 
+        for(int i = 0; i < 10; i++){
+            setMapValue(i,0,0xFFFFFF);
+            setMapValue(i,1,0xFFFFFF);
+            setMapValue(i,2,0xFFFFFF);
+            setMapValue(i,3,0xFFFFFF);
+            setMapValue(i,4,0xFFFFFF); 
+        }
+        
+
     }
 
-    TileMap(int TW, int TH, int MW, int MH) 
+    psybw7TileManager(int TW, int TH, int MW, int MH) 
         : TileManager(TW, TH, MW, MH) 
     { 
     }
@@ -24,6 +33,7 @@ public:
         virtual void virtDrawTileAt( 
         BaseEngine* pEngine, DrawingSurface* pSurface,int iMapX, int iMapY, int iStartPositionScreenX, int iStartPositionScreenY) const override;
 
-    void drawClouds(BaseEngine* p_engine);
+    void drawCloud(BaseEngine* p_engine, int x, int y, int mapX);
+
 
 };

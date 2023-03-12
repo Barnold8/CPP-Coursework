@@ -28,12 +28,12 @@ int doProgram(int argc, char *argv[])
 
 	// Uncomment only ONE of the following lines - to choose which object to create - ENSURE ONLY ONE IS CREATED.
 	//SimpleDemo oMainDemoObject;
-	//BouncingBallMain oMainDemoObject;
+	BouncingBallMain oMainDemoObject;
 	//MazeDemoMain oMainDemoObject;
 
 	// DemoA oMainDemoObject;
 
-	DemoA oMainDemoObject;
+	//DemoA oMainDemoObject;
 
 	// Advanced demos showing one or more facilities...
 	//FlashingDemo oMainDemoObject;

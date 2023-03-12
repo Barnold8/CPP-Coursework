@@ -3,23 +3,22 @@
 #include "../src/SimpleImage.h"
 #include "PipePair.h"
 #include "../src/UtilCollisionDetection.h"
+#include "cw1_main.h"
 
 
 #include "Bird.h"
 
 void Bird::virtDraw(){
 
-    const int scoreDebuff = 100;
-    std::string score = "Score: " + std::to_string(getScore()/scoreDebuff);
-
-    //collider box
-    getEngine()->drawForegroundRectangle(
-            m_iCurrentScreenX+100,
-            m_iCurrentScreenY+100,
-            m_iCurrentScreenX+(m_image.getWidth()/2),
-            m_iCurrentScreenY+(m_image.getHeight()/2),
-    0x9803fc);
-    //collider box
+    
+    //collider box - used for debugging collisions
+    // getEngine()->drawForegroundRectangle(
+    //         m_iCurrentScreenX+100,
+    //         m_iCurrentScreenY+100,
+    //         m_iCurrentScreenX+(m_image.getWidth()/2),
+    //         m_iCurrentScreenY+(m_image.getHeight()/2),
+    // 0x9803fc);
+    //collider box - used for debugging collisions
 
     // std::cout << m_iCurrentScreenX+100 << " | " << m_iCurrentScreenX+(m_image.getWidth()/2) << std::endl;
 
@@ -33,17 +32,20 @@ void Bird::virtDraw(){
             m_image.getHeight(),
             0x08ff00
     );
-    m_pEngine->drawForegroundString(
-        100,
-        // m_pEngine->getForegroundSurface()->getSurfaceHeight()/2,
-        100,
-        score.data(),
-        0
-        );
+
+    // m_pEngine->virtDrawStringsOnTop(
+    //     100,
+    //     // m_pEngine->getForegroundSurface()->getSurfaceHeight()/2,
+    //     100,
+    //     score.data(),
+    //     0
+    //     );
 
 }
 
 bool Bird::checkCollisions(){
+
+    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
 
     for(int i = 1; i < m_pEngine->getNonNullObjectContentCount()-1; i++){
 
@@ -82,6 +84,17 @@ bool Bird::checkCollisions(){
         }
 
     }
+
+    if(m_iCurrentScreenY > m_pEngine->getForegroundSurface()->getSurfaceHeight()){
+            m_iCurrentScreenX = 650;
+            m_iCurrentScreenY = 400;
+            m_score = 0;
+    }
+    if(m_iCurrentScreenY < - (m_iCurrentScreenY + m_image.getHeight())){
+            m_iCurrentScreenX = 650;
+            m_iCurrentScreenY = 400;
+            m_score = 0;
+    }
     // std::cout << "Count:  " << m_pEngine->getNonNullObjectContentCount() << std::endl;
 
     return false;
@@ -90,8 +103,22 @@ bool Bird::checkCollisions(){
 
 void Bird::virtDoUpdate(int iCurrentTime){
 
-    applyVelocity();
+    const int scoreDebuff = 100;
+    std::string score = "Score: " + std::to_string(getScore()/scoreDebuff);
+    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
     m_score++;
+
+    int x = main->m_tile_map.getMapXForScreenX(m_iCurrentScreenX+60);
+    int y = main->m_tile_map.getMapYForScreenY(m_iCurrentScreenY+60); 
+
+    for(int i = 0;i < 10;i++){ //reset tile to some blue value
+        main->m_tile_map.setAndRedrawMapValueAt(x, y-1,0x3492eb-(m_iCurrentScreenY/50), main, main->getBackgroundSurface() );
+    }
+    //
+    main->m_tile_map.setAndRedrawMapValueAt(x, y, 0xEEE32F, main, main->getBackgroundSurface() );
+
+    applyVelocity();
+    main->setLabel(score);
     checkCollisions();
     redrawDisplay();
     
@@ -116,6 +143,12 @@ void Bird::applyJump(){
     const int spring = 18;
 
     this->m_yVel -= this->m_yVel + spring;
+    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
+
+    main->m_tile_map.setMapValue(0,0,0xFF0000);
+    // main->m_tile_map.drawAllTiles(main,main->getForegroundSurface());
+    main->m_tile_map.setAndRedrawMapValueAt(0,0,0xFF0000,main,main->getForegroundSurface());
+
 }
 
 
