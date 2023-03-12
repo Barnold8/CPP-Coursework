@@ -27,10 +27,14 @@ public:
 
     }
 
-
+    Pipe* getBottomPipe(){return m_bottom_pipe;}
+    Pipe* getTopPipe(){return m_top_pipe;}
 
     virtual void virtDraw() override;    
 
     virtual void virtDoUpdate(int iCurrentTime) override;
   
+    void setTopPipeX(int x){m_top_pipe->setX(x);}
+
+
 };

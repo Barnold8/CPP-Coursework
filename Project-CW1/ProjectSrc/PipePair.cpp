@@ -33,7 +33,9 @@ void PipePair::virtDraw(){
         p_1[0]+(retract/2), p_1[1]+(retract/2)+1,
         p_1[0]+(retract/2) + p_1[2] - 1- retract,
         p_1[1]+(retract/2) + p_1[3] - 1- retract,
-    m_top_pipe->get_Colour());
+        m_top_pipe->get_Colour()
+
+    );
 
     // Pipe 1
 
@@ -58,14 +60,18 @@ void PipePair::virtDraw(){
 void PipePair::virtDoUpdate(int iCurrentTime){
   
     const int OFFSET = 100;
+    const int pipe_speed = 2;
+    const int outside_region = 4000;
+    // std::cout << "X: " <<  m_top_pipe->getX()  << " Mem address : " << this <<std::endl;
+    
+    if(m_top_pipe->getX() < 0 - OFFSET){
 
-    if(m_bottom_pipe->getX() < 0 - OFFSET){
-        m_bottom_pipe->setX(this->m_pEngine->getForegroundSurface()->getSurfaceWidth()+OFFSET);
-        m_top_pipe->setX(this->m_pEngine->getForegroundSurface()->getSurfaceWidth()+OFFSET);
-        // m_top_pipe->setH(rand()%100);
+        m_top_pipe->setX(outside_region);
+        m_bottom_pipe->setX(outside_region);
+       
     }else{
-        m_bottom_pipe->setX(-1);
-        m_top_pipe->setX(-1);
+        m_bottom_pipe->addX(-pipe_speed);
+        m_top_pipe->addX(-pipe_speed);
     }
 
 }

@@ -12,7 +12,7 @@ public:
 
     Pipe(){
 
-        m_x_position = 100;
+        m_x_position = 200;
         m_y_position = 100;
         m_width = 100;
         m_height = 100;
@@ -62,11 +62,14 @@ public:
 
     int get_Colour(){return m_colour;}
 
-    void setX(int x){m_x_position += x;}
+    void addX(int x){m_x_position += x;}
     
-    void setY(int y){m_y_position = y;}
+    void addY(int y){m_y_position += y;}
+
+    void setX(int x){m_x_position = x;}
 
     void setH(int h){m_height = h;}
+
 
 
 };

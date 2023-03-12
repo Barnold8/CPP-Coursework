@@ -3,6 +3,8 @@
 
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../ProjectSrc/Bird.cpp
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../ProjectSrc/Bird.h
+CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../ProjectSrc/Pipe.h
+CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../ProjectSrc/PipePair.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/BaseEngine.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/DisplayableObject.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/DisplayableObjectContainer.h
@@ -12,6 +14,7 @@ CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/FontManager.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/ImageManager.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/RawImageData.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/SimpleImage.h
+CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/UtilCollisionDetection.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: ../src/header.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: /usr/include/SDL2/SDL.h
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o: /usr/include/SDL2/SDL_assert.h

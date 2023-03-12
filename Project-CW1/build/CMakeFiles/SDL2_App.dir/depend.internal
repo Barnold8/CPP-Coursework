@@ -4,6 +4,8 @@
 CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.cpp
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+ /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
+ /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/PipePair.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/BaseEngine.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObjectContainer.h
@@ -13,6 +15,7 @@ CMakeFiles/SDL2_App.dir/ProjectSrc/Bird.cpp.o
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/ImageManager.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/RawImageData.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/SimpleImage.h
+ /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/UtilCollisionDetection.h
  /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
  /usr/include/SDL2/SDL.h
  /usr/include/SDL2/SDL_assert.h

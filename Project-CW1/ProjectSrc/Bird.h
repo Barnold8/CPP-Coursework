@@ -10,6 +10,10 @@ class Bird: public DisplayableObject{
 private:
 
     int m_yVel, m_grav;
+    int m_score = 0;
+    SimpleImage m_image;
+
+
 
 
 public:
@@ -44,6 +48,17 @@ public:
         m_grav = gravity;
     }
 
+    Bird(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,int objX, int objY,int velocity, int gravity,std::string imgPath): DisplayableObject( pEngine, iWidth, iHeight, useTopLeftFor00){
+        //BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00
+        m_iCurrentScreenX = objX;
+        m_iCurrentScreenY = objY;
+        m_iDrawWidth = iWidth; // Width of drawing area
+        m_iDrawHeight = iHeight; 
+        m_yVel = velocity;
+        m_grav = gravity;
+        m_image = ImageManager::loadImage(imgPath,true);
+    }
+
 
     virtual void virtDraw() override;
 
@@ -52,6 +67,10 @@ public:
     void applyVelocity();
 
     void applyJump();
+
+    bool checkCollisions();
+
+    int getScore(){return m_score;} // ensures value is copied for string formatting and pass by reference isnt forced
 
 
 };

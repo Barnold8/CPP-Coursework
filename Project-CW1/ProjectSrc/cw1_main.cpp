@@ -5,6 +5,10 @@
 #include "PipePair.h"
 
 
+
+// NOTE!!!!!: Make sure the text for the score is on the 1st z axis. I.E it is rendering above everything else. Also, follow the other requirements to ensure top grades
+
+
 void Main::virtSetupBackgroundBuffer(){
 
     int colIndex = 0;
@@ -36,28 +40,31 @@ void Main::virtSetupBackgroundBuffer(){
 
 
     // SUN RAYS
-    this->drawBackgroundLine(
+    this->drawBackgroundThickLine(
         100,
         100,
         200,
         200,
-        0xFFFF00
+        0xFFFF00,
+        10
     );
 
-    this->drawBackgroundLine(
+    this->drawBackgroundThickLine(
         140,
         50,
         250,
         50,
-        0xFFFF00
+        0xFFFF00,
+        10
     );
 
-    this->drawBackgroundLine(
+    this->drawBackgroundThickLine(
         40,
         120,
         40,
         240,
-        0xFFFF00
+        0xFFFF00,
+        10
     );
     
     // SUN RAYS
@@ -79,45 +86,43 @@ int Main::virtInitialiseObjects(){
 
     const int PAIRAMOUNT = 10;
 
-     drawableObjectsChanged();
-    // Destroy any existing objects
-    destroyOldObjects(true);
-    // Creates an array big enough for the number of objects that you want.
-    createObjectArray(2);
-    // You MUST set the array entry after the last one that you create to NULL,
-    // so that the system knows when to stop.
-    storeObjectInArray(0, new Bird(
-        this,50,50,false,
-        getForegroundSurface()->getSurfaceWidth()/2-25,
-        getForegroundSurface()->getSurfaceHeight()/2-25,
-        2,1));
+    drawableObjectsChanged();
 
-    // storeObjectInArray(1,new Pipe(this,50,200,false,
-    // this->getForegroundSurface()->getSurfaceWidth()/2 - 25,
-    // this->getForegroundSurface()->getSurfaceWidth()/2, 0x21b040));
+    destroyOldObjects(true);
+
+    createObjectArray(PAIRAMOUNT+1);
+
+    // storeObjectInArray(0, new Bird(
+    //     this,50,50,false,
+    //     getForegroundSurface()->getSurfaceWidth()/2-25,
+    //     getForegroundSurface()->getSurfaceHeight()/2-25,
+    //     2,1,
+    //     "../src/resources/FBirdMask.png"));
+
 
     // GENERATE PIPES IN ARRAY
     int surfWidth = this->getForegroundSurface()->getSurfaceWidth();
     for(int i = 0; i < PAIRAMOUNT;i++){
-        int x =  rand()%surfWidth + surfWidth/2;
-        std::cout << x << std::endl;
+        
+        int y_random_one = -400 + (rand() % 200);
+        int y_random_two = (y_random_one+690) + (rand()%(this->getForegroundSurface()->getSurfaceHeight()/2));
+
         storeObjectInArray(i+1, new PipePair(this,
-                x,        // x1
-                100,        // y1
-                100,        // x2
-                400,        // y2
+                100+i*400,           // x1
+                y_random_one,        // y1
+                100+i*400,           // x2
+                y_random_two,        // y2
                 100,        // w1
                 100,        // w2
-                100,        // h1
-                100,        // h2
-                0xFF0000,   // col1
-                0x0000FF    // col2
+                500,        // h1
+                600,        // h2
+                y_random_one + y_random_two,
+                y_random_one + y_random_two
+                // 0xFF0000,   // col1
+                // 0x00FF00,
+                // 0x0000FF    // col2
         ));
-
-
     }
-
-
     // GENERATE PIPES IN ARRAY
 
 
