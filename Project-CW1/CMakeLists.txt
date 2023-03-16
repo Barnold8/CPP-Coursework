@@ -42,3 +42,15 @@ target_link_libraries(SDL2_App ${SDL2_LIBRARY} ${SDL2_TTF_LIBRARY} ${SDL2_IMAGE_
 add_custom_command(TARGET SDL2_App PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                        ${G52CPP_SOURCE_DIR}/src/resources ${CMAKE_CURRENT_BINARY_DIR})
+
+# Need to check this works for me personally
+add_compile_options(-fsanitize=address)
+add_link_options(-fsanitize=address)
+
+add_compile_options(-fsanitize=undefined)
+add_link_options(-fsanitize=undefined) 
+# Nedd to check this works for me personally 
+
+
+
+

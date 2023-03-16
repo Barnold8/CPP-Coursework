@@ -6,8 +6,7 @@
 
 
 
-// NOTE!!!!!: Make sure the text for the score is on the 1st z axis. I.E it is rendering above everything else. Also, follow the other requirements to ensure top grades
-
+// NOTE: make sure that the text is not oblitered by the tilemap
 
 void psybw7Engine::virtSetupBackgroundBuffer(){
 
@@ -81,7 +80,7 @@ void psybw7Engine::virtSetupBackgroundBuffer(){
             image.getHeight(),
             0x000000
     );
-    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/2-100,this->getBackgroundSurface()->getSurfaceHeight()/4,bgStrings[strIndex].data(),0xFF0000);
+    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/3-100,this->getBackgroundSurface()->getSurfaceHeight()/4,bgStrings[strIndex].data(),0xFF0000);
 }
 
 
@@ -168,7 +167,7 @@ void psybw7Engine::virtMouseDown(int iButton, int iX, int iY){
 
     strIndex = (strIndex >= bgStrings.size()-1) ? 0 : strIndex + 1;
     strIndexY++;
-    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/2-100,this->getBackgroundSurface()->getSurfaceHeight()/4+(strIndexY*20),bgStrings[strIndex].data(),0xFF0000);
+    this->drawBackgroundString(this->getBackgroundSurface()->getSurfaceWidth()/3-100,this->getBackgroundSurface()->getSurfaceHeight()/4+(strIndexY*20),bgStrings[strIndex].data(),0xFF0000);
     
 
 }
