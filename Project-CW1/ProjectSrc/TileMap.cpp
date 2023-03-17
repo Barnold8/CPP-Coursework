@@ -2,7 +2,7 @@
 #include "TileMap.h"
 
 
-void psybw7TileManager::virtDrawTileAt(BaseEngine* pEngine, DrawingSurface* pSurface,int iMapX, int iMapY, int iStartPositionScreenX, int iStartPositionScreenY) const{
+void Psybw7TileManager::virtDrawTileAt(BaseEngine* pEngine, DrawingSurface* pSurface,int iMapX, int iMapY, int iStartPositionScreenX, int iStartPositionScreenY) const{
 
     pSurface->drawOval (
                         iStartPositionScreenX, // Left
@@ -15,7 +15,7 @@ void psybw7TileManager::virtDrawTileAt(BaseEngine* pEngine, DrawingSurface* pSur
 
 
 
-void psybw7TileManager::drawCloud(BaseEngine* p_engine, int x, int y, int mapX){
+void Psybw7TileManager::drawCloud(BaseEngine* p_engine, int x, int y, int mapX){
 
 
     int Adj = 25;

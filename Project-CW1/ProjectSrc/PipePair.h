@@ -26,6 +26,7 @@ public:
         m_bottom_pipe = new Pipe(x2,y2,w2,h2,col2);
 
     }
+    
 
     Pipe* getBottomPipe(){return m_bottom_pipe;}
     Pipe* getTopPipe(){return m_top_pipe;}
@@ -35,6 +36,10 @@ public:
     virtual void virtDoUpdate(int iCurrentTime) override;
   
     void setTopPipeX(int x){m_top_pipe->setX(x);}
- 
-
+    
+    ~PipePair(){ // Ensuring that the members are freed from the heap
+        delete m_top_pipe;
+        delete m_bottom_pipe;
+    }
+    
 };

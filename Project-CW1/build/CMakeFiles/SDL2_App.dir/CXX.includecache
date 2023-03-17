@@ -6,6 +6,18 @@
 
 #IncludeRegexTransform: 
 
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+../src/DisplayableObject.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
+
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/PipePair.h
+../src/DisplayableObject.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/DisplayableObject.h
+Pipe.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Pipe.h
+
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/TileMap.h
 ../src/TileManager.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/TileManager.h
@@ -131,6 +143,10 @@ header.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/src/header.h
 ../ProjectSrc/cw1_main.h
 /mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/cw1_main.h
+../ProjectSrc/Bird.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/Bird.h
+../ProjectSrc/PipePair.h
+/mnt/d/Code/C++/CPP-Coursework/Project-CW1/ProjectSrc/PipePair.h
 ctime
 -
 

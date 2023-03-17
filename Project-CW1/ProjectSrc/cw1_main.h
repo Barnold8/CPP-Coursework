@@ -18,7 +18,7 @@ private:
 
 public:
     
-    psybw7TileManager m_tile_map;
+    Psybw7TileManager m_tile_map;
     
     virtual void virtSetupBackgroundBuffer() override;
 

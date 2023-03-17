@@ -700,6 +700,9 @@ CMakeFiles/SDL2_App.dir/src/TileManager.cpp.o: /usr/include/SDL2/SDL_video.h
 CMakeFiles/SDL2_App.dir/src/TileManager.cpp.o: /usr/include/SDL2/begin_code.h
 CMakeFiles/SDL2_App.dir/src/TileManager.cpp.o: /usr/include/SDL2/close_code.h
 
+CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../ProjectSrc/Bird.h
+CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../ProjectSrc/Pipe.h
+CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../ProjectSrc/PipePair.h
 CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../ProjectSrc/TileMap.h
 CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../ProjectSrc/cw1_main.h
 CMakeFiles/SDL2_App.dir/src/mainfunction.cpp.o: ../src/BaseEngine.h

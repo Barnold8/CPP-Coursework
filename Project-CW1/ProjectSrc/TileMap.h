@@ -3,7 +3,7 @@
 #include "../src/TileManager.h"
 
 
-class psybw7TileManager :  public TileManager{
+class Psybw7TileManager :  public TileManager{
 
     // Tilemap is an overlay kind of thing that works as a grid for drawing to for easy GUI management
 
@@ -11,7 +11,7 @@ class psybw7TileManager :  public TileManager{
 
 public:
 
-    psybw7TileManager() 
+    Psybw7TileManager() 
         : TileManager(40, 40, 100, 100) 
     { 
         for(int i = 0; i < 10; i++){
@@ -25,7 +25,7 @@ public:
 
     }
 
-    psybw7TileManager(int TW, int TH, int MW, int MH) 
+    Psybw7TileManager(int TW, int TH, int MW, int MH) 
         : TileManager(TW, TH, MW, MH) 
     { 
     }

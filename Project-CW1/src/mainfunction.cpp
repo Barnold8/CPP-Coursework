@@ -1,5 +1,7 @@
 #include "header.h"
 #include "../ProjectSrc/cw1_main.h"
+#include "../ProjectSrc/Bird.h"
+#include "../ProjectSrc/PipePair.h"
 #include <ctime>
 
 
@@ -22,7 +24,10 @@ int doProgram(int argc, char *argv[])
 	iResult = mainObject.initialise(buf, BaseScreenWidth, BaseScreenHeight, "Cornerstone Regular.ttf", 24);
 
 	iResult = mainObject.mainLoop();
+
 	mainObject.deinitialise();
+
+
 	return iResult;
 } // Main object (created on the stack) gets destroyed at this point, so it will free its memory
 
@@ -38,7 +43,7 @@ int main(int argc, char *argv[])
 	// Free the cached images by destroying the image manager
 	// Ensure that you do this AFTER the main object and any other objects have been destroyed
 	// The game object is a stack object inside doProgram() so will have been 
-	// ImageManager::destroyImageManager(); <-- REINCLUDE THIS WHEN YOU HAVE AN IMAGE OBJECT
+	ImageManager::destroyImageManager(); 
 	
 	// Uncomment the following line to introduce a memory leak!
 	// new int();
@@ -57,8 +62,6 @@ int main(int argc, char *argv[])
 	_CrtDumpMemoryLeaks();
 #endif
 #endif
-
-	std::cout << "Hello world " << std::endl;
 
 	return iResult;
 }
