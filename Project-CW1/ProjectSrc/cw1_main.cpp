@@ -8,7 +8,7 @@
 
 // NOTE: make sure that the text is not oblitered by the tilemap
 
-void psybw7Engine::virtSetupBackgroundBuffer(){
+void Psybw7Engine::virtSetupBackgroundBuffer(){
 
     int colIndex = 0;
     int colour = 0x478aed;
@@ -84,7 +84,7 @@ void psybw7Engine::virtSetupBackgroundBuffer(){
 }
 
 
-int psybw7Engine::virtInitialiseObjects(){
+int Psybw7Engine::virtInitialiseObjects(){
 
     const int PAIRAMOUNT = 10;
 
@@ -134,7 +134,7 @@ int psybw7Engine::virtInitialiseObjects(){
 }
  
 
-void psybw7Engine::drawImage(std::string path,int x, int y){
+void Psybw7Engine::drawImage(std::string path,int x, int y){
 
     SimpleImage image = ImageManager::loadImage(path,true);
     image.renderImage(getBackgroundSurface(),x,y,x+100,y+100,200,200);
@@ -143,7 +143,7 @@ void psybw7Engine::drawImage(std::string path,int x, int y){
 }
 
 
-void psybw7Engine::virtKeyDown(int iKeyCode){
+void Psybw7Engine::virtKeyDown(int iKeyCode){
     
     switch (iKeyCode)
     {
@@ -157,7 +157,7 @@ void psybw7Engine::virtKeyDown(int iKeyCode){
 }
 
 
-void psybw7Engine::virtMouseDown(int iButton, int iX, int iY){
+void Psybw7Engine::virtMouseDown(int iButton, int iX, int iY){
 
 
     if(iButton == 3){
@@ -172,13 +172,13 @@ void psybw7Engine::virtMouseDown(int iButton, int iX, int iY){
 
 }
 
-void psybw7Engine::virtMainLoopStartIteration(){
+void Psybw7Engine::virtMainLoopStartIteration(){
 
     redrawDisplay();
 
 }
 
-void psybw7Engine::virtDrawStringsOnTop(){
+void Psybw7Engine::virtDrawStringsOnTop(){
 
     drawForegroundString(100,100,foreground_label.data(),0xFF0000);
 

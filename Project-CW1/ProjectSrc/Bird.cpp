@@ -45,7 +45,7 @@ void Bird::virtDraw(){
 
 bool Bird::checkCollisions(){
 
-    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
+    Psybw7Engine* main = dynamic_cast<Psybw7Engine*>(m_pEngine);
 
     for(int i = 1; i < m_pEngine->getNonNullObjectContentCount()-1; i++){
 
@@ -105,7 +105,7 @@ void Bird::virtDoUpdate(int iCurrentTime){
 
     const int scoreDebuff = 100;
     std::string score = "Score: " + std::to_string(getScore()/scoreDebuff);
-    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
+    Psybw7Engine* main = dynamic_cast<Psybw7Engine*>(m_pEngine);
     m_score++;
 
     int x = main->m_tile_map.getMapXForScreenX(m_iCurrentScreenX+60);
@@ -143,7 +143,7 @@ void Bird::applyJump(){
     const int spring = 18;
 
     this->m_yVel -= this->m_yVel + spring;
-    psybw7Engine* main = dynamic_cast<psybw7Engine*>(m_pEngine);
+    Psybw7Engine* main = dynamic_cast<Psybw7Engine*>(m_pEngine);
 
     main->m_tile_map.setMapValue(0,0,0xFF0000);
     // main->m_tile_map.drawAllTiles(main,main->getForegroundSurface());

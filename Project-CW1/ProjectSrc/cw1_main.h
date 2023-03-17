@@ -2,7 +2,7 @@
 #include "../src/BaseEngine.h"
 #include "TileMap.h"
 
-class psybw7Engine: public BaseEngine{
+class Psybw7Engine: public BaseEngine{
 
 
 private: 
