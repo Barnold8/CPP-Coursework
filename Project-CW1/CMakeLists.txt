@@ -14,13 +14,14 @@ find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_image REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2_TTF_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
-# Need to check this works for me personally
-add_compile_options(-fsanitize=address)
-add_link_options(-fsanitize=address)
 
-add_compile_options(-fsanitize=undefined)
-add_link_options(-fsanitize=undefined) 
-# Nedd to check this works for me personally 
+
+# add_compile_options(-fsanitize=address)
+# add_link_options(-fsanitize=address)
+
+# add_compile_options(-fsanitize=undefined)
+# add_link_options(-fsanitize=undefined) 
+
 
 
 set(SOURCE_FILES 

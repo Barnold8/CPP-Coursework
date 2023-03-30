@@ -1,0 +1,27 @@
+﻿  DraggingDemo.cpp
+  DrawingSurface.cpp
+  FlashingDemo.cpp
+  ImageMappingDemo.cpp
+  mainfunction.cpp
+  BaseEngine.cpp
+  DisplayableObject.cpp
+  FontManager.cpp
+  SimpleImage.cpp
+  SimpleDemo.cpp
+  StarfieldDemo.cpp
+  TileManager.cpp
+  BouncingBall.cpp
+  BouncingBallMain.cpp
+  MazeDemoMain.cpp
+  MazeDemoObject.cpp
+  MazeDemoTileManager.cpp
+  ZoomingDemo.cpp
+  Generating Code...
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7TileManager::virtDrawTileAt(class BaseEngine *,class DrawingSurface *,int,int,int,int)const " (?virtDrawTileAt@Psybw7TileManager@@UBEXPAVBaseEngine@@PAVDrawingSurface@@HHHH@Z)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7Engine::virtSetupBackgroundBuffer(void)" (?virtSetupBackgroundBuffer@Psybw7Engine@@UAEXXZ)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7Engine::virtKeyDown(int)" (?virtKeyDown@Psybw7Engine@@UAEXH@Z)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall Psybw7Engine::virtInitialiseObjects(void)" (?virtInitialiseObjects@Psybw7Engine@@UAEHXZ)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7Engine::virtMainLoopStartIteration(void)" (?virtMainLoopStartIteration@Psybw7Engine@@UAEXXZ)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7Engine::virtDrawStringsOnTop(void)" (?virtDrawStringsOnTop@Psybw7Engine@@UAEXXZ)
+mainfunction.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall Psybw7Engine::virtMouseDown(int,int,int)" (?virtMouseDown@Psybw7Engine@@UAEXHHH@Z)
+D:\Code\C++\CPP-Coursework\Project-CW1\\Debug\CourseworkBase2020.exe : fatal error LNK1120: 7 unresolved externals
