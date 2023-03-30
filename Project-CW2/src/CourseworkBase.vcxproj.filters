@@ -31,6 +31,9 @@
     <Filter Include="Source Files\More advanced demos">
       <UniqueIdentifier>{427592e9-3a23-441e-8895-59b91fa3c6af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MyCode">
+      <UniqueIdentifier>{336f6c28-9c8b-42a6-b51d-859fae9a2644}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
@@ -126,6 +129,9 @@
     <ClInclude Include="ExampleFilterPointClasses.h">
       <Filter>Header Files\More advanced demos</Filter>
     </ClInclude>
+    <ClInclude Include="Office_Apocalypse.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainfunction.cpp">
@@ -181,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="ZoomingDemo.cpp">
       <Filter>Source Files\More advanced demos</Filter>
+    </ClCompile>
+    <ClCompile Include="Office_Apocalypse.cpp">
+      <Filter>Source Files\MyCode</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

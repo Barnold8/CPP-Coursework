@@ -6,7 +6,7 @@
 
 
 // These are passed to initialise to determine the window size
-const int BaseScreenWidth = 1300;
+const int BaseScreenWidth = 800;
 const int BaseScreenHeight = 800;
 
 
