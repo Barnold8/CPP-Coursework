@@ -1,0 +1,5 @@
+i change the state object innit
+which handles rendering and has its own functionality
+which the engine uses
+i dont need to do anything to the engine at all innit
+like the state would be the main kinda object, which changes based on user interaction

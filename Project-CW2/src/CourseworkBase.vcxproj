@@ -99,6 +99,8 @@
     <ClInclude Include="Office_Apocalypse.h" />
     <ClInclude Include="SimpleFlashingDragableImageObject.h" />
     <ClInclude Include="StarfieldDemo.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="Main_Menu.h" />
     <ClInclude Include="UtilCollisionDetection.h" />
     <ClInclude Include="DisplayableObjectContainer.h" />
     <ClInclude Include="ExampleDragableObjects.h" />
@@ -139,6 +141,8 @@
     <ClCompile Include="SimpleImage.cpp" />
     <ClCompile Include="SimpleDemo.cpp" />
     <ClCompile Include="StarfieldDemo.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="TileManager.cpp" />
     <ClCompile Include="BouncingBall.cpp" />
     <ClCompile Include="BouncingBallMain.cpp" />
