@@ -6,20 +6,17 @@
 void Office_Apocalypse::virtSetupBackgroundBuffer()
 {
 
-	SimpleImage background = ImageManager::loadImage("resources/Background.png");
-	SimpleImage player = ImageManager::loadImage("resources/AdamPhoneSprites.png");
+	//SimpleImage background = ImageManager::loadImage("resources/Background.png");
+	//SimpleImage player = ImageManager::loadImage("resources/AdamPhoneSprites.png");
 
-	background.renderImage(getBackgroundSurface(), 0, 0, 0, 0, 800, 800);	
-
+	//background.renderImage(getBackgroundSurface(), 0, 0, 0, 0, 800, 800);	
+	
 
 }
 
 
 void Office_Apocalypse::virtMainLoopStartIteration() {
-
-
 	redrawDisplay();
-
 
 }
 
@@ -39,6 +36,12 @@ int Office_Apocalypse::virtInitialiseObjects() {
 
 void Office_Apocalypse::virtKeyDown(int iKeyCode) {
 
-	m_state_master->changeState(new Game());
+	//m_state_master->changeState(new Game(this));
+
+}
+
+void Office_Apocalypse::virtMainLoopDoBeforeUpdate() {
+
+	m_state_master->childUpdate();
 
 }

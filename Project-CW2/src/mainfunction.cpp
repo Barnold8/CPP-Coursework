@@ -18,11 +18,7 @@ int doProgram(int argc, char *argv[])
 { 
 	int iResult = 0;
 
-	
-	
 	Office_Apocalypse oMainDemoObject;
-
-
 
 	char buf[1024];
 	// Screen caption can be set on following line...
@@ -32,6 +28,7 @@ int doProgram(int argc, char *argv[])
 	iResult = oMainDemoObject.mainLoop();
 	oMainDemoObject.deinitialise();
 	return iResult;
+
 } // Main object (created on the stack) gets destroyed at this point, so it will free its memory
 
 
