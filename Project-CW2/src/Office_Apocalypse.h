@@ -11,11 +11,12 @@ class Office_Apocalypse : public BaseEngine{
 
 private:
 	
+	int m_updates = 0;
 	std::shared_ptr<State_Master> m_state_master = std::make_shared<State_Master>(this);;
 
 public:
 
-	void setBgSurface(DrawingSurface* newSurface) { this->m_pBackgroundSurface = newSurface; }
+	void setBgSurface(DrawingSurface* newSurface);
 
 	virtual void virtSetupBackgroundBuffer() override;
 
@@ -26,5 +27,9 @@ public:
 	virtual void virtKeyDown(int iKeyCode) override;
 
 	virtual void virtMainLoopDoBeforeUpdate() override;
+
+	int getUpdates();
+
+	void setUpdates(int updates);
 };
 

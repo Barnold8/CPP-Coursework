@@ -6,12 +6,6 @@
 void Office_Apocalypse::virtSetupBackgroundBuffer()
 {
 
-	//SimpleImage background = ImageManager::loadImage("resources/Background.png");
-	//SimpleImage player = ImageManager::loadImage("resources/AdamPhoneSprites.png");
-
-	//background.renderImage(getBackgroundSurface(), 0, 0, 0, 0, 800, 800);	
-	
-
 }
 
 
@@ -45,3 +39,10 @@ void Office_Apocalypse::virtMainLoopDoBeforeUpdate() {
 	m_state_master->childUpdate();
 
 }
+
+void Office_Apocalypse::setBgSurface(DrawingSurface* newSurface) { this->m_pBackgroundSurface = newSurface; }
+
+
+int Office_Apocalypse::getUpdates() { return m_updates; }
+
+void Office_Apocalypse::setUpdates(int updates) { m_updates = updates; }
