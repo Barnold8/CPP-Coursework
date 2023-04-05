@@ -6,6 +6,7 @@
 // Needs one of the following #includes, to include the class definition
 
 #include "Office_Apocalypse.h"
+#include "StarfieldDemo.h"
 
 // These are passed to initialise to determine the window size
 const int BaseScreenWidth = 800;

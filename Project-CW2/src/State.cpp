@@ -77,7 +77,22 @@ void Menu::KeyListener(int keyCode) {
 			}
 			break;
 		case 13:
-			//M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine)); <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
+			std::cout << "menu select " << m_menu_select << std::endl;
+			switch (m_menu_select) {
+				case 1:
+					M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
+				break;
+				case 2:
+					//std::cout << "IMPLEMENT Loading save data brandon!!!" << std::endl;
+					M->getStateMaster()->changeState(std::make_shared<Lose>(m_pEngine));
+					break;
+				case 3:
+					m_pEngine->setExitWithCode(0);
+					break;
+				default:
+					break;
+			}
+			
 			break;
 		default:
 			break;
@@ -95,6 +110,26 @@ void State::set_master(std::shared_ptr<State_Master*> state) { // Changes
 	m_state_master = state;
 }
 
+void State::newSurfaces() {
+	
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+	foregroundSurface = new DrawingSurface(m_pEngine);
+	backgroundSurface = new DrawingSurface(m_pEngine);
+
+	foregroundSurface->createSurface(800, 800);
+	backgroundSurface->createSurface(800, 800);
+
+	M->setBgSurface(backgroundSurface);
+	M->setFgSurface(foregroundSurface);
+
+}
+
+void State::delSurfaces() {
+
+	delete foregroundSurface;
+	delete backgroundSurface;
+
+}
 
 Menu::Menu(BaseEngine* engine) : State(engine) {
 
@@ -111,19 +146,64 @@ Menu::Menu(BaseEngine* engine) : State(engine) {
 
 Menu::~Menu() {
 
-	for (int i = 0; i < FRAMES;i++) {
+	for (int i = 0; i < FRAMES;i++) { // Deleting these frames leads to access violation
 		delete frames[i];
 	}
 
-	//delete m_menuTilde; // For some reason this is automatically deleted even though its a member of Menu?
+	m_pEngine->destroyOldObjects(true); // used to remove the selector bar
+	
+	std::cout << "Clearing Menu from memory" << std::endl;
 
 }
 
 Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear public methods of state master class object
+	
 
-	std::cout << "Game init" << std::endl;
+	newSurfaces();
 
 }
+
+Game::~Game() { // needed since changing surface for engine takes DrawingSurface* so i cant use smart pointers
+
+	delSurfaces();
+}
+
+void Game::update() {}
+
+void Game::setup() {}
+
+void Game::KeyListener(int keyCode) {}
+
+
+
+Lose::Lose(BaseEngine* engine) : State(engine) {
+
+	newSurfaces();
+	m_loseScreen = ImageManager::loadImage("resources/Menu/Lose.png",true);
+}
+
+void Lose::setup() {
+
+}
+
+void Lose::update() {
+
+	m_loseScreen.renderImage(backgroundSurface, 0, 0, 1000, 800, 800, 800);
+
+}
+
+void Lose::KeyListener(int keyCode) {
+
+	std::cout << "Lose key " << keyCode << std::endl;
+}
+
+
+Lose::~Lose() {
+
+	delSurfaces();
+
+}
+
 
 State_Master::State_Master(BaseEngine* engine) {
 
@@ -135,6 +215,8 @@ State_Master::State_Master(BaseEngine* engine) {
 void State_Master::changeState(std::shared_ptr<State>state) { // May produce read access violation
 	m_state = state;
 }
+
+
 
 void State_Master::childUpdate() { m_state->update(); }
 

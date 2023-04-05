@@ -46,6 +46,7 @@ void Office_Apocalypse::virtMainLoopDoBeforeUpdate() {
 
 void Office_Apocalypse::setBgSurface(DrawingSurface* newSurface) { this->m_pBackgroundSurface = newSurface; }
 
+void Office_Apocalypse::setFgSurface(DrawingSurface* newSurface) { this->m_pForegroundSurface = newSurface; }
 
 int Office_Apocalypse::getUpdates() { return m_updates; }
 

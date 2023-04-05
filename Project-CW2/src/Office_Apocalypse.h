@@ -19,6 +19,8 @@ public:
 
 	void setBgSurface(DrawingSurface* newSurface);
 
+	void setFgSurface(DrawingSurface* newSurface);
+
 	virtual void virtSetupBackgroundBuffer() override;
 
 	virtual void virtMainLoopStartIteration() override;

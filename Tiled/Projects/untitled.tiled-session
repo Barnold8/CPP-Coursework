@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Interiors_free_32x32.tsx",
+    "activeFile": "",
     "expandedProjectPaths": [
         "."
     ],
@@ -17,18 +17,28 @@
             "scaleInDock": 1,
             "scaleInEditor": 4
         },
+        "Interiors_free_48x48.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Spritesheet_UI_Flat_Button_01.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "D:/Code/C++/CPP-Coursework/Assets/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/32x32",
+    "last.imagePath": "D:/Code/C++/CPP-Coursework/Assets_BEFORE/Modern_Interiors_Free_v2.2/Modern tiles_Free/Interiors_free/48x48",
+    "map.height": 32,
+    "map.tileHeight": 48,
+    "map.tileWidth": 48,
+    "map.width": 32,
     "openFiles": [
-        "Interiors_free_32x32.tsx"
+        "Interiors_free_32x32.tsx",
+        "Interiors_free_48x48.tsx"
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
         "Interiors_free_32x32.tsx",
+        "Interiors_free_48x48.tsx",
         "Spritesheet_UI_Flat_Button_01.tsx",
         "GUI.tsx"
     ],
