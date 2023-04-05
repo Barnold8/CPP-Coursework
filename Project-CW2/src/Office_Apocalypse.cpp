@@ -6,6 +6,8 @@
 void Office_Apocalypse::virtSetupBackgroundBuffer()
 {
 
+	m_state_master->setup();
+
 }
 
 
@@ -22,7 +24,9 @@ int Office_Apocalypse::virtInitialiseObjects() {
 
     destroyOldObjects(true);
 
-    createObjectArray(1);
+	createObjectArray(255);
+
+	setAllObjectsVisible(true);
 
 	return 0;
 
@@ -30,7 +34,7 @@ int Office_Apocalypse::virtInitialiseObjects() {
 
 void Office_Apocalypse::virtKeyDown(int iKeyCode) {
 
-	//m_state_master->changeState(new Game(this));
+	m_state_master->childKey(iKeyCode);
 
 }
 
@@ -46,3 +50,5 @@ void Office_Apocalypse::setBgSurface(DrawingSurface* newSurface) { this->m_pBack
 int Office_Apocalypse::getUpdates() { return m_updates; }
 
 void Office_Apocalypse::setUpdates(int updates) { m_updates = updates; }
+
+std::shared_ptr<State_Master> Office_Apocalypse::getStateMaster() { return m_state_master; }

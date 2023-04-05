@@ -96,6 +96,7 @@
     <ClInclude Include="DraggingDemo.h" />
     <ClInclude Include="FlashingDemo.h" />
     <ClInclude Include="ImageMappingDemo.h" />
+    <ClInclude Include="MenuTilde.h" />
     <ClInclude Include="Office_Apocalypse.h" />
     <ClInclude Include="SimpleFlashingDragableImageObject.h" />
     <ClInclude Include="StarfieldDemo.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="BaseEngine.cpp" />
     <ClCompile Include="DisplayableObject.cpp" />
     <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="MenuTilde.cpp" />
     <ClCompile Include="Office_Apocalypse.cpp" />
     <ClCompile Include="SimpleImage.cpp" />
     <ClCompile Include="SimpleDemo.cpp" />

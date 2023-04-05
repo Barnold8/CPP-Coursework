@@ -1,6 +1,7 @@
 #pragma once
 #include "header.h"
 #include "BaseEngine.h"
+#include "MenuTilde.h"
 #include <memory>
 
 
@@ -26,6 +27,10 @@ public:
 
 	virtual void update() = 0; // FORCE SUB STATES TO UPDATE
 
+	virtual void setup() = 0;
+
+	virtual void KeyListener(int keyCode) = 0;
+
 };
 
 
@@ -34,8 +39,10 @@ class Menu : public State {
 
 private:
 
-	int counter = 0;
 	static const int FRAMES = 9;
+	int counter = 0;
+	int m_menu_select = 0;
+	bool Loaded = false;
 	DrawingSurface* frames[FRAMES];
 	SimpleImage images[FRAMES];
 
@@ -46,6 +53,11 @@ public:
 	~Menu();
 
 	virtual void update() override;
+
+	void setup();
+
+	virtual void KeyListener(int keyCode) override;
+
 };
 
 class Game : public State {
@@ -69,8 +81,13 @@ public:
 
 	State_Master(BaseEngine* engine);
 
+
+	void setup();
+
 	void changeState(std::shared_ptr<State>state);
 
 	void childUpdate();
+
+	void childKey(int keyCode);
 
 };

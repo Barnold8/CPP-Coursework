@@ -4,6 +4,7 @@
 
 //Note!!! making a new surface pushes the previous one down. its so stupid....
 
+
 class State_Master;
 
 
@@ -31,5 +32,8 @@ public:
 	int getUpdates();
 
 	void setUpdates(int updates);
+
+	std::shared_ptr<State_Master> getStateMaster();
+
 };
 
