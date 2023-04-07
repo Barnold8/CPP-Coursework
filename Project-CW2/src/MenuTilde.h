@@ -16,6 +16,8 @@ public:
 	//DisplayableObject(BaseEngine* pEngine, int iWidth = 0, int iHeight = 0, bool useTopLeftFor00 = true);
 	MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY);
 
+	MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, int xPositions[3],int yPositions[3], int Widths[3]);
+
 
     virtual void virtDraw() override;
 

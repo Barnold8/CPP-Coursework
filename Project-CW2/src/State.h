@@ -15,8 +15,7 @@ protected:
 
 	std::shared_ptr<State_Master*> m_state_master;
 	BaseEngine* m_pEngine;
-	DrawingSurface* foregroundSurface;
-	DrawingSurface* backgroundSurface;
+
 
 private:
 
@@ -27,9 +26,7 @@ public:
 
 	void set_master(std::shared_ptr<State_Master*> state);
 
-	void newSurfaces();
-
-	void delSurfaces();
+	virtual void copyAllBackgroundBuffer() = 0;
 
 	virtual void update() = 0; // FORCE SUB STATES TO UPDATE
 
@@ -58,6 +55,8 @@ public:
 
 	~Menu();
 
+	virtual void copyAllBackgroundBuffer() override;
+
 	virtual void update() override;
 
 	void setup();
@@ -74,6 +73,8 @@ public:
 
 	~Game();
 
+	virtual void copyAllBackgroundBuffer() override;
+
 	virtual void update();
 
 	virtual void setup();
@@ -89,12 +90,16 @@ private:
 	DrawingSurface* foregroundSurface;
 	DrawingSurface* backgroundSurface;
 	SimpleImage m_loseScreen;
+	int m_iOffset;
+	int m_randChance; // random int between 1-100
 
 public:
 
 	Lose(BaseEngine* engine);
 
 	~Lose();
+
+	virtual void copyAllBackgroundBuffer() override;
 
 	virtual void update();
 
@@ -103,6 +108,8 @@ public:
 	virtual void KeyListener(int keyCode);
 
 };
+
+
 //
 //
 //
@@ -124,6 +131,7 @@ public:
 
 	State_Master(BaseEngine* engine);
 
+	void copyAllBackgroundBuffer();
 
 	void setup();
 

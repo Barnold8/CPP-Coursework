@@ -3,6 +3,9 @@
 #include "Office_Apocalypse.h"
 
 
+//NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
+// Try and remove only one object when you have the menu destructor.
+
 
 void Menu::update() {
 
@@ -32,14 +35,12 @@ void Menu::update() {
 			if (counter >= FRAMES) {
 				counter = 0;
 			}
-
 		}
-		
 		M->setUpdates(M->getUpdates() + 1);
 		M->setBgSurface(frames[counter]);
 	}
 	else { // Used to force the engine to cooperate with loading assets onto surfaces...
-		m_pEngine->storeObjectInArray(0, new MenuTilde(m_pEngine, 800, 800, true, 800, 800)); // <- this gives a subscript error, and it makes no sense
+		m_pEngine->storeObjectInArray(0, new MenuTilde(m_pEngine, 800, 800, true, 800, 800));
 		for (int i = 0; i < FRAMES; i++) {
 
 			frames[i]->mySDLLockSurface();
@@ -53,7 +54,7 @@ void Menu::update() {
 	
 }
 
-void Menu::setup() {} // Not needed
+void Menu::setup() {} 
 
 
 void Menu::KeyListener(int keyCode) {
@@ -105,31 +106,10 @@ State::State(BaseEngine* engine) {
 	m_pEngine = engine;
 }
 
-
 void State::set_master(std::shared_ptr<State_Master*> state) { // Changes 
 	m_state_master = state;
 }
 
-void State::newSurfaces() {
-	
-	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-	foregroundSurface = new DrawingSurface(m_pEngine);
-	backgroundSurface = new DrawingSurface(m_pEngine);
-
-	foregroundSurface->createSurface(800, 800);
-	backgroundSurface->createSurface(800, 800);
-
-	M->setBgSurface(backgroundSurface);
-	M->setFgSurface(foregroundSurface);
-
-}
-
-void State::delSurfaces() {
-
-	delete foregroundSurface;
-	delete backgroundSurface;
-
-}
 
 Menu::Menu(BaseEngine* engine) : State(engine) {
 
@@ -137,10 +117,14 @@ Menu::Menu(BaseEngine* engine) : State(engine) {
 		frames[i] = new DrawingSurface(m_pEngine);
 		frames[i]->createSurface(800, 800);
 		images[i] = ImageManager::loadImage("resources/Menu/MenuFrame" + std::to_string(i + 1) + ".png", true);
-
 	}
 
 	m_pEngine->notifyObjectsAboutKeys(true);
+
+}
+
+void Menu::copyAllBackgroundBuffer() {
+
 
 }
 
@@ -150,22 +134,33 @@ Menu::~Menu() {
 		delete frames[i];
 	}
 
-	m_pEngine->destroyOldObjects(true); // used to remove the selector bar
+	// DELETE ONLY ONE OBJECT
+	MenuTilde* f = dynamic_cast<MenuTilde*>(m_pEngine->getDisplayableObject(0));
+	m_pEngine->removeDisplayableObject(0);
+	//delete f;
+
+	m_pEngine->drawableObjectsChanged();
+
+	//m_pEngine->destroyOldObjects(true); // used to remove the selector bar
 	
 	std::cout << "Clearing Menu from memory" << std::endl;
 
 }
 
 Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear public methods of state master class object
+
 	
 
-	newSurfaces();
+}
+
+void Game::copyAllBackgroundBuffer() {
+
 
 }
 
 Game::~Game() { // needed since changing surface for engine takes DrawingSurface* so i cant use smart pointers
 
-	delSurfaces();
+	
 }
 
 void Game::update() {}
@@ -174,12 +169,26 @@ void Game::setup() {}
 
 void Game::KeyListener(int keyCode) {}
 
-
-
 Lose::Lose(BaseEngine* engine) : State(engine) {
 
-	newSurfaces();
-	m_loseScreen = ImageManager::loadImage("resources/Menu/Lose.png",true);
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+	M->setSurfacesToCopies();
+	M->customRendering(true);
+	m_loseScreen = ImageManager::loadImage("resources/Menu/Lose.png");
+
+	m_pEngine->lockBackgroundForDrawing();
+	m_loseScreen.renderImage(M->getBgSurface(), -2, -2, -2,-2, 1000, 800);
+	m_pEngine->unlockBackgroundForDrawing();
+	m_randChance = rand() % 100 + 1;
+
+	m_pEngine->lockForegroundForDrawing();
+	m_pEngine->drawForegroundOval(100, 100, 200, 200, 0xFF0000);
+	m_pEngine->unlockBackgroundForDrawing();
+
+	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800)); // not showing up on screen
+	m_pEngine->setAllObjectsVisible(true);
+
+
 }
 
 void Lose::setup() {
@@ -188,7 +197,6 @@ void Lose::setup() {
 
 void Lose::update() {
 
-	m_loseScreen.renderImage(backgroundSurface, 0, 0, 1000, 800, 800, 800);
 
 }
 
@@ -197,13 +205,40 @@ void Lose::KeyListener(int keyCode) {
 	std::cout << "Lose key " << keyCode << std::endl;
 }
 
+void Lose::copyAllBackgroundBuffer() {
 
-Lose::~Lose() {
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
-	delSurfaces();
+
+	if (M->getUpdates() % 10 == 0) {
+		m_iOffset = (m_iOffset + 1) % m_pEngine->getWindowWidth();;
+
+		DrawingSurface* m_pForegroundSurface = m_pEngine->getForegroundSurface();
+		DrawingSurface* m_pBackgroundSurface = m_pEngine->getBackgroundSurface();
+
+		if (m_randChance > 80) { // 20% chance of seeing this special end screen :O
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, 0, 0, m_pEngine->getWindowWidth(), m_pEngine->getWindowHeight(), m_iOffset, 0);
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, 0, 0, m_pEngine->getWindowWidth(), m_pEngine->getWindowHeight(), m_iOffset, 0);
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, m_pEngine->getWindowWidth() - m_iOffset, 0, m_pEngine->getWindowWidth(), m_pEngine->getWindowHeight(), m_iOffset - m_pEngine->getWindowWidth(), 0);
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, 0, m_pEngine->getWindowWidth() - m_iOffset, m_pEngine->getWindowHeight(), m_pEngine->getWindowWidth(), 0, m_iOffset - m_pEngine->getWindowWidth());
+
+		}
+		else {
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, 0, 0, m_pEngine->getWindowWidth(), m_pEngine->getWindowHeight(), m_iOffset, 0);
+			m_pForegroundSurface->copyRectangleFrom(m_pBackgroundSurface, m_pEngine->getWindowWidth() - m_iOffset, 0, m_pEngine->getWindowWidth(), m_pEngine->getWindowHeight(), m_iOffset - m_pEngine->getWindowWidth(), 0);
+		}
+		
+		//m_pEngine->redrawDisplay();
+
+	}
+	M->setUpdates(M->getUpdates() + 1);
+
 
 }
 
+Lose::~Lose() {
+
+}
 
 State_Master::State_Master(BaseEngine* engine) {
 
@@ -212,11 +247,15 @@ State_Master::State_Master(BaseEngine* engine) {
 
 }
 
+
+void State_Master::copyAllBackgroundBuffer() {
+
+	m_state->copyAllBackgroundBuffer();
+}
+
 void State_Master::changeState(std::shared_ptr<State>state) { // May produce read access violation
 	m_state = state;
 }
-
-
 
 void State_Master::childUpdate() { m_state->update(); }
 
