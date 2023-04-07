@@ -74,7 +74,27 @@ void Office_Apocalypse::copyAllBackgroundBuffer() {
 void Office_Apocalypse::virtDrawStringsOnTop() { // This needs to be used due to the flow of the engine... overriding this ensures that the body inside is drawn last, thus on top...
 												 // Why you wouldnt have an override for other things on top i dont know...
 
-	drawForegroundRectangle(100, 100, 200, 200, 0xFF0000);
+
+
+}
+
+void Office_Apocalypse::customRendering(bool setRenderBool) {
+	m_customRender = setRenderBool;
+}
+
+void Office_Apocalypse::objectClearer() {
+
+	for (int i = 0; i < getContentCount(); i++) {
+
+		DisplayableObject* d = getDisplayableObject(i);
+
+		while (d != nullptr) {
+			removeDisplayableObject(d);
+			delete d;
+			d = getDisplayableObject(i);
+		}
+
+	}
 
 }
 

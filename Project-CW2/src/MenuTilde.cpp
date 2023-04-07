@@ -13,8 +13,6 @@ void MenuTilde::virtDraw() {
 
 void MenuTilde::virtKeyDown(int iKeyCode) { 
 
-
-
 	switch (iKeyCode) { // What is up with these awful keycodes?
 
 	case 1073741906: // UP ARROW
@@ -40,16 +38,33 @@ void MenuTilde::virtKeyDown(int iKeyCode) {
 
 MenuTilde::MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY) : DisplayableObject(pEngine, iWidth, iHeight, useTopLeftFor00) {
 		// Default constructor because I originally only made the tilde for the main menu
-		int m_yPos[3] = { 325,395,475 };
-		int m_xPos[3] = { 170,170,220 };
-		int m_widths[3] = { 180,180,70 };
-		std::cout << "FFF" << std::endl;
+		int yPos[3] = { 325,395,475 };
+		int xPos[3] = { 170,170,220 };
+		int widths[3] = { 180,180,70 };
+
+		for (int i = 0; i < 3; i++) {
+			m_xPos[i] = xPos[i];
+			m_yPos[i] = yPos[i];
+			m_widths[i] = widths[i];
+		}
+		
+		std::cout << "First menu tilde constructor" << std::endl;
 }
 
 
 MenuTilde::MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, int xPositions[3], int yPositions[3], int Widths[3]) : DisplayableObject(pEngine, iWidth, iHeight, useTopLeftFor00) {
 	// Default constructor because I originally only made the tilde for the main menu
-	int m_yPos[3] = {yPositions[0],yPositions[1],yPositions[2]};
-	int m_xPos[3] = { xPositions[0],xPositions[1],xPositions[2] };
-	int m_widths[3] = { Widths[0],Widths[1],Widths[2] };
+
+	int yPos[3] = {yPositions[0],yPositions[1],yPositions[2]};
+	int xPos[3] = {xPositions[0],xPositions[1],xPositions[2]};
+	int widths[3] = { Widths[0],Widths[1],Widths[2]};
+
+	for (int i = 0; i < 3; i++) {
+		m_xPos[i] = xPos[i];
+		m_yPos[i] = yPos[i];
+		m_widths[i] = widths[i];
+	}
+	
+
+	std::cout << "Second menu tilde constructor" << std::endl;
 }

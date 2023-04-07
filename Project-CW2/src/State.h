@@ -8,7 +8,7 @@
 class State_Master;
 
 
-class State // Due to the fact that the state doesnt START with new surfaces, sub states must call their modified destructor ro remove foregroundSurface/backgroundSurface
+class State
 {
 	
 protected:
@@ -87,11 +87,11 @@ class Lose : public State {
 
 private:
 
-	DrawingSurface* foregroundSurface;
-	DrawingSurface* backgroundSurface;
+
 	SimpleImage m_loseScreen;
 	int m_iOffset;
 	int m_randChance; // random int between 1-100
+	int m_menu_select = 1;
 
 public:
 

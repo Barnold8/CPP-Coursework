@@ -3,9 +3,9 @@
 #include "State.h"
 
 //Note!!! making a new surface pushes the previous one down. its so stupid....
+//TODO: make a cleanup function for the engine. This will clean the object array we got given which for some reason gives memory access violations if you do anything in a state destructor. 
 
-
-class State_Master;
+class State_Master; 
 
 
 class Office_Apocalypse : public BaseEngine{
@@ -30,13 +30,15 @@ public:
 
 	void setFgSurface(DrawingSurface* newSurface);
 
+	void setUpdates(int updates);
+
 	DrawingSurface* getBgSurface();
 
 	DrawingSurface* getFgSurface();
 
-	void customRendering(bool setRenderBool) {
-		m_customRender = setRenderBool;
-	}
+	void customRendering(bool setRenderBool);
+
+	void objectClearer();
 
 	virtual void virtDrawStringsOnTop() override;
 
@@ -54,7 +56,6 @@ public:
 
 	int getUpdates();
 
-	void setUpdates(int updates);
 
 	std::shared_ptr<State_Master> getStateMaster();
 

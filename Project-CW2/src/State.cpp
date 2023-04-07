@@ -1,6 +1,7 @@
 ﻿#include "header.h"
 #include "State.h"
 #include "Office_Apocalypse.h"
+#include "Image.h"
 
 
 //NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
@@ -40,17 +41,16 @@ void Menu::update() {
 		M->setBgSurface(frames[counter]);
 	}
 	else { // Used to force the engine to cooperate with loading assets onto surfaces...
+		M->objectClearer();
 		m_pEngine->storeObjectInArray(0, new MenuTilde(m_pEngine, 800, 800, true, 800, 800));
 		for (int i = 0; i < FRAMES; i++) {
 
 			frames[i]->mySDLLockSurface();
 			images[i].renderImage(frames[i], 0, 0, 0, 0, 800, 800);
 			frames[i]->mySDLUnlockSurface();
-
 		}
 		Loaded = true;
 	}
-	//m_pEngine->drawBackgroundOval(100, 100, 200, 200, 0xFF0000);
 	
 }
 
@@ -119,6 +119,9 @@ Menu::Menu(BaseEngine* engine) : State(engine) {
 		images[i] = ImageManager::loadImage("resources/Menu/MenuFrame" + std::to_string(i + 1) + ".png", true);
 	}
 
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+	
+	M->customRendering(false);
 	m_pEngine->notifyObjectsAboutKeys(true);
 
 }
@@ -128,21 +131,12 @@ void Menu::copyAllBackgroundBuffer() {
 
 }
 
-Menu::~Menu() {
+Menu::~Menu() { // NOTE: due to the weirdness of this engine, i need to remove the menutilde from the menu when transitioning into any new state from the menu
 
 	for (int i = 0; i < FRAMES;i++) { // Deleting these frames leads to access violation
 		delete frames[i];
 	}
 
-	// DELETE ONLY ONE OBJECT
-	MenuTilde* f = dynamic_cast<MenuTilde*>(m_pEngine->getDisplayableObject(0));
-	m_pEngine->removeDisplayableObject(0);
-	//delete f;
-
-	m_pEngine->drawableObjectsChanged();
-
-	//m_pEngine->destroyOldObjects(true); // used to remove the selector bar
-	
 	std::cout << "Clearing Menu from memory" << std::endl;
 
 }
@@ -171,7 +165,14 @@ void Game::KeyListener(int keyCode) {}
 
 Lose::Lose(BaseEngine* engine) : State(engine) {
 
+	int x[3] = { 300,300,340 };
+	int y[3] = { 350,430,510 };
+	int z[3] = { 200,200,100 };
+
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+
+
+	M->objectClearer();
 	M->setSurfacesToCopies();
 	M->customRendering(true);
 	m_loseScreen = ImageManager::loadImage("resources/Menu/Lose.png");
@@ -181,12 +182,8 @@ Lose::Lose(BaseEngine* engine) : State(engine) {
 	m_pEngine->unlockBackgroundForDrawing();
 	m_randChance = rand() % 100 + 1;
 
-	m_pEngine->lockForegroundForDrawing();
-	m_pEngine->drawForegroundOval(100, 100, 200, 200, 0xFF0000);
-	m_pEngine->unlockBackgroundForDrawing();
-
-	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800)); // not showing up on screen
-	m_pEngine->setAllObjectsVisible(true);
+	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800,x,y,z));
+	m_pEngine->storeObjectInArray(0, new Image(m_pEngine, 800, 800, true, 800, 800,"resources/Menu/Plate.png"));
 
 
 }
@@ -202,7 +199,42 @@ void Lose::update() {
 
 void Lose::KeyListener(int keyCode) {
 
-	std::cout << "Lose key " << keyCode << std::endl;
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+	switch (keyCode) {// What is up with these awful keycodes?
+
+	case 1073741906: // UP ARROW
+		m_menu_select--;
+		if (m_menu_select < 1) {
+			m_menu_select = 3;
+		}
+		break;
+
+	case 1073741905: // DOWN ARROW
+
+		m_menu_select++;
+		if (m_menu_select > 3) {
+			m_menu_select = 1;
+		}
+		break;
+	case 13:
+		std::cout << "menu select " << m_menu_select << std::endl;
+		switch (m_menu_select) {
+		case 1:
+			M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
+			break;
+		case 2:
+			break;
+		case 3:
+			m_pEngine->setExitWithCode(0);
+			break;
+		default:
+			break;
+		}
+
+		break;
+	default:
+		break;
+	}
 }
 
 void Lose::copyAllBackgroundBuffer() {
@@ -210,7 +242,7 @@ void Lose::copyAllBackgroundBuffer() {
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
 
-	if (M->getUpdates() % 10 == 0) {
+	if (M->getUpdates() % 10 == 0 || true) { // using or true to make it always true since the plate object slows this state down to a nice speed (REMOVE TRUE IF PERFORMANCE IS TOO QUICK)
 		m_iOffset = (m_iOffset + 1) % m_pEngine->getWindowWidth();;
 
 		DrawingSurface* m_pForegroundSurface = m_pEngine->getForegroundSurface();
@@ -232,8 +264,6 @@ void Lose::copyAllBackgroundBuffer() {
 
 	}
 	M->setUpdates(M->getUpdates() + 1);
-
-
 }
 
 Lose::~Lose() {
