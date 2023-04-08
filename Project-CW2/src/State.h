@@ -36,7 +36,6 @@ public:
 
 };
 
-
 class Menu : public State {
 
 
@@ -54,6 +53,45 @@ public:
 	Menu(BaseEngine* engine);
 
 	~Menu();
+
+	virtual void copyAllBackgroundBuffer() override;
+
+	virtual void update() override;
+
+	void setup();
+
+	virtual void KeyListener(int keyCode) override;
+
+};
+
+class SignAway : public State {
+
+private:
+
+	SimpleImage sign;
+
+
+public:
+
+	SignAway(BaseEngine* engine);
+
+	virtual void copyAllBackgroundBuffer() override;
+
+	virtual void update() override;
+
+	void setup();
+
+	virtual void KeyListener(int keyCode) override;
+
+};
+
+class Load : public State {
+
+private:
+
+public:
+
+	Load(BaseEngine* engine);
 
 	virtual void copyAllBackgroundBuffer() override;
 
@@ -109,15 +147,28 @@ public:
 
 };
 
+class Win : public State {
 
-//
-//
-//
-//class Win : public State {
-//
-//
-//
-//};
+private:
+
+	int m_menu_select = 1;
+	int m_iOffset;
+	SimpleImage m_winScreen;
+
+public:
+
+	Win(BaseEngine* engine);
+
+	virtual void copyAllBackgroundBuffer() override;
+
+	virtual void update();
+
+	virtual void setup();
+
+	virtual void KeyListener(int keyCode);
+
+
+};
 
 class State_Master {
 

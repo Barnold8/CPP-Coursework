@@ -16,6 +16,7 @@ private:
 
 	DrawingSurface* m_bgSurfaceCopy;
 	DrawingSurface* m_fgSurfaceCopy;
+	std::string m_userName;
 	bool m_customRender = false;
 
 	std::shared_ptr<State_Master> m_state_master = std::make_shared<State_Master>(this);;
@@ -23,6 +24,13 @@ private:
 public:
 
 	Office_Apocalypse();
+
+
+	DrawingSurface* getBgSurface();
+
+	DrawingSurface* getFgSurface();
+
+	std::string getUserName();
 
 	void setSurfacesToCopies();
 
@@ -32,13 +40,11 @@ public:
 
 	void setUpdates(int updates);
 
-	DrawingSurface* getBgSurface();
-
-	DrawingSurface* getFgSurface();
-
 	void customRendering(bool setRenderBool);
 
 	void objectClearer();
+
+	void setUserName(std::string name);
 
 	virtual void virtDrawStringsOnTop() override;
 

@@ -111,3 +111,7 @@ int Office_Apocalypse::getUpdates() { return m_updates; }
 void Office_Apocalypse::setUpdates(int updates) { m_updates = updates; }
 
 std::shared_ptr<State_Master> Office_Apocalypse::getStateMaster() { return m_state_master; }
+
+std::string Office_Apocalypse::getUserName() { return m_userName; }
+
+void Office_Apocalypse::setUserName(std::string name) { m_userName = name; }
