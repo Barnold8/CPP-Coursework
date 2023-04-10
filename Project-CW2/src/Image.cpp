@@ -5,10 +5,6 @@
 #include "Office_Apocalypse.h"
 
 
-Image::Image(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY) : DisplayableObject(pEngine, iWidth, iHeight, useTopLeftFor00) {
-
-
-}
 
 
 Image::Image(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY,std::string path) : DisplayableObject(pEngine, iWidth, iHeight, useTopLeftFor00) {

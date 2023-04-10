@@ -3,17 +3,16 @@
 #include "Office_Apocalypse.h"
 //#include "State.h"
 
-void Office_Apocalypse::virtSetupBackgroundBuffer()
+void Office_Apocalypse::virtSetupBackgroundBuffer() // func has no effect if called after program starts first state
 {
 
-	m_state_master->setup();
+	//m_state_master->setup(); 
 
 }
 
 
 void Office_Apocalypse::virtMainLoopStartIteration() {
 	redrawDisplay();
-
 }
 
 int Office_Apocalypse::virtInitialiseObjects() {

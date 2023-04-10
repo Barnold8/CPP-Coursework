@@ -17,16 +17,9 @@ private:
 
 public:
 
-	Image(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY);
-
 	Image(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string path);
 
 	Image::Image(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string path, std::string title);
-
-	~Image() {
-	
-		std::cout << "Image deleted" << std::endl;
-	}
 
 	virtual void virtDraw() override;
 

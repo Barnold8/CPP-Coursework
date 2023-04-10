@@ -2,6 +2,8 @@
 #include "header.h"
 #include "BaseEngine.h"
 #include "MenuTilde.h"
+#include "FileIO.h"
+#include "LevelLoader.h"
 #include <memory>
 
 
@@ -104,6 +106,10 @@ public:
 };
 
 class Game : public State {
+
+public:
+
+	std::shared_ptr<LevelLoader> f;
 
 public:
 

@@ -5,9 +5,8 @@
 #include "Text.h"
 
 
-//NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
-// Try and remove only one object when you have the menu destructor.
 
+//NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
 
 
 // MENU
@@ -95,14 +94,14 @@ void Menu::KeyListener(int keyCode) {
 			}
 			break;
 		case 13:
-			std::cout << "menu select " << m_menu_select << std::endl;
+
 			switch (m_menu_select) {
 				case 1:
 					M->getStateMaster()->changeState(std::make_shared<SignAway>(m_pEngine));
 				break;
 				case 2:
 					//std::cout << "IMPLEMENT Loading save data brandon!!!" << std::endl;
-					M->getStateMaster()->changeState(std::make_shared<Win>(m_pEngine));
+					M->getStateMaster()->changeState(std::make_shared<Load>(m_pEngine));
 					break;
 				case 3:
 					m_pEngine->setExitWithCode(0);
@@ -130,14 +129,10 @@ Menu::~Menu() { // NOTE: due to the weirdness of this engine, i need to remove t
 		delete frames[i];
 	}
 
-	std::cout << "Clearing Menu from memory" << std::endl;
-
 }
 // MENU
 
 // SIGN AWAY
-
-
 SignAway::SignAway(BaseEngine* engine) : State(engine){
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
@@ -155,7 +150,6 @@ SignAway::SignAway(BaseEngine* engine) : State(engine){
 	m_pEngine->storeObjectInArray(0, new Text(m_pEngine, 800, 800, true, 800, 800," ",300,650,30,12,true)); // space to stop weird read access violation. thanks engine :)
 
 }
-
 
 void SignAway::copyAllBackgroundBuffer() {}
 
@@ -225,9 +219,14 @@ void State::set_master(std::shared_ptr<State_Master*> state) { // Changes
 
 // GAME
 Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear public methods of state master class object
+	
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 	M->objectClearer();
 	M->setSurfacesToCopies();
+
+	f = std::make_shared<LevelLoader>(m_pEngine,"resources/LevelImages/furniture.png",32,32,800,800);
+	// init a level loader here - maybe make shared
+	setup();
 }
 
 void Game::copyAllBackgroundBuffer() {
@@ -237,12 +236,22 @@ void Game::copyAllBackgroundBuffer() {
 
 Game::~Game() { // needed since changing surface for engine takes DrawingSurface* so i cant use smart pointers
 
+	// delete level loader here
 	
 }
 
-void Game::update() {}
+void Game::update() {
 
-void Game::setup() {}
+	
+
+}
+
+void Game::setup() {
+
+	f->drawTiles();
+	std::cout << "adasdasdas" << std::endl;
+
+}
 
 void Game::KeyListener(int keyCode) {}
 // GAME
@@ -270,8 +279,6 @@ Lose::Lose(BaseEngine* engine) : State(engine) {
 
 	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800,x,y,z));
 	m_pEngine->storeObjectInArray(0, new Image(m_pEngine, 800, 800, true, 800, 800,"resources/Menu/Plate.png"));
-
-
 }
 
 void Lose::setup() {
@@ -303,7 +310,7 @@ void Lose::KeyListener(int keyCode) {
 		}
 		break;
 	case 13:
-		std::cout << "menu select " << m_menu_select << std::endl;
+		
 		switch (m_menu_select) {
 		case 1:
 			M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
@@ -330,7 +337,7 @@ void Lose::copyAllBackgroundBuffer() {
 
 
 	if (M->getUpdates() % 10 == 0 || true) { // using or true to make it always true since the plate object slows this state down to a nice speed (REMOVE TRUE IF PERFORMANCE IS TOO QUICK)
-		m_iOffset = (m_iOffset + 1) % m_pEngine->getWindowWidth();;
+		m_iOffset = (m_iOffset + 1) % m_pEngine->getWindowWidth();
 
 		DrawingSurface* m_pForegroundSurface = m_pEngine->getForegroundSurface();
 		DrawingSurface* m_pBackgroundSurface = m_pEngine->getBackgroundSurface();
