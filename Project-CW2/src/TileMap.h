@@ -1,6 +1,8 @@
 #pragma once
 #include "TileManager.h"
 
+struct TMJ;
+
 class TileMap : public TileManager{
 
 	//, std::vector<std::string>& spritePaths,
@@ -13,13 +15,9 @@ class TileMap : public TileManager{
 
 public:
 
-	TileMap(int iTileHeight, int iTileWidth, int iMapWidth, int iMapHeight, std::string spritePath);
-
-	TileMap(int iTileHeight, int iTileWidth, int iMapWidth, int iMapHeight, std::vector<std::string>& spritePaths);
-
+	TileMap(int iTileHeight, int iTileWidth, int iMapWidth, int iMapHeight, std::vector<std::string>& spritePaths, std::vector<std::shared_ptr<TMJ>> tileData);
 
 	virtual void virtDrawTileAt(BaseEngine* pEngine,DrawingSurface* pSurface,int iMapX, int iMapY,int iStartPositionScreenX, int iStartPositionScreenY) const override;
-
 
 };
 

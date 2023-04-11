@@ -10,7 +10,6 @@ void Office_Apocalypse::virtSetupBackgroundBuffer() // func has no effect if cal
 
 }
 
-
 void Office_Apocalypse::virtMainLoopStartIteration() {
 	redrawDisplay();
 }

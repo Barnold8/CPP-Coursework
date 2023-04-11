@@ -109,7 +109,7 @@ class Game : public State {
 
 public:
 
-	std::shared_ptr<LevelLoader> f;
+	std::shared_ptr<LevelLoader> m_level_loader;
 
 public:
 
