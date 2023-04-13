@@ -34,6 +34,24 @@
     <Filter Include="Source Files\MyCode">
       <UniqueIdentifier>{336f6c28-9c8b-42a6-b51d-859fae9a2644}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\MyCode\Entity">
+      <UniqueIdentifier>{c950d821-4518-46d2-9b68-697bbe8ce229}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MyCode\State">
+      <UniqueIdentifier>{8471f7c4-5e54-4d9c-a739-de81572bf336}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MyCode\Engine">
+      <UniqueIdentifier>{7cac61dd-61e4-4f30-a174-87cff82e6576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{26810148-9d99-4ca0-9ab0-9c113dd7bf9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{ba219d87-6fb7-42e0-b501-04907e8aa187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\State">
+      <UniqueIdentifier>{19dfd050-f436-4d8d-bdb5-5dcf2fe9c15c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
@@ -129,28 +147,49 @@
     <ClInclude Include="ExampleFilterPointClasses.h">
       <Filter>Header Files\More advanced demos</Filter>
     </ClInclude>
-    <ClInclude Include="Office_Apocalypse.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="MenuTilde.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Person.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelLoader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="FileIO.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuTilde.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Office_Apocalypse.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Header Files\State</Filter>
+    </ClInclude>
+    <ClInclude Include="Plate.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageDistorter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -209,29 +248,50 @@
     <ClCompile Include="ZoomingDemo.cpp">
       <Filter>Source Files\More advanced demos</Filter>
     </ClCompile>
-    <ClCompile Include="Office_Apocalypse.cpp">
-      <Filter>Source Files\MyCode</Filter>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Source Files\MyCode</Filter>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="MenuTilde.cpp">
-      <Filter>Source Files\MyCode</Filter>
+    <ClCompile Include="Person.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source Files\MyCode</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>Source Files\MyCode</Filter>
-    </ClCompile>
-    <ClCompile Include="FileIO.cpp">
-      <Filter>Source Files\MyCode</Filter>
+      <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>
     <ClCompile Include="LevelLoader.cpp">
-      <Filter>Source Files\MyCode</Filter>
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuTilde.cpp">
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Office_Apocalypse.cpp">
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="FileIO.cpp">
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files\MyCode</Filter>
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Source Files\MyCode\State</Filter>
+    </ClCompile>
+    <ClCompile Include="Plate.cpp">
+      <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageDistorter.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

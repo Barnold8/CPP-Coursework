@@ -94,13 +94,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DraggingDemo.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="FlashingDemo.h" />
     <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageDistorter.h" />
     <ClInclude Include="ImageMappingDemo.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MenuTilde.h" />
     <ClInclude Include="Office_Apocalypse.h" />
+    <ClInclude Include="Person.h" />
+    <ClInclude Include="Plate.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="SimpleFlashingDragableImageObject.h" />
     <ClInclude Include="StarfieldDemo.h" />
     <ClInclude Include="State.h" />
@@ -136,9 +143,12 @@
   <ItemGroup>
     <ClCompile Include="DraggingDemo.cpp" />
     <ClCompile Include="DrawingSurface.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="FlashingDemo.cpp" />
     <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageDistorter.cpp" />
     <ClCompile Include="ImageMappingDemo.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="mainfunction.cpp" />
@@ -147,6 +157,10 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="MenuTilde.cpp" />
     <ClCompile Include="Office_Apocalypse.cpp" />
+    <ClCompile Include="Person.cpp" />
+    <ClCompile Include="Plate.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="SimpleImage.cpp" />
     <ClCompile Include="SimpleDemo.cpp" />
     <ClCompile Include="StarfieldDemo.cpp" />

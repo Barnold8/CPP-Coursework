@@ -3,6 +3,10 @@
 #include "Office_Apocalypse.h"
 #include "Image.h"
 #include "Text.h"
+#include "Player.h"
+#include "Person.h"
+#include "Enemy.h"
+#include "Plate.h"
 
 
 
@@ -207,7 +211,7 @@ void Load::KeyListener(int keyCode) {
 
 // LOAD
 
-// STATE
+// STATE 
 State::State(BaseEngine* engine) {
 	m_pEngine = engine;
 }
@@ -229,9 +233,10 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 
 	std::vector<std::string> sPaths = { "resources/LevelImages/walls_and_floor.png","resources/LevelImages/furniture.png" };
 
-	//LevelLoader(BaseEngine* engine, std::vector<std::string>& spritePaths, std::string TMJ_Path, int tile_w, int tile_h, int w_width, int w_height); // this assumes multiple layers for a level
-
 	m_level_loader = std::make_shared<LevelLoader>(m_pEngine,sPaths,"resources/Levels/Level1.tmj", 32, 32, 800, 800);
+
+	m_pEngine->storeObjectInArray(0, new Player(m_pEngine, 800, 800, true, 800, 800,"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",100,100,M->getUserName()));
+	m_pEngine->storeObjectInArray(1, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png", 300, 100, "ENEMY"));
 
 	setup();
 }
@@ -249,6 +254,9 @@ Game::~Game() { // needed since changing surface for engine takes DrawingSurface
 
 void Game::update() {
 
+	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+
+	M->setUpdates(M->getUpdates() + 1);
 	
 
 }
@@ -272,7 +280,6 @@ Lose::Lose(BaseEngine* engine) : State(engine) {
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
-
 	M->objectClearer();
 	M->setSurfacesToCopies();
 	M->customRendering(true);
@@ -284,7 +291,8 @@ Lose::Lose(BaseEngine* engine) : State(engine) {
 	m_randChance = rand() % 100 + 1;
 
 	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800,x,y,z));
-	m_pEngine->storeObjectInArray(0, new Image(m_pEngine, 800, 800, true, 800, 800,"resources/Menu/Plate.png"));
+	m_pEngine->storeObjectInArray(0, new Plate(m_pEngine, 800, 800, true, 800, 800,"resources/Menu/Plate.png","YOU LOSE!"));
+
 }
 
 void Lose::setup() {
@@ -372,7 +380,6 @@ Lose::~Lose() {
 // LOSE
 
 // WIN
-
 Win::Win(BaseEngine* engine) : State(engine) {
 
 	int x[3] = { 300,300,340 };
@@ -393,7 +400,7 @@ Win::Win(BaseEngine* engine) : State(engine) {
 	m_pEngine->unlockBackgroundForDrawing();
 
 	m_pEngine->storeObjectInArray(1, new MenuTilde(m_pEngine, 800, 800, true, 800, 800, x, y, z));
-	m_pEngine->storeObjectInArray(0, new Image(m_pEngine, 800, 800, true, 800, 800, "resources/Menu/Plate.png","YOU WIN!")); // doesnt work lol
+	m_pEngine->storeObjectInArray(0, new Plate(m_pEngine, 800, 800, true, 800, 800, "resources/Menu/Plate.png","YOU WIN!"));
 
 	
 }
@@ -468,7 +475,6 @@ void Win::copyAllBackgroundBuffer() { // code from here is nothing different fro
 	}
 	M->setUpdates(M->getUpdates() + 1);
 }
-
 // WIN
 
 

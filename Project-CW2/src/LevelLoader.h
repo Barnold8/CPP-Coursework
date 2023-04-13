@@ -25,7 +25,7 @@ private:
 
 	std::vector<std::shared_ptr<TMJ>> m_TMJS;
 
-	std::shared_ptr<TileMap> m_tileMap; // used for rendering tiles
+	std::vector<std::shared_ptr<TileMap>> m_tileMaps; // used for rendering tiles
 
 public:
 

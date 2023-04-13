@@ -84,28 +84,11 @@ std::vector<std::vector<std::string>> LevelLoader::TMJData(std::vector<std::stri
 	return dataSets;
 }
 
-//LevelLoader::LevelLoader(BaseEngine* engine, std::string spritePath, std::string TMJ_Path, int tile_w, int tile_h, int w_width, int w_height) : FileIO() {
-//
-//	std::vector<std::vector<std::string>> numbers = TMJData(loadFileToLines(TMJ_Path)); // set of integers from TMJ file. 
-//
-//	for (int i = 0; i < numbers.size(); i++) { // get layers of TMJ numbers and make them into TMJ objects (struct holding integers in a vect)
-//		std::shared_ptr<TMJ> j = std::make_shared<TMJ>();
-//		j->IDS = intify(numbers[i]);
-//		m_TMJS.push_back(j);
-//	}
-//
-//	m_tileMap = std::make_shared<TileMap>(tile_w, tile_w, w_width/ tile_w , w_height / tile_h , spritePath, m_TMJS[0]); // only give m_TMJS[0] since this level loader only has one layer to handle
-//	m_pEngine = engine;
-//	m_onlyPath = spritePath;
-//	m_TMJPath = TMJ_Path;
-//
-//
-//}
-
 LevelLoader::LevelLoader(BaseEngine* engine, std::vector<std::string>& spritePaths, std::string TMJ_Path, int tile_w, int tile_h, int w_width, int w_height) : FileIO() {
 
 	m_pEngine = engine;
 	m_TMJPath = TMJ_Path;
+	m_spritePaths = spritePaths;
 
 	std::vector<std::vector<std::string>> numbers = TMJData(loadFileToLines(TMJ_Path)); // set of integers from TMJ file. 
 
@@ -115,14 +98,18 @@ LevelLoader::LevelLoader(BaseEngine* engine, std::vector<std::string>& spritePat
 		m_TMJS.push_back(j);
 	}
 
-	m_spritePaths = spritePaths;
-
-	m_tileMap = std::make_shared<TileMap>(32, 32, 800 / 32, 800 / 32, m_spritePaths, m_TMJS);
+	m_tileMaps.push_back(std::make_shared<TileMap>(32, 32, 800 / 32, 800 / 32, m_spritePaths[0], m_TMJS[1], 544, 736,1));
+	m_tileMaps.push_back(std::make_shared<TileMap>(32, 32, 800 / 32, 800 / 32, m_spritePaths[1], m_TMJS[2], 512, 2848,392));
+	m_tileMaps.push_back(std::make_shared<TileMap>(32, 32, 800 / 32, 800 / 32, m_spritePaths[1], m_TMJS[3], 512, 2848, 392));
 
 }
 
 void LevelLoader::drawTiles() {
 	
-	//m_tileMap->drawAllTiles(m_pEngine, m_pEngine->getBackgroundSurface());
+	for (int i = 0; i < m_tileMaps.size();i++) {
+	
+		m_tileMaps[i]->drawAllTiles(m_pEngine, m_pEngine->getBackgroundSurface());
 
+	}
+	
 }
