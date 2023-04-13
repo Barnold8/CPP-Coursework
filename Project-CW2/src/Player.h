@@ -7,8 +7,8 @@ class Player : public Person {
 
 private:
 
-
-
+	int m_projSize; // amount of projectiles player shoots
+	int m_projCap;  // cap of projectiles that can be in game at any given time
 
 public:
 

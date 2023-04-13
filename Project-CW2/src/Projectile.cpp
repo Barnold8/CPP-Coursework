@@ -10,7 +10,7 @@ Projectile::Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTop
 	m_yPos  = pY;
 	m_speed = speed;
 	m_tick  = 0;
-	m_imgDist = new ImageDistorter(m_pEngine);
+	m_imgDist = std::make_shared<ImageDistorter>(m_pEngine, pX,pY);
 
 }
 
@@ -19,6 +19,7 @@ void Projectile::virtDraw() {
 	m_projectileSprite.renderImage(m_pEngine->getForegroundSurface(), 0, 0, m_xPos, m_yPos, m_projectileSprite.getWidth(), m_projectileSprite.getHeight());
 	
 	if (m_tick % 200 == 0) {
+
 		switch (m_direction) {
 		
 		case RIGHT:
@@ -43,10 +44,9 @@ void Projectile::virtDraw() {
 	}
 	m_tick += 10;
 
-	double x = 10.0;
-	double y = 10.0;
 
-	m_imgDist->mapCoordinates(x, y, m_projectileSprite);
-
+	m_imgDist->setX(m_xPos);
+	m_imgDist->setY(m_yPos);
+	
 	
 }

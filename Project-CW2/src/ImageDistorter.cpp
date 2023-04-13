@@ -2,51 +2,30 @@
 #include "ImageDistorter.h"
 
 
-ImageDistorter::ImageDistorter(BaseEngine* engine) {
+ImageDistorter::ImageDistorter(BaseEngine* engine, int x, int y) {
 
 	m_pEngine = engine;
+	i_x = x;
+	i_y = y;
 }
 
-bool ImageDistorter::mapCoordinates(double& x, double& y, const SimpleImage& image) {
 
-	int iOffset = m_pEngine->getModifiedTime() / 10;
+bool ImageDistorter::changePixelColour(int x, int y, int& colour, DrawingSurface* pTarget) { // actually change the colour of a pixel since the original did nothing....
 
-	if (x < 0) return false;
-	if (y < 0) return false;
-	if (x >= (image.getWidth() - 0.5)) return false;
-	if (y >= (image.getHeight() - 0.5)) return false;
-
-	 //Demo 1 - shift x
-	//x = ((int)(x + 0.5) + iOffset) % image.getWidth();
-
-	// Demo 2 - shift y
-//	y = ((int)(y + 0.5) + iOffset) % image.getHeight();
-
-	// Demo 3 - simple rotation
-
-	// Shift offset to the centre of the image, so we can rotate around centre
-	x -= image.getWidth() / 2;
-	y -= image.getHeight() / 2;
-
-	// Rotate it
-	//double dAngle = (double)iOffset / 100;
-	double dAngle = atan(y / (x + 0.0001));
-	if (x < 0)
-		dAngle += M_PI;
-	double hyp = ::sqrt(x * x + y * y);
-	dAngle += (double)iOffset / 100;
-
-	x = hyp * ::cos(dAngle);
-	y = hyp * ::sin(dAngle);
-
-	// Shift offset back to the corner
-	x += image.getWidth() / 2;
-	y += image.getHeight() / 2;
-
-	if (x < 0) return false;
-	if (y < 0) return false;
-	if (x >= (image.getWidth() - 0.5)) return false;
-	if (y >= (image.getHeight() - 0.5)) return false;
+	pTarget->setPixel(x, y, colour);
 
 	return true;
 }
+
+bool ImageDistorter::mapCoordinates(double& x, double& y, const SimpleImage& image) {
+	
+
+
+	return true;
+}
+
+
+
+void  ImageDistorter::setX(int x) { i_x = x; }
+
+void  ImageDistorter::setY(int y) { i_y = y; }

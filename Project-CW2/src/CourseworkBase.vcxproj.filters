@@ -291,7 +291,7 @@
       <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>
     <ClCompile Include="ImageDistorter.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

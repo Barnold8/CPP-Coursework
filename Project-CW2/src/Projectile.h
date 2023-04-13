@@ -10,7 +10,8 @@ class Projectile : public Entity {
 protected:
 
 	SimpleImage m_projectileSprite;
-	ImageDistorter* m_imgDist;
+	std::shared_ptr<ImageDistorter> m_imgDist;
+	//ImageDistorter* m_imgDist;
 	Movement	m_direction;
 	int			m_tick;
 

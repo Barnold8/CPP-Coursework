@@ -14,6 +14,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runCycle  = 0;
 	m_runTick   = 0;
 	m_personName = "None";
+	m_projSize = 0;
 }
 
 
@@ -29,6 +30,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_personName = "None";
+	m_projSize = 0;
 
 }
 
@@ -44,6 +46,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_personName = name;
+	m_projSize = 0;
 
 }
 
@@ -60,12 +63,13 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_personName = name;
 	m_healthAmount = health;
+	m_projSize = 0;
 
 }
 
-void Player::virtKeyDown(int iKeyCode) {
+void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 255
 
-	std::cout << iKeyCode << std::endl;
+	std::cout << "Non null objs " << m_pEngine->getNonNullObjectContentCount() << std::endl;;
 
 	switch (iKeyCode) {
 
@@ -89,9 +93,22 @@ void Player::virtKeyDown(int iKeyCode) {
 		m_direction = UP;
 		m_runTimer = 0;
 		break;
-	case 1073741903:
+
 		//Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string sprite, Movement dir, int pX, int pY, int speed);
-		m_pEngine->storeObjectInArray(3, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", RIGHT, 100, 10, 1));
+	case 1073741903:
+		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(),new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", RIGHT, m_xPos, m_yPos, 1));
+		break;
+
+	case 1073741905:
+		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", DOWN, m_xPos, m_yPos, 1));
+		break;
+
+	case 1073741904:
+		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", LEFT, m_xPos, m_yPos, 1));
+		break;
+
+	case 1073741906:
+		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", UP, m_xPos, m_yPos, 1));
 		break;
 	default:
 		break;

@@ -7,6 +7,7 @@
 
 #include "Office_Apocalypse.h"
 #include "StarfieldDemo.h"
+#include "ImageMappingDemo.h"
 
 // These are passed to initialise to determine the window size
 const int BaseScreenWidth = 800;
@@ -20,6 +21,8 @@ int doProgram(int argc, char *argv[])
 	int iResult = 0;
 
 	Office_Apocalypse oMainDemoObject;
+
+	//ImageMappingDemo oMainDemoObject;
 
 	char buf[1024];
 	// Screen caption can be set on following line...
