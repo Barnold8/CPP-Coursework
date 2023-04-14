@@ -14,7 +14,12 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runCycle  = 0;
 	m_runTick   = 0;
 	m_personName = "None";
+	m_projCap = 10;	// 10 projectiles from the player
+	m_projStart = 1; // players projectiles start from 1 in object array
 	m_projSize = 0;
+	m_replace = false;
+	m_shootTick = 0;
+
 }
 
 
@@ -30,7 +35,11 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_personName = "None";
+	m_projCap = 10;	// 10 projectiles from the player
+	m_projStart = 1; // players projectiles start from 1 in object array
 	m_projSize = 0;
+	m_replace = false;
+	m_shootTick = 0;
 
 }
 
@@ -46,7 +55,12 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_personName = name;
+	m_projCap = 10;	// 10 projectiles from the player
+	m_projStart = 1; // players projectiles start from 1 in object array
 	m_projSize = 0;
+	m_replace = false;
+	m_shootTick = 0;
+
 
 }
 
@@ -63,13 +77,15 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_personName = name;
 	m_healthAmount = health;
+	m_projCap = 10;	// 10 projectiles from the player
+	m_projStart = 1; // players projectiles start from 1 in object array
 	m_projSize = 0;
+	m_replace = false;
+	m_shootTick = 0;
 
 }
 
 void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 255
-
-	std::cout << "Non null objs " << m_pEngine->getNonNullObjectContentCount() << std::endl;;
 
 	switch (iKeyCode) {
 
@@ -93,22 +109,26 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 		m_direction = UP;
 		m_runTimer = 0;
 		break;
+	}
+	
+	//Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string sprite, Movement dir, int pX, int pY, int speed);
 
-		//Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string sprite, Movement dir, int pX, int pY, int speed);
+	switch (iKeyCode) {	
+
 	case 1073741903:
-		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(),new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", RIGHT, m_xPos, m_yPos, 1));
+		addProjectile(RIGHT);
 		break;
 
 	case 1073741905:
-		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", DOWN, m_xPos, m_yPos, 1));
+		addProjectile(DOWN);
 		break;
 
 	case 1073741904:
-		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", LEFT, m_xPos, m_yPos, 1));
+		addProjectile(LEFT);
 		break;
 
 	case 1073741906:
-		m_pEngine->storeObjectInArray(m_pEngine->getNonNullObjectContentCount(), new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard3.png", UP, m_xPos, m_yPos, 1));
+		addProjectile(UP);
 		break;
 	default:
 		break;
@@ -116,3 +136,83 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 
 
 }
+
+
+void Player::addProjectile( Movement direction) {
+
+	int distance = -1;
+
+	if (m_projSize != 0) { // gets distance of previous object
+		DisplayableObject* d = m_pEngine->getDisplayableObject(m_projStart + m_projSize - 1);
+		Projectile* p = dynamic_cast<Projectile*>(d);
+		distance = p->distance(m_xPos, m_yPos);
+
+		d = m_pEngine->getDisplayableObject(m_projStart + m_projSize);
+
+		if (distance > 100){
+			if (d != nullptr) {
+				delete d;
+			}
+			
+			m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+
+			m_projSize++;
+
+			if (m_projSize > m_projCap) { m_projSize = 0;}
+		}
+		
+	}
+	else { // first shot overlaps last shot :(
+
+		DisplayableObject* d  = m_pEngine->getDisplayableObject(m_projStart + m_projSize);
+
+		if (d != nullptr) {
+			delete d;
+		}
+
+		m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+
+		m_projSize++;
+
+		if (m_projSize > m_projCap) { m_projSize = 0; }
+	
+	}
+
+
+}
+
+
+//
+//if (m_projSize == 0) {
+//
+//	if (d != nullptr) {
+//		delete d;
+//	}
+//
+//	m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+//
+//	m_projSize++;
+//
+//	if (m_projSize > m_projCap) { m_projSize = 0; }
+//
+//}
+//else {
+//	DisplayableObject* d = m_pEngine->getDisplayableObject((m_projStart + m_projSize) - 1);
+//
+//	Projectile* p = dynamic_cast<Projectile*>(d);
+//
+//	if (p->distance(m_xPos, m_yPos) > 100) {
+//		if (d != nullptr) {
+//			delete d;
+//		}
+//
+//		m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+//
+//		m_projSize++;
+//
+//		if (m_projSize > m_projCap) { m_projSize = 0; }
+//
+//	}
+//
+//
+//}

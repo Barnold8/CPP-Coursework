@@ -12,6 +12,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_spriteOffset = 6;
 }
 
 Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
@@ -25,6 +26,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runTick = 0;
 	m_xPos = pX;
 	m_yPos = pY;
+	m_spriteOffset = 6;
 
 }
 
@@ -39,8 +41,23 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runTick = 0;
 	m_xPos = pX;
 	m_yPos = pY;
+	m_spriteOffset = 6;
+}
+
+Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
+	m_personIdle = ImageManager::loadImage(idle, true);
+	m_personRunning = ImageManager::loadImage(running, true);
+	m_direction = RIGHT;
+	m_animState = RUNNING;
+	m_runTimer = 0;
+	m_runCycle = 0;
+	m_runTick = 0;
+	m_xPos = pX;
+	m_yPos = pY;
+	m_spriteOffset = offset;
 
 }
+
 
 void Person::virtDraw() {
 
@@ -74,7 +91,9 @@ void Person::virtDraw() {
 		);
 
 	}
+
 	m_runTimer += 1;
+	m_shootTick += 10;
 
 
 	m_pEngine->drawForegroundString(m_xPos - m_personName.length() * 6, m_yPos - 20, m_personName.c_str(), 0xFFFFFF, M->getFont("resources/Fonts/Monocraft.ttf", 24));
@@ -89,7 +108,7 @@ void Person::virtDraw() {
 		if (m_runCycle % 200 == 0) {
 			m_runTick += 1;
 		}
-		if (m_runTick >= 6) {
+		if (m_runTick >= m_spriteOffset) {
 			m_runTick = 0;
 		}
 

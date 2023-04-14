@@ -19,8 +19,6 @@ bool ImageDistorter::changePixelColour(int x, int y, int& colour, DrawingSurface
 
 bool ImageDistorter::mapCoordinates(double& x, double& y, const SimpleImage& image) {
 	
-
-
 	return true;
 }
 

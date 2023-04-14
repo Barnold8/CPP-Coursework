@@ -18,6 +18,8 @@ protected:
 	int			m_runCycle;			// number counted to tick over next anim frame
 	int			m_runTick;			// nunber to use in animation frame formula
 	int			m_healthAmount;
+	int			m_shootTick;		// Used so players/enemies can only shoot every n ticks
+	int			m_spriteOffset;
 
 
 public:
@@ -27,6 +29,8 @@ public:
 	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY);
 
 	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name);
+
+	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset);
 
 	virtual void virtDraw() override;
 

@@ -236,7 +236,7 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 	m_level_loader = std::make_shared<LevelLoader>(m_pEngine,sPaths,"resources/Levels/Level1.tmj", 32, 32, 800, 800);
 
 	m_pEngine->storeObjectInArray(0, new Player(m_pEngine, 800, 800, true, 800, 800,"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",100,100,M->getUserName()));
-	m_pEngine->storeObjectInArray(1, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png", 300, 100, "ENEMY"));
+	//m_pEngine->storeObjectInArray(15, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",0,100,"ENEMY",5));
 
 	setup();
 }
