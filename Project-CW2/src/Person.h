@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-
+#include <vector>
 
 //NOTE: player running frame per direction is 6
 
@@ -9,17 +9,29 @@ class Person : public Entity {
 
 protected:
 
-	std::string m_personName;		// Allows name above person to be different
-	SimpleImage m_personIdle;
-	SimpleImage m_personRunning;
-	Movement	m_direction;
-	animState	m_animState;
-	int			m_runTimer;			// time after last key update
-	int			m_runCycle;			// number counted to tick over next anim frame
-	int			m_runTick;			// nunber to use in animation frame formula
-	int			m_healthAmount;
-	int			m_shootTick;		// Used so players/enemies can only shoot every n ticks
+	std::string m_personName;									 // Allows name above person to be different
+	SimpleImage m_personIdle;									 // stores spritesheets for idle anims
+	SimpleImage m_personRunning;								 // stores spritesheets for running anims
+	SimpleImage m_health;										 // stores spritesheets for health
+	Movement	m_direction;									 // enum for the player looking direction
+	animState	m_animState;									 // enum for the animation state
+	spriteSheetCollider m_idleCollider;
+	spriteSheetCollider m_runCollider;
+	// - this is no way near "good c++"
+	// Parent = spritesheet
+	// Child  = sprite
+	// child of child = set of pairs
+	std::vector<std::vector<std::vector<std::pair<int, int>>>> m_validPixels; // used to store valid coords for collision
+	int			m_runTimer;										 // time after last key update
+	int			m_runCycle;										 // number counted to tick over next anim frame
+	int			m_runTick;										 // number to use in animation frame formula
+	int			m_healthAmount;									 // amount of health user has
+	int			m_shootTick;									 // Used so players/enemies can only shoot every n ticks
 	int			m_spriteOffset;
+	int			m_collisionMask;								 // the colour used to say what is a valid pixel for collision
+	bool		m_renderHealth;
+	
+
 
 
 public:
@@ -31,6 +43,10 @@ public:
 	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name);
 
 	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset);
+
+	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, bool renderHealth);
+	
+	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, bool renderHealth, int collisionMask);
 
 	virtual void virtDraw() override;
 

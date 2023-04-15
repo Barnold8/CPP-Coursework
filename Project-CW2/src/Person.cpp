@@ -13,6 +13,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runCycle = 0;
 	m_runTick = 0;
 	m_spriteOffset = 6;
+
 }
 
 Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
@@ -27,6 +28,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = 6;
+	m_renderHealth = false;
 
 }
 
@@ -42,6 +44,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = 6;
+	m_renderHealth = false;
 }
 
 Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
@@ -55,9 +58,42 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = offset;
+	m_renderHealth = false;
 
 }
 
+Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, bool renderHealth) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
+	m_personIdle = ImageManager::loadImage(idle, true);
+	m_personRunning = ImageManager::loadImage(running, true);
+	m_health = ImageManager::loadImage("resources/PlayerSprites/heart.png", true);
+	m_direction = RIGHT;
+	m_animState = RUNNING;
+	m_runTimer = 0;
+	m_runCycle = 0;
+	m_runTick = 0;
+	m_xPos = pX;
+	m_yPos = pY;
+	m_spriteOffset = offset;
+	m_renderHealth = m_renderHealth;
+	
+
+}
+
+Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, bool renderHealth, int collisionMask) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
+	m_personIdle = ImageManager::loadImage(idle, true);
+	m_personRunning = ImageManager::loadImage(running, true);
+	m_health = ImageManager::loadImage("resources/PlayerSprites/heart.png", true);
+	m_direction = RIGHT;
+	m_animState = RUNNING;
+	m_runTimer = 0;
+	m_runCycle = 0;
+	m_runTick = 0;
+	m_xPos = pX;
+	m_yPos = pY;
+	m_spriteOffset = offset;
+	m_renderHealth = m_renderHealth;
+	m_collisionMask = collisionMask;
+}
 
 void Person::virtDraw() {
 
@@ -112,6 +148,29 @@ void Person::virtDraw() {
 			m_runTick = 0;
 		}
 
+	}
+
+	if (m_renderHealth == true) {
+		//m_healthAmount
+
+		int w2 = m_pEngine->getBackgroundSurface()->getSurfaceWidth() / 2 - m_pEngine->getBackgroundSurface()->getSurfaceWidth() / 4;
+
+		for (int i = 0; i < m_healthAmount ; i++) {
+
+			m_health.renderImageWithMask(
+				m_pEngine->getForegroundSurface(),
+				0,0,w2 + i*40, 10,32,30,0x00FF00
+				);
+
+		}
+
+	}
+
+	if (m_xPos > m_pEngine->getBackgroundSurface()->getSurfaceWidth() + 10) {
+		m_xPos = -10;
+	}
+	else if (m_xPos < -30) {
+		m_xPos = m_pEngine->getBackgroundSurface()->getSurfaceWidth() + 10;
 	}
 
 	//std::cout << "animState : " << m_animState << " | RunCycle: " << m_runCycle << " | Runtick: " << m_runTick << std::endl;

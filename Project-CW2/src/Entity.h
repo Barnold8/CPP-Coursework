@@ -2,6 +2,7 @@
 
 #include "DisplayableObject.h"
 #include "Image.h"				// Image in here so we dont have to worry about including it later on for sub classes
+#include <vector>
 
 enum Movement {
 
@@ -17,6 +18,18 @@ enum animState {
 	IDLE,
 	RUNNING,
 
+};
+
+
+struct spriteCollider {
+
+	std::vector<std::pair<int, int>> coordinates;
+
+};
+
+struct spriteSheetCollider {
+
+	std::vector<spriteCollider> colliders;
 
 };
 
