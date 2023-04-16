@@ -1,15 +1,13 @@
 #pragma once
 
-#include <memory>
-#include "Entity.h"
+#include "BaseEngine.h"
 
 class Collider
 {
 
 public:
 
-	// takes two rectangles and returns true if collided and false if not
-	static bool rectCollided();
+	void updateObjs(BaseEngine* b);
 
 };
 

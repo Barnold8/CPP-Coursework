@@ -32,5 +32,11 @@ public:
 
 	void setXY(int x, int y);
 
+	void setCollisionCoords();
+
+	std::vector<std::pair<int, int>> getCoords();
+
+	void internalUpdate();
+
 };
 

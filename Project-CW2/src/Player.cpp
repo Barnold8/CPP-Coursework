@@ -110,7 +110,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 }
 
-Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth, int collisionMask) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
+Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
 
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
@@ -130,7 +130,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_replace = false;
 	m_shootTick = 0;
 	m_renderHealth = renderHealth;
-	m_collisionMask = collisionMask;
+
 
 }
 void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 255
@@ -172,10 +172,6 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 		setHealth(getHealth() + 1);
 		break;
 
-	case SDLK_3:
-		spriteCoordLoader();
-		break;
-
 	case 1073741903:
 		addProjectile(RIGHT);
 		break;
@@ -199,7 +195,7 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 }
 
 
-void Player::addProjectile( Movement direction) {
+void Player::addProjectile( Movement direction) { // Need to have switch case for directions so spawn location for keyboards makes sense
 
 	int distance = -1;
 
@@ -215,7 +211,7 @@ void Player::addProjectile( Movement direction) {
 				delete d;
 			}
 			
-			m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+			m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 5));
 
 			m_projSize++;
 
@@ -231,7 +227,7 @@ void Player::addProjectile( Movement direction) {
 			delete d;
 		}
 
-		m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 1));
+		m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos, 5));
 
 		m_projSize++;
 
@@ -255,67 +251,108 @@ int	Player::getHealth() {
 
 }
 
+//void Player::setCollisionCoords() { // need a way to make sure the collider map lines up properly 
+//
+//	SimpleImage img = (m_animState == IDLE) ? m_personIdle : m_personRunning;
+//	int offset = (m_animState == IDLE) ? 1 : 6;
+//	int a = (m_animState == IDLE) ? 32 * m_direction : ((32 * m_direction) * 6) + (m_runTick * 32);
+//	std::vector<std::pair<int, int>> pairs;
+//
+//	//std::cout << "X: " << ((32 * m_direction) * offset) + (m_runTick * 32) << " | Y: " << 64 << std::endl;
+//
+//	//if (m_animState == IDLE) {
+//
+//	//	m_personIdle.renderImageWithMask(
+//	//		m_pEngine->getForegroundSurface(),
+//	//		32 * m_direction,
+//	//		1,
+//	//		m_xPos,
+//	//		m_yPos,
+//	//		31, 64,
+//	//		0x00FF00
+//	//	);
+//
+//	//}
+//	//else if (m_animState == RUNNING) {
+//
+//	//	m_personRunning.renderImageWithMask(
+//	//		m_pEngine->getForegroundSurface(),
+//	//		((32 * m_direction) * 6) + (m_runTick * 32),
+//	//		1,
+//	//		m_xPos,
+//	//		m_yPos,
+//	//		31, 64,
+//	//		0x00FF00
+//	//	);
+//
+//	//}
+//	//((32 * m_direction) * 6) + (m_runTick * 32)
+//
+//	for (int i = a; i < (a) + 32; i++) {
+//		for (int y = 1; y < 64; y++) {
+//			if (img.getPixelColour(i, y) != 0x00FF00) {
+//			
+//				pairs.push_back(std::make_pair(i, y+m_yPos));
+//			}	
+//		}
+//	}
+//	m_collisionCoords = pairs;
+//
+//	//
+//
+//	// TESTING
+//	for (int i = 0; i < m_collisionCoords.size(); i++) { // go through all coords and render for testing
+//		m_pEngine->lockBackgroundForDrawing();
+//		//m_pEngine->rawSetBackgroundPixel(m_collisionCoords[i].first, m_collisionCoords[i].second, 0xFFFFFF);
+//		m_pEngine->rawSetForegroundPixel((m_collisionCoords[i].first + m_xPos - ((32 * m_direction) * offset) + (m_runTick * 32))
+//			- (32 * m_runTick) - 32 * m_runTick,
+//			
+//			
+//			m_collisionCoords[i].second, 0x00CCFF);
+//		m_pEngine->unlockBackgroundForDrawing();
+//	}
+//	// TESTING
+//		
+//}
+//
+//
+//void Player::internalUpdate() {
+//
+//	setCollisionCoords(); // this may be causing frame stuttering? See entity definition for more details on overall impact
+//}
 
-void Player::spriteCoordLoader() { // this is hard coded heavily to avoid headaches
-	
-
-	// NOTE: storing way too many coordinates for what an actual sprite is. also storing way more sprites than exist.....
-
-	int sprite_w = 96 / 3;
-
-	// IDLE
-
-	for (int sp = 0; sp < 4; sp++) {
-
-		spriteCollider collider;
-
-		for (int i = sprite_w * sp; i < m_personIdle.getWidth();i++) {
-
-			std::pair<int, int> pair;
-
-			for (int y = 0; y < m_personIdle.getHeight(); y++) {
-
-				if (m_personIdle.getPixelColour(i, y) != 0x000000) {
-
-					//m_pEngine->rawSetBackgroundPixel(i + m_xPos, y + m_yPos, 0xFFFFFF);
-					pair = std::make_pair(i, y);
-					collider.coordinates.push_back(pair);
-
-				}
-			}
-			m_idleCollider.colliders.push_back(collider);
-		}
-	}
-	// IDLE
-
-	// Running - THIS NEEDS TO BE REDONE AND NOT TAKE UP SO MUCH MEMORY
-
-		spriteCollider collider;
-		std::pair<int, int> pair;
 
 
-		for (int i = 0; i < m_personRunning.getWidth();i++) {
-
-			for (int y = 0; y < m_personRunning.getHeight(); y++) {
-
-				if (m_personRunning.getPixelColour(i, y) != 0x000000) {
+// DONT GO DOWN THERE........... :(
 
 
-					//m_pEngine->lockBackgroundForDrawing();
-					//m_pEngine->rawSetBackgroundPixel(i + m_xPos, y + m_yPos, 0xFFFFFF);
-					//m_pEngine->unlockBackgroundForDrawing();
-					pair = std::make_pair(0, y);
-					collider.coordinates.push_back(pair);
-
-				}
-			}
-
-			m_runCollider.colliders.push_back(collider); // this takes up so much memory
-		}
 
 
-	// Running
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

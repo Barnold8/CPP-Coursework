@@ -15,13 +15,6 @@ protected:
 	SimpleImage m_health;										 // stores spritesheets for health
 	Movement	m_direction;									 // enum for the player looking direction
 	animState	m_animState;									 // enum for the animation state
-	spriteSheetCollider m_idleCollider;
-	spriteSheetCollider m_runCollider;
-	// - this is no way near "good c++"
-	// Parent = spritesheet
-	// Child  = sprite
-	// child of child = set of pairs
-	std::vector<std::vector<std::vector<std::pair<int, int>>>> m_validPixels; // used to store valid coords for collision
 	int			m_runTimer;										 // time after last key update
 	int			m_runCycle;										 // number counted to tick over next anim frame
 	int			m_runTick;										 // number to use in animation frame formula
@@ -31,8 +24,6 @@ protected:
 	int			m_collisionMask;								 // the colour used to say what is a valid pixel for collision
 	bool		m_renderHealth;
 	
-
-
 
 public:
 
@@ -51,6 +42,12 @@ public:
 	virtual void virtDraw() override;
 
 	void virtKeyDown(int iKeyCode) override;
+
+	virtual void setCollisionCoords();
+
+	//std::vector<std::pair<int, int>> getCoords() override;
+
+	virtual void internalUpdate();
 
 };
 

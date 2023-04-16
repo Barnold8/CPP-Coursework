@@ -99,7 +99,7 @@ void Person::virtDraw() {
 
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-
+	
 
 	if (m_animState == IDLE) {
 
@@ -110,7 +110,7 @@ void Person::virtDraw() {
 			m_xPos,
 			m_yPos,
 			31, 64,
-			0x000000
+			0x00FF00
 		);
 
 	}
@@ -123,10 +123,12 @@ void Person::virtDraw() {
 			m_xPos,
 			m_yPos,
 			31, 64,
-			0x000000
+			0x00FF00
 		);
 
 	}
+
+	internalUpdate();
 
 	m_runTimer += 1;
 	m_shootTick += 10;
@@ -141,7 +143,7 @@ void Person::virtDraw() {
 	else {
 		m_animState = RUNNING;
 		m_runCycle += 1;
-		if (m_runCycle % 200 == 0) {
+		if (m_runCycle % 100 == 0) {
 			m_runTick += 1;
 		}
 		if (m_runTick >= m_spriteOffset) {
@@ -166,6 +168,7 @@ void Person::virtDraw() {
 
 	}
 
+
 	if (m_xPos > m_pEngine->getBackgroundSurface()->getSurfaceWidth() + 10) {
 		m_xPos = -10;
 	}
@@ -174,6 +177,8 @@ void Person::virtDraw() {
 	}
 
 	//std::cout << "animState : " << m_animState << " | RunCycle: " << m_runCycle << " | Runtick: " << m_runTick << std::endl;
+
+
 
 }
 
@@ -207,4 +212,49 @@ void Person::virtKeyDown(int iKeyCode) {
 	}
 
 
+}
+
+
+void Person::setCollisionCoords() { // need a way to make sure the collider map lines up properly 
+
+	SimpleImage img = (m_animState == IDLE) ? m_personIdle : m_personRunning;
+	int offset = (m_animState == IDLE) ? 1 : 6;
+	int a = (m_animState == IDLE) ? 32 * m_direction : ((32 * m_direction) * 6) + (m_runTick * 32);
+	std::vector<std::pair<int, int>> pairs;
+
+
+	for (int i = a; i < (a)+32; i++) {
+		for (int y = 1; y < 64; y++) {
+			if (img.getPixelColour(i, y) != 0x00FF00) {
+
+				pairs.push_back(std::make_pair(i, y + m_yPos));
+			}
+		}
+	}
+	m_collisionCoords = pairs;
+
+	//
+
+	 //TESTING
+	//for (int i = 0; i < getCoords().size(); i++) { // go through all coords and render for testing
+	//	m_pEngine->lockBackgroundForDrawing();
+	//	//m_pEngine->rawSetBackgroundPixel(m_collisionCoords[i].first, m_collisionCoords[i].second, 0xFFFFFF);
+	//	m_pEngine->rawSetForegroundPixel((m_collisionCoords[i].first + m_xPos - ((32 * m_direction) * offset) + (m_runTick * 32))
+	//		- (32 * m_runTick) - 32 * m_runTick,
+
+
+	//		m_collisionCoords[i].second, 0x00CCFF);
+	//	m_pEngine->unlockBackgroundForDrawing();
+	//}
+	 //TESTING
+
+}
+
+//
+//std::vector<std::pair<int, int>> Person::getCoords() { return m_collisionCoords; }
+
+
+void Person::internalUpdate() {
+
+	setCollisionCoords(); // this may be causing frame stuttering? See entity definition for more details on overall impact
 }

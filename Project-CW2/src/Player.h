@@ -26,7 +26,7 @@ public:
 	
 	Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, bool renderHealth);
 
-	Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth, int collisionMask);
+	Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth);
 
 	void virtKeyDown(int iKeyCode) override;
 
@@ -36,11 +36,11 @@ public:
 
 	int	 getHealth();
 
-	void spriteCoordLoader();				// used to load in the collision perimeter of sprites into memory into an AWFUL data structure (std::vector<std::vector<std::vector<std::pair<int, int>>>> m_validPixels)
+	//void setCollisionCoords();
 
+	//void setCollisionCoords() override;
 
-
-
+	//void internalUpdate() override;
 
 };
 
