@@ -2,12 +2,28 @@
 
 #include "BaseEngine.h"
 
+struct rect {
+
+    int x;
+    int y;
+    int w;
+    int h;
+
+};
+
+
 class Collider
 {
 
 public:
 
-	void updateObjs(BaseEngine* b);
+	virtual int getColAtPixel(int x, int y) = 0;
+
+    rect rectToRect(rect r1, rect r2);
+
+    virtual rect getRect() = 0;
+
+
 
 };
 

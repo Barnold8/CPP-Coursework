@@ -32,6 +32,5 @@ void Entity::setCollided(bool c) {
 	m_collided = c;
 }
 
-std::vector<std::pair<int, int>> Entity::getCoords() {
-	return m_collisionCoords;
-}
+
+

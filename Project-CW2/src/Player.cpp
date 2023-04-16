@@ -132,9 +132,10 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_renderHealth = renderHealth;
 
 
+
 }
 void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 255
-
+	
 
 	switch (iKeyCode) {
 
@@ -162,14 +163,22 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 
 	//Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string sprite, Movement dir, int pX, int pY, int speed);
 
-	switch (iKeyCode) {	
-	
+	switch (iKeyCode) {
+
 	case SDLK_1:
-		setHealth(getHealth()-1);
+		setHealth(getHealth() - 1);
 		break;
 
 	case SDLK_2:
 		setHealth(getHealth() + 1);
+		break;
+
+	case SDLK_3:
+		isCollided();
+		break;
+
+	case SDLK_4:
+		/*std::cout << getImgXY().first << " " << getImgXY().second << std::endl;*/
 		break;
 
 	case 1073741903:
@@ -191,9 +200,7 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 		break;
 	}
 
-
 }
-
 
 void Player::addProjectile( Movement direction) { // Need to have switch case for directions so spawn location for keyboards makes sense
 
@@ -250,6 +257,55 @@ int	Player::getHealth() {
 	return m_healthAmount;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// DONT GO DOWN THERE........... :(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //void Player::setCollisionCoords() { // need a way to make sure the collider map lines up properly 
 //
@@ -320,42 +376,6 @@ int	Player::getHealth() {
 //
 //	setCollisionCoords(); // this may be causing frame stuttering? See entity definition for more details on overall impact
 //}
-
-
-
-// DONT GO DOWN THERE........... :(
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

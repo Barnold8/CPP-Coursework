@@ -29,7 +29,7 @@ protected:
 	int m_yPos;
 	int m_speed;
 	bool m_collided; // Used to say if the entity is colliding with something. Collision code can be done based on this 
-	std::vector<std::pair<int, int>> m_collisionCoords;
+	
 
 public:
 
@@ -45,7 +45,7 @@ public:
 
 	void setCollided(bool c);
 
-	virtual std::vector<std::pair<int, int>> getCoords();
+
 
 };
 

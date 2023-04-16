@@ -1,10 +1,11 @@
 #pragma once
 #include "Entity.h"
+#include "Collider.h"
 #include <vector>
 
 //NOTE: player running frame per direction is 6
 
-class Person : public Entity {
+class Person : public Entity, public Collider {
 
 
 protected:
@@ -39,15 +40,16 @@ public:
 	
 	Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, bool renderHealth, int collisionMask);
 
+	virtual void isCollided();
+
 	virtual void virtDraw() override;
 
 	void virtKeyDown(int iKeyCode) override;
 
-	virtual void setCollisionCoords();
+	int getColAtPixel(int x, int y) override;
 
-	//std::vector<std::pair<int, int>> getCoords() override;
+	rect getRect() override;
 
-	virtual void internalUpdate();
 
 };
 

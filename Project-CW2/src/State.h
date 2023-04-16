@@ -111,8 +111,6 @@ class Game : public State {
 public:
 
 	std::shared_ptr<LevelLoader> m_level_loader;
-	std::shared_ptr<Collider> m_collider;
-
 public:
 
 	Game(BaseEngine* engine);

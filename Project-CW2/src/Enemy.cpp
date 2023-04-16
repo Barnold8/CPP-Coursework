@@ -73,22 +73,22 @@ void Enemy::virtKeyDown(int iKeyCode) {
 
 	switch (iKeyCode) {
 
-	case 100:
+	case SDLK_RIGHT:
 		m_xPos += m_speed;
 		m_direction = RIGHT;
 		m_runTimer = 0;
 		break;
-	case 97:
+	case SDLK_LEFT:
 		m_xPos -= m_speed;
 		m_direction = LEFT;
 		m_runTimer = 0;
 		break;
-	case 115:
+	case SDLK_DOWN:
 		m_yPos += m_speed;
 		m_direction = DOWN;
 		m_runTimer = 0;
 		break;
-	case 119:
+	case SDLK_UP:
 		m_yPos -= m_speed;
 		m_direction = UP;
 		m_runTimer = 0;

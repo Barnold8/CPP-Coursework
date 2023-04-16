@@ -36,11 +36,7 @@ public:
 
 	int	 getHealth();
 
-	//void setCollisionCoords();
 
-	//void setCollisionCoords() override;
-
-	//void internalUpdate() override;
 
 };
 

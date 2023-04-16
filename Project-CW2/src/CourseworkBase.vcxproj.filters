@@ -293,9 +293,6 @@
     <ClCompile Include="Plate.cpp">
       <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="ImageDistorter.cpp">
-      <Filter>Source Files\MyCode\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\MyCode\Engine</Filter>
     </ClCompile>

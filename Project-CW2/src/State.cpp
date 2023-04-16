@@ -182,6 +182,7 @@ void SignAway::KeyListener(int keyCode) {
 // LOAD
 
 Load::Load(BaseEngine* engine) : State(engine) {
+
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
 	M->objectClearer();
@@ -225,7 +226,7 @@ void State::set_master(std::shared_ptr<State_Master*> state) { // Changes
 Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear public methods of state master class object
 	
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-	m_collider = std::make_shared<Collider>();
+
 	//std::vector<std::string> 
 	M->objectClearer();
 	M->setSurfacesToCopies();
@@ -236,7 +237,7 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 
 
 	m_pEngine->storeObjectInArray(0, new Player(m_pEngine, 800, 800, true, 800, 800,"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",100,100,M->getUserName(),10,7,true));
-	m_pEngine->storeObjectInArray(15, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",0,100,"ENEMY",5));
+	m_pEngine->storeObjectInArray(15, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",100,400,"ENEMY",5));
 
 	setup();
 }
@@ -257,7 +258,7 @@ void Game::update() {
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
 	M->setUpdates(M->getUpdates() + 1);
-	m_collider->updateObjs(m_pEngine);
+	//m_collider->updateObjs(m_pEngine);
 	
 
 }

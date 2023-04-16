@@ -13,6 +13,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_runCycle = 0;
 	m_runTick = 0;
 	m_spriteOffset = 6;
+	m_collided = false;
 
 }
 
@@ -29,6 +30,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_spriteOffset = 6;
 	m_renderHealth = false;
+	m_collided = false;
 
 }
 
@@ -45,6 +47,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_spriteOffset = 6;
 	m_renderHealth = false;
+	m_collided = false;
 }
 
 Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
@@ -59,6 +62,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_spriteOffset = offset;
 	m_renderHealth = false;
+	m_collided = false;
 
 }
 
@@ -75,6 +79,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_yPos = pY;
 	m_spriteOffset = offset;
 	m_renderHealth = m_renderHealth;
+	m_collided = false;
 	
 
 }
@@ -93,6 +98,7 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_spriteOffset = offset;
 	m_renderHealth = m_renderHealth;
 	m_collisionMask = collisionMask;
+	m_collided = false;
 }
 
 void Person::virtDraw() {
@@ -113,6 +119,7 @@ void Person::virtDraw() {
 			0x00FF00
 		);
 
+
 	}
 	else if (m_animState == RUNNING) {
 
@@ -125,6 +132,7 @@ void Person::virtDraw() {
 			31, 64,
 			0x00FF00
 		);
+
 
 	}
 
@@ -143,7 +151,7 @@ void Person::virtDraw() {
 	else {
 		m_animState = RUNNING;
 		m_runCycle += 1;
-		if (m_runCycle % 100 == 0) {
+		if (m_runCycle % 200 == 0 ) {
 			m_runTick += 1;
 		}
 		if (m_runTick >= m_spriteOffset) {
@@ -182,7 +190,6 @@ void Person::virtDraw() {
 
 }
 
-
 void Person::virtKeyDown(int iKeyCode) {
 
 	switch (iKeyCode) {
@@ -211,50 +218,56 @@ void Person::virtKeyDown(int iKeyCode) {
 		break;
 	}
 
-
 }
 
+void Person::isCollided() {
 
-void Person::setCollisionCoords() { // need a way to make sure the collider map lines up properly 
+	rect r1 = getRect();
 
-	SimpleImage img = (m_animState == IDLE) ? m_personIdle : m_personRunning;
-	int offset = (m_animState == IDLE) ? 1 : 6;
-	int a = (m_animState == IDLE) ? 32 * m_direction : ((32 * m_direction) * 6) + (m_runTick * 32);
-	std::vector<std::pair<int, int>> pairs;
+	for (int i = 0; i < m_pEngine->getContentCount(); i++) {
+		Collider* c = dynamic_cast<Collider*>(m_pEngine->getDisplayableObject(i));
+		if (c != nullptr && c != this) {
+			rect r2 = c->getRect();
+			rect area = rectToRect(r1, r2);
+			for (int x = area.x; x < area.x + area.w; x++) {
+			
+				for (int y = area.y; y < area.y + area.h; y++) {
 
+					int myPixel = getColAtPixel(x, y);
+					int otherpixel = c->getColAtPixel(x, y);
 
-	for (int i = a; i < (a)+32; i++) {
-		for (int y = 1; y < 64; y++) {
-			if (img.getPixelColour(i, y) != 0x00FF00) {
+					if (myPixel != 0x00FF00 && otherpixel != 0x00FF00) {
+					
+						m_pEngine->rawSetBackgroundPixel(x, y, 0X821ce8);
+					}
 
-				pairs.push_back(std::make_pair(i, y + m_yPos));
+				}
+
 			}
 		}
+		
 	}
-	m_collisionCoords = pairs;
 
-	//
+	//rect r = getRect();
+	//Collider* c = dynamic_cast<Collider*>(m_pEngine->getDisplayableObject(15));
 
-	 //TESTING
-	//for (int i = 0; i < getCoords().size(); i++) { // go through all coords and render for testing
-	//	m_pEngine->lockBackgroundForDrawing();
-	//	//m_pEngine->rawSetBackgroundPixel(m_collisionCoords[i].first, m_collisionCoords[i].second, 0xFFFFFF);
-	//	m_pEngine->rawSetForegroundPixel((m_collisionCoords[i].first + m_xPos - ((32 * m_direction) * offset) + (m_runTick * 32))
-	//		- (32 * m_runTick) - 32 * m_runTick,
+	//rect Finish = rectToRect(r, c->getRect());
+
+	//m_pEngine->getBackgroundSurface()->drawRectangle(Finish.x, Finish.y, Finish.x + Finish.w, Finish.y + Finish.h,0xFF0000);
+	////m_pEngine->getBackgroundSurface()->drawRectangle(120, 400, 120 + 12, 400 + 32,0x00FF00);
+}
 
 
-	//		m_collisionCoords[i].second, 0x00CCFF);
-	//	m_pEngine->unlockBackgroundForDrawing();
-	//}
-	 //TESTING
+int Person::getColAtPixel(int x, int y) {
+
+	
+	return (m_animState == IDLE) ? m_personIdle.getPixelColour(x-m_xPos,y-m_yPos) : m_personRunning.getPixelColour(x - m_xPos, y - m_yPos);
+
 
 }
 
-//
-//std::vector<std::pair<int, int>> Person::getCoords() { return m_collisionCoords; }
+rect Person::getRect() {
 
+	return rect{ m_xPos,m_yPos,32,64};
 
-void Person::internalUpdate() {
-
-	setCollisionCoords(); // this may be causing frame stuttering? See entity definition for more details on overall impact
 }

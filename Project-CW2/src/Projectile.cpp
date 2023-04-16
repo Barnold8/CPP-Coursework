@@ -74,42 +74,8 @@ void Projectile::setXY(int x, int y) {
 }
 
 
-void  Projectile::setCollisionCoords() {
+//int Projectile::getColAtPixel(int x, int y) {
+//
+//	return m_projectileSprite.getPixelColour(x + m_xPos, y + m_yPos);
+//}
 
-
-	// need a way to make sure the collider map lines up properly 
-
-	SimpleImage img = m_projectileSprite;
-	std::vector<std::pair<int, int>> pairs;
-
-
-	for (int i = 0; i < img.getWidth(); i++) {
-		for (int y = 1; y < img.getHeight(); y++) {
-			if (img.getPixelColour(i, y) != 0x00FF00) {
-
-				pairs.push_back(std::make_pair(i, y + m_yPos));
-			}
-		}
-	}
-
-	m_collisionCoords = pairs;
-
-	//
-
-	// TESTING
-	//for (int i = 0; i < m_collisionCoords.size(); i++) { // go through all coords and render for testing
-	//	m_pEngine->lockBackgroundForDrawing();
-	//	//std::cout << "ffff" << std::endl;
-	//	//m_pEngine->rawSetBackgroundPixel(m_collisionCoords[i].first, m_collisionCoords[i].second, 0xFFFFFF);
-	//	m_pEngine->rawSetForegroundPixel(m_collisionCoords[i].first + m_xPos, m_collisionCoords[i].second, 0x00CCFF);
-	//	m_pEngine->unlockBackgroundForDrawing();
-	//}
-	// TESTING
-
-	
-
-}
-
-std::vector<std::pair<int, int>>  Projectile::getCoords() { return m_collisionCoords; }
-
-void  Projectile::internalUpdate() { setCollisionCoords(); }
