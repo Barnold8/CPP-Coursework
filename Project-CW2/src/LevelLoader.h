@@ -37,6 +37,10 @@ public:
 
 	std::vector<std::vector<std::string>> TMJData(std::vector<std::string> fileData);
 
+	std::vector<std::shared_ptr<TMJ>> getTMJS();
+
+	std::vector<std::shared_ptr<TileMap>> getMaps();
+
 	void drawTiles();
 
 };

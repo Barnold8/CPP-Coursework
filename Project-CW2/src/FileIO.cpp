@@ -10,6 +10,7 @@ std::vector<std::string> FileIO::loadFileToLines(std::string filePath) {
 
     if (file.is_open()) {
         while (std::getline(file, currLine)) {
+            //std::cout << currLine << std::endl;
             buffer.push_back(currLine);
         }
         return buffer;

@@ -2,6 +2,7 @@
 #include "Collider.h"
 #include "Entity.h"
 #include "DisplayableObject.h"
+#include "BaseEngine.h"
 
 
 rect Collider::rectToRect(rect r1, rect r2){
@@ -30,6 +31,92 @@ rect Collider::rectToRect(rect r1, rect r2){
 }
 
 
+
+//IDEA: get the area of each tile occupied by something that isnt a floor and check for a collision there. Not sure if possible to get the image from the tile itself though
+
+bool Collider::canMove(std::shared_ptr<LevelLoader> LL, int x, int y, bool isFloor) {
+    
+    std::shared_ptr<TileMap> F = LL->getMaps()[!isFloor];
+    int x_t = x / 32 + 1;
+    int y_t = y / 32 + 1;
+    int tileValue = F->getMapValue(x_t, y_t);
+    //std::cout << x / 32 << " " << y / 32 << std::endl;
+
+    //F->setMapValue(x / 32 + 1, y / 32 + 1, 102);
+    //F->getTileHeight();
+    //F->drawAllTiles(engine,engine->getBackgroundSurface());
+    if (isFloor) {
+        switch (tileValue) {
+
+        case 104:
+            return true;
+        case 105:
+            return true;
+        case 103:
+            return true;
+            break;
+        case 88:
+            return true;
+        case 87:
+            return true;
+        case 86:
+            return true;
+        case 89:
+            return true;
+        case 13:
+            return true;
+        case 33:
+            return true;
+        case 32:
+            return true;
+        default:
+            /*std::cout << F->getMapValue(x_t, y_t) << std::endl*/;
+            break;
+        }
+    }
+    else if(tileValue != 0) {
+        return true;
+    }
+
+
+
+    return false;
+}
+
+int Collider::isCollided(BaseEngine* engine) { // RETURN THE ID OF THE COLLIDER OBJECT INSTEAD OF A BOOL. with this we can do some object conditional processing
+
+    rect r1 = getRect();
+
+    for (int i = 0; i < engine->getContentCount(); i++) {
+        Collider* c = dynamic_cast<Collider*>(engine->getDisplayableObject(i));
+        if (c != nullptr && c != this) {
+            rect r2 = c->getRect();
+            rect area = rectToRect(r1, r2);
+            for (int x = area.x; x < area.x + area.w; x++) {
+
+                for (int y = area.y; y < area.y + area.h; y++) {
+
+                    int myPixel = getColAtPixel(x, y);
+                    int otherpixel = c->getColAtPixel(x, y);
+
+                    if (myPixel != 0x00FF00 && otherpixel != 0x00FF00) {
+                        //engine->rawSetBackgroundPixel(x, y, 0X821ce8);
+     
+                        return c->ID;
+                    }
+
+                }
+
+            }
+        }
+    }
+    
+    return false;
+}
+
+int Collider::getID() {
+    return ID;
+}
 //
 //DisplayableObject* d1;
 //DisplayableObject* d2;

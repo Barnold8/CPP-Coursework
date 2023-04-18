@@ -93,6 +93,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="DraggingDemo.h" />
     <ClInclude Include="Enemy.h" />
@@ -142,6 +143,7 @@
     <ClInclude Include="ZoomingDemo.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="DraggingDemo.cpp" />
     <ClCompile Include="DrawingSurface.cpp" />

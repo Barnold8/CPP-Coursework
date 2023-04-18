@@ -6,7 +6,7 @@
 
 // any subclass of this will be used for different kinds of projectiles 
 
-class Projectile : public Entity {
+class Projectile : public Entity, public Collider {
 
 protected:
 
@@ -31,7 +31,11 @@ public:
 
 	void setXY(int x, int y);
 
-	//int getColAtPixel(int x, int y) override;
+	int getColAtPixel(int x, int y) override;
+
+	rect getRect() override;
+
+
 
 };
 

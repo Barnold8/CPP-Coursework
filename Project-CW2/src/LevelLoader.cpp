@@ -113,3 +113,11 @@ void LevelLoader::drawTiles() {
 	}
 	
 }
+
+std::vector<std::shared_ptr<TMJ>> LevelLoader::getTMJS() {
+	return m_TMJS;
+}
+
+std::vector<std::shared_ptr<TileMap>> LevelLoader::getMaps() {
+	return m_tileMaps;
+}

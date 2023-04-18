@@ -23,8 +23,9 @@ void Entity::virtKeyDown(int iKeyCode) {
 
 }
 
-void Entity::internalUpdate() {
+bool Entity::internalUpdate() {
 
+	return false;
 
 }
 

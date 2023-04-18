@@ -14,6 +14,7 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	m_runTick = 0;
 	m_personName = "None";
 	m_spriteOffset = 6;
+	ID = 2;
 }
 
 
@@ -30,6 +31,7 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	m_yPos = pY;
 	m_personName = "None";
 	m_spriteOffset = 6;
+	ID = 2;
 
 }
 
@@ -46,6 +48,7 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	m_yPos = pY;
 	m_personName = name;
 	m_spriteOffset = 6;
+	ID = 2;
 }
 
 Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -61,6 +64,26 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	m_yPos = pY;
 	m_personName = name;
 	m_spriteOffset = offset;
+	ID = 2;
+
+}
+
+Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, std::shared_ptr<LevelLoader> LL, Player* player) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
+
+	m_personIdle = ImageManager::loadImage(idle, true);
+	m_personRunning = ImageManager::loadImage(running, true);
+	m_direction = RIGHT;
+	m_animState = RUNNING;
+	m_runTimer = 0;
+	m_runCycle = 0;
+	m_runTick = 0;
+	m_xPos = pX;
+	m_yPos = pY;
+	m_personName = name;
+	m_spriteOffset = offset;
+	ID = 2;
+	m_levelLoader = LL;
+	m_player = player;
 
 }
 
@@ -98,4 +121,19 @@ void Enemy::virtKeyDown(int iKeyCode) {
 
 }
 
+
+bool Enemy::internalUpdate() {
+
+
+	if (m_runTimer > 5) {
+		m_xPos += 1;
+		m_direction = RIGHT;
+		m_runTimer = 0;
+	
+	}
+
+
+	return false;
+
+}
 

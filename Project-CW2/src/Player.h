@@ -28,6 +28,8 @@ public:
 
 	Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth);
 
+	Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth,std::shared_ptr<LevelLoader> LL);
+
 	void virtKeyDown(int iKeyCode) override;
 
 	void addProjectile(Movement direction);
@@ -35,6 +37,8 @@ public:
 	void setHealth(int h);
 
 	int	 getHealth();
+
+	bool internalUpdate() override;
 
 
 

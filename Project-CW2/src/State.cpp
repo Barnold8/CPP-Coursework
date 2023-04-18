@@ -227,7 +227,7 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 	
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
-	//std::vector<std::string> 
+
 	M->objectClearer();
 	M->setSurfacesToCopies();
 
@@ -236,7 +236,7 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 	m_level_loader = std::make_shared<LevelLoader>(m_pEngine,sPaths,"resources/Levels/Level1.tmj", 32, 32, 800, 800);
 
 
-	m_pEngine->storeObjectInArray(0, new Player(m_pEngine, 800, 800, true, 800, 800,"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",100,100,M->getUserName(),10,7,true));
+	m_pEngine->storeObjectInArray(0, new Player(m_pEngine, 800, 800, true, 800, 800,"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",90,100,M->getUserName(),10,7,true,m_level_loader));
 	m_pEngine->storeObjectInArray(15, new Enemy(m_pEngine, 800, 800, true, 800, 800, "resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",100,400,"ENEMY",5));
 
 	setup();
@@ -256,10 +256,16 @@ Game::~Game() { // needed since changing surface for engine takes DrawingSurface
 void Game::update() {
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-
 	M->setUpdates(M->getUpdates() + 1);
-	//m_collider->updateObjs(m_pEngine);
-	
+
+	//for (int i = 0; i < m_pEngine->getContentCount(); i++) {
+	//
+	//	Collider* c = dynamic_cast<Collider*>(m_pEngine->getDisplayableObject(i));
+	//	if (c != nullptr) {
+	//		c->isCollided(m_pEngine);
+	//	}
+	//}
+
 
 }
 

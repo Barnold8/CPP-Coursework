@@ -7,13 +7,17 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
+	m_shield = ImageManager::loadImage("resources/PlayeSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_spriteOffset = 6;
 	m_collided = false;
+
+
 
 }
 
@@ -21,11 +25,13 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
+	m_shield = ImageManager::loadImage("resources/PlayerSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = 6;
@@ -38,11 +44,13 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
+	m_shield = ImageManager::loadImage("resources/PlayerSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = 6;
@@ -53,11 +61,13 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset) : Entity(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY) {
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
+	m_shield = ImageManager::loadImage("resources/PlayerSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = offset;
@@ -70,11 +80,13 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
 	m_health = ImageManager::loadImage("resources/PlayerSprites/heart.png", true);
+	m_shield = ImageManager::loadImage("resources/PlayerSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = offset;
@@ -88,11 +100,13 @@ Person::Person(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_personIdle = ImageManager::loadImage(idle, true);
 	m_personRunning = ImageManager::loadImage(running, true);
 	m_health = ImageManager::loadImage("resources/PlayerSprites/heart.png", true);
+	m_shield = ImageManager::loadImage("resources/PlayerSprites/Shield.png", true);
 	m_direction = RIGHT;
 	m_animState = RUNNING;
 	m_runTimer = 0;
 	m_runCycle = 0;
 	m_runTick = 0;
+	m_collisionCoolDown = 0;
 	m_xPos = pX;
 	m_yPos = pY;
 	m_spriteOffset = offset;
@@ -106,6 +120,7 @@ void Person::virtDraw() {
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 	
+	internalUpdate();
 
 	if (m_animState == IDLE) {
 
@@ -136,11 +151,11 @@ void Person::virtDraw() {
 
 	}
 
-	internalUpdate();
+	// collidedID is true whenever an ID > 0 since 1 is boolean true, thus the value can have two uses
+
 
 	m_runTimer += 1;
-	m_shootTick += 10;
-
+	m_collisionCoolDown += 1;
 
 	m_pEngine->drawForegroundString(m_xPos - m_personName.length() * 6, m_yPos - 20, m_personName.c_str(), 0xFFFFFF, M->getFont("resources/Fonts/Monocraft.ttf", 24));
 	if (m_runTimer > 200) {
@@ -185,12 +200,12 @@ void Person::virtDraw() {
 	}
 
 	//std::cout << "animState : " << m_animState << " | RunCycle: " << m_runCycle << " | Runtick: " << m_runTick << std::endl;
-
-
-
 }
 
+bool Person::internalUpdate() { return false; }
+
 void Person::virtKeyDown(int iKeyCode) {
+
 
 	switch (iKeyCode) {
 
@@ -219,44 +234,6 @@ void Person::virtKeyDown(int iKeyCode) {
 	}
 
 }
-
-void Person::isCollided() {
-
-	rect r1 = getRect();
-
-	for (int i = 0; i < m_pEngine->getContentCount(); i++) {
-		Collider* c = dynamic_cast<Collider*>(m_pEngine->getDisplayableObject(i));
-		if (c != nullptr && c != this) {
-			rect r2 = c->getRect();
-			rect area = rectToRect(r1, r2);
-			for (int x = area.x; x < area.x + area.w; x++) {
-			
-				for (int y = area.y; y < area.y + area.h; y++) {
-
-					int myPixel = getColAtPixel(x, y);
-					int otherpixel = c->getColAtPixel(x, y);
-
-					if (myPixel != 0x00FF00 && otherpixel != 0x00FF00) {
-					
-						m_pEngine->rawSetBackgroundPixel(x, y, 0X821ce8);
-					}
-
-				}
-
-			}
-		}
-		
-	}
-
-	//rect r = getRect();
-	//Collider* c = dynamic_cast<Collider*>(m_pEngine->getDisplayableObject(15));
-
-	//rect Finish = rectToRect(r, c->getRect());
-
-	//m_pEngine->getBackgroundSurface()->drawRectangle(Finish.x, Finish.y, Finish.x + Finish.w, Finish.y + Finish.h,0xFF0000);
-	////m_pEngine->getBackgroundSurface()->drawRectangle(120, 400, 120 + 12, 400 + 32,0x00FF00);
-}
-
 
 int Person::getColAtPixel(int x, int y) {
 

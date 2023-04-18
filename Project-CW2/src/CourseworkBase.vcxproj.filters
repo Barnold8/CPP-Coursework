@@ -195,6 +195,9 @@
     <ClInclude Include="Collider.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="AI.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="mainfunction.cpp">
@@ -295,6 +298,9 @@
     </ClCompile>
     <ClCompile Include="Collider.cpp">
       <Filter>Source Files\MyCode\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="AI.cpp">
+      <Filter>Source Files\MyCode\Entity</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

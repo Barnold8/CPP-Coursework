@@ -28,24 +28,21 @@ protected:
 	int m_xPos;
 	int m_yPos;
 	int m_speed;
-	bool m_collided; // Used to say if the entity is colliding with something. Collision code can be done based on this 
-	
+	bool m_collided; // May not even be used lol
+	int	 m_collisionCoolDown;
 
 public:
 
 
 	Entity(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY);
 
-
 	virtual void virtDraw() override;
 
 	virtual void virtKeyDown(int iKeyCode) override;
 
-	virtual void internalUpdate();
+	virtual bool internalUpdate();
 
 	void setCollided(bool c);
-
-
 
 };
 
