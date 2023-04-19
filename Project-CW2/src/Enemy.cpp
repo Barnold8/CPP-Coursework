@@ -84,6 +84,11 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	ID = 2;
 	m_levelLoader = LL;
 	m_player = player;
+	m_nodes = generateNodes(LL->getMaps()); // generate notes for enemy object 
+											// (might be a good idea to generate this 
+											// at startup of game state so each enemy 
+											// can have a pointer of this and not have to generate it on creation)
+	std::cout << "Enemy" << std::endl;
 
 }
 
@@ -125,12 +130,12 @@ void Enemy::virtKeyDown(int iKeyCode) {
 bool Enemy::internalUpdate() {
 
 
-	if (m_runTimer > 5) {
-		m_xPos += 1;
-		m_direction = RIGHT;
-		m_runTimer = 0;
-	
-	}
+	//if (m_runTimer > 5) {
+	//	m_xPos += 1;
+	//	m_direction = RIGHT;
+	//	m_runTimer = 0;
+	//
+	//}
 
 
 	return false;
