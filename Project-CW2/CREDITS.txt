@@ -2,7 +2,7 @@ https://www.dafont.com/minecraft.font
 https://w.itch.io/world-of-fonts
 https://limezu.itch.io/moderninteriors
 https://github.com/IdreesInc/Monocraft
-
+https://paperhatlizard.itch.io/cryos-mini-gui
 
 // https://shubibubi.itch.io/cozy-interior
 
@@ -13,3 +13,5 @@ https://github.com/IdreesInc/Monocraft
 // https://kickpixel.itch.io/50fantasyicons
 
 // https://cardinalzebra.itch.io/fantasy-interior-tiles
+
+

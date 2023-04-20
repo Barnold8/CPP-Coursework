@@ -22,11 +22,12 @@ bool AI::AIProc() {
     int x = 0;
     bool found = false; // states whether the alogrithm found a route. Should always be true due to the nature of the maps but this metric makes a good tool for debugging
     std::vector<Node*> path;
-
+ 
     while (m_openSet.size() > 0) {
-
+        
         int lowest = 0;
 
+        // grab best elem from open set
         for (size_t i = 0; i < m_openSet.size(); i++)
         {   
             if (m_openSet[i].f < m_openSet[lowest].f) {
@@ -34,10 +35,9 @@ bool AI::AIProc() {
             }
 
         }
-
+        // grab best elem from open set
+    
         Node current = m_openSet[lowest];
-
-
 
         if(current == m_end){
 
@@ -48,7 +48,7 @@ bool AI::AIProc() {
             //    current = *current.previous;
             //    std::cout << "ff" << std::endl;
             //}
-
+    
             std::cout << "Endd" << std::endl;
 
             break;
@@ -58,25 +58,33 @@ bool AI::AIProc() {
         m_closedSet.push_back(current);
        
         std::vector<Node> neighbours = current.neighbour_nodes;
+        /*std::cout << "Neighbours.size " << neighbours.size() << std::endl;*/
 
         for (size_t i = 0; i < neighbours.size(); i++)
         {
-            Node neighbour = neighbours[i];
+        
+            Node  neighbour    =  neighbours[i];
+            //std::cout << "Neighbour[" << i << "]: X: " << neighbour.x << " | Y: " << neighbour.y << std::endl;
 
              //if neighbour not in closed set
             if (!(std::find(m_closedSet.begin(), m_closedSet.end(), neighbour) != m_closedSet.end()) ) {
+                std::cout << "F" << std::endl;
                 int tentativeG = current.g + 1;
                 // if neighbour in openset 
                 if (std::find(m_openSet.begin(), m_openSet.end(), neighbour) != m_openSet.end()) {
+                  
+                    std::cout << "G" << std::endl;
                     if (tentativeG < neighbour.g) {
                         neighbour.g = tentativeG;
                     }
-                    else {
-                        neighbour.g = tentativeG;
-                        m_openSet.push_back(neighbour);
-                    }
-                
                 }
+                else {
+                    std::cout << "H" << std::endl;
+                    neighbour.g = tentativeG;
+                    //m_openSet.push_back(neighbour);
+                    
+                }
+             
                 neighbour.h = hueristic(neighbour, m_end);
                 neighbour.f = neighbour.g + neighbour.h;
                 neighbour.previous = &current;
@@ -85,7 +93,8 @@ bool AI::AIProc() {
         }
 
         std::cout << "Open set " << m_openSet.size() << std::endl;
-
+        std::cout << "Closed set " << m_closedSet.size() << std::endl;
+        m_openSet.clear();
     }
     //std::cout << "asdasd" << std::endl;
 
@@ -93,84 +102,6 @@ bool AI::AIProc() {
     return found;
 }
 
-bool AI::AIProc(BaseEngine* engine) {
-
-    int x = 0;
-    bool found = false; // states whether the alogrithm found a route. Should always be true due to the nature of the maps but this metric makes a good tool for debugging
-    std::vector<Node*> path;
-
-    while (m_openSet.size() > 0) {
-
-        int lowest = 0;
-
-        for (size_t i = 0; i < m_openSet.size(); i++)
-        {
-            if (m_openSet[i].f < m_openSet[lowest].f) {
-                lowest = i;
-            }
-
-        }
-
-        Node current = m_openSet[lowest];
-
-        engine->lockBackgroundForDrawing();
-        engine->drawBackgroundRectangle(current.x, current.y, current.x * 32, current.y * 32, 0x00FF00);
-        engine->unlockBackgroundForDrawing();
-
-
-        if (current == m_end) {
-
-            found = true;
-
-            //while(current.previous != nullptr){
-            //    path.push_back(current.previous);
-            //    current = *current.previous;
-            //    std::cout << "ff" << std::endl;
-            //}
-
-            std::cout << "Endd" << std::endl;
-
-            break;
-        }
-
-        removeNode(current, m_openSet);
-        m_closedSet.push_back(current);
-
-        std::vector<Node> neighbours = current.neighbour_nodes;
-
-        for (size_t i = 0; i < neighbours.size(); i++)
-        {
-            Node neighbour = neighbours[i];
-
-            //if neighbour not in closed set
-            if (!(std::find(m_closedSet.begin(), m_closedSet.end(), neighbour) != m_closedSet.end())) {
-                int tentativeG = current.g + 1;
-                // if neighbour in openset 
-                if (std::find(m_openSet.begin(), m_openSet.end(), neighbour) != m_openSet.end()) {
-                    if (tentativeG < neighbour.g) {
-                        neighbour.g = tentativeG;
-                    }
-                    else {
-                        neighbour.g = tentativeG;
-                        m_openSet.push_back(neighbour);
-                    }
-
-                }
-                neighbour.h = hueristic(neighbour, m_end);
-                neighbour.f = neighbour.g + neighbour.h;
-                neighbour.previous = &current;
-            }
-
-        }
-
-        std::cout << "Open set " << m_openSet.size() << std::endl;
-
-    }
-    //std::cout << "asdasd" << std::endl;
-
-
-    return found;
-} 
 
 
 std::vector<std::vector<Node>> AI::generateNodes(std::vector<std::shared_ptr<TileMap>> TM) {
@@ -381,10 +312,12 @@ void AI::setFirstOpenNode(int x, int y) {
     int x_t = x / 32 + 1;
     int y_t = y / 32 + 1;
 
-    
 
-    m_openSet.push_back(Node{ 0,0,0,x_t,y_t });
+    Node enemy = Node{ 0,0,0,x_t,y_t };
 
+    m_openSet.push_back(enemy);
+
+    m_start = enemy;
 
 }
 
@@ -395,45 +328,41 @@ void AI::setFirstOpenNode(int x, int y, BaseEngine* engine) {
     int y_t = y / 32 + 1;
 
 
-    Node enemy = Node{ 0,0,0,x_t,y_t };
+    Node enemy = m_nodes[x_t][y_t];
 
     m_openSet.push_back(enemy);
     
-
-
-
     m_start = enemy;
 }
 
 void AI::setPlayerNode(int x, int y) {
 
+    // What tile we are actually on 
     int x_t = x / 32 + 1;
     int y_t = y / 32 + 1;
 
-    Node player = Node{ 0,0,0,x_t,y_t };
 
-    m_nodes[x_t][y_t] = player; // sets end node 
+    Node enemy = m_nodes[x_t][y_t];
 
-  
-    m_end = player;
+    m_openSet.push_back(enemy);
+
+    m_start = enemy;
 }
 
 void AI::setPlayerNode(int x, int y, BaseEngine* engine) {
     
     int x_t = x / 32 + 1;
     int y_t = y / 32 + 1;
+    if (x_t > 24) { x_t = 24; }
+    if (y_t > 24) { y_t = 24; }
 
     Node player = Node{ 0,0,0,x_t,y_t, m_nodes[x_t][y_t].valid };
 
     m_nodes[x_t][y_t] = player; // sets end node 
 
-    //engine->lockBackgroundForDrawing();
-    //engine->drawBackgroundRectangle(x_t*32, y_t*32, x_t*32 + 32, y_t*32 + 32,0xFF0000);
-    //engine->unlockBackgroundForDrawing();
+
 
     m_end = player;
-    
-
 
     for (int i = 0; i < m_nodes.size(); i++) {
         for (size_t j = 0; j < m_nodes[i].size(); j++)
@@ -447,6 +376,10 @@ void AI::setPlayerNode(int x, int y, BaseEngine* engine) {
         }
 
     }
+
+    engine->lockBackgroundForDrawing();
+    engine->drawBackgroundRectangle(x_t * 32, y_t * 32, x_t * 32 + 32, y_t * 32 + 32, 0xFF0000);
+    engine->unlockBackgroundForDrawing();
 
 }
 
@@ -467,15 +400,88 @@ void AI::removeNode(Node node, std::vector<Node> nodes) {
 }
 
 
+//struct Node {
+//
+//    int f; // f(n) = g(n) + h(n) 
+//    int g; // g(n) is the cost of the path from the start node to n
+//    int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
+//    int x; // literal x position of node
+//    int y; // literal y position of node
+//    bool valid; // says if tile can be walked on or not 
+//    Node* previous;
+//    std::vector<Node> neighbour_nodes;
+//
+//};
+
+
 void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) { 
     
     //std::cout << "Self.x: " << self.x << " | Self.y: " << self.y << std::endl;
-    
+    Node neighbour;
+    Node nNeighbour;
+
     // ONLY ALLOWS  NON-DIAGONALS AND NO SUBSCRIPT ERROR
-    if (self.x < m_h-1) {nodes.push_back(m_nodes[self.x + 1][self.y]);}
-    if (self.x > 0) { nodes.push_back(m_nodes[self.x - 1][self.y]); }
-    if (self.y < m_w-1) { nodes.push_back(m_nodes[self.x][self.y + 1]); }
-    if (self.y > 0) { nodes.push_back(m_nodes[self.x][self.y - 1]); }
+    if (self.x < m_h-1) {
+    
+        neighbour = m_nodes[self.x + 1][self.y];
+        nNeighbour = Node{
+            neighbour.f,
+            neighbour.g,
+            neighbour.h,
+            neighbour.x,
+            neighbour.y,
+            neighbour.valid
+
+        };
+        nodes.push_back(nNeighbour);
+    }
+    if (self.x > 0) { 
+     
+        nNeighbour = Node{
+            neighbour.f,
+            neighbour.g,
+            neighbour.h,
+            neighbour.x,
+            neighbour.y,
+            neighbour.valid
+
+        };
+        neighbour = m_nodes[self.x - 1][self.y];
+
+
+        nodes.push_back(nNeighbour);
+    }
+    if (self.y < m_w-1) {
+      
+        nNeighbour = Node{
+            neighbour.f,
+            neighbour.g,
+            neighbour.h,
+            neighbour.x,
+            neighbour.y,
+            neighbour.valid
+
+        };
+        neighbour = m_nodes[self.x][self.y + 1];
+
+
+        nodes.push_back(nNeighbour);
+    }
+    if (self.y > 0) { 
+    
+        nNeighbour = Node{
+            neighbour.f,
+            neighbour.g,
+            neighbour.h,
+            neighbour.x,
+            neighbour.y,
+            neighbour.valid
+
+        };
+        neighbour = m_nodes[self.x][self.y - 1];
+
+        nodes.push_back(nNeighbour);
+    }
  
     //std::cout << "adsasd" << std::endl;
 
@@ -485,4 +491,12 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
 int AI::hueristic(Node n, Node e) {
    
     return std::abs(n.x - e.x) + std::abs(n.y - e.y);
+}
+
+bool AI::isInVector(std::vector<Node> nodes, Node self) {
+
+    for (int i = 0; i < nodes.size(); i++) {
+        if (nodes[i] == self) { return true; }
+    }
+    return false;
 }

@@ -92,8 +92,8 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	// add neighbour nodes to parent node 
 	for (int i = 0; i < m_h - 1; i++) {
 		for (int j = 0; j < m_w - 1; j++) {
-			Node test = Node{};
-			//addNeighbourNodes(m_nodes[i][j].neighbour_nodes, m_nodes[i][j] );  /. THIS ALLOCS GIGS OF DATA :( FIX THIS
+
+			addNeighbourNodes(m_nodes[i][j].neighbour_nodes, m_nodes[i][j] ); 
 		}
 	}
 	// add neighbour nodes to parent node 
@@ -113,7 +113,7 @@ void Enemy::virtKeyDown(int iKeyCode) {
 	// ENABLE THE KEYPRESSES TO TEST THE ENEMY MOVEMENT WITHOUT AI
 	//setFirstOpenNode(m_xPos, m_yPos, m_pEngine);
 
-	//setPlayerNode(m_player->getCoords().first, m_player->getCoords().second, m_pEngine);
+	setPlayerNode(m_player->getCoords().first, m_player->getCoords().second, m_pEngine);
 	
 	//AIProc();
 
@@ -139,6 +139,13 @@ void Enemy::virtKeyDown(int iKeyCode) {
 		m_direction = UP;
 		m_runTimer = 0;
 		break;
+
+	case SDLK_1:
+		
+		break;
+
+	default:
+		break;
 	}
 
 
@@ -154,7 +161,10 @@ bool Enemy::internalUpdate() {
 	//	m_runTimer = 0;
 	//
 	//}
-	//if (AIProc()) { std::cout << "ENDDDD" << std::endl; };
+	//
+	if (AIProc()) { std::cout << "ENDDDD" << std::endl; };
+	//m_openSet.clear();
+	//m_closedSet.clear();
 
 	return false;
 

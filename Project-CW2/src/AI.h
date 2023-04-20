@@ -51,8 +51,6 @@ public:
 
 	bool AIProc(); // ai processing
 
-	bool AIProc(BaseEngine* engine); // ai processing with debugging
-
 	std::vector<std::vector<Node>> generateNodes(std::vector<std::shared_ptr<TileMap>> TM);
 
 	void setFirstOpenNode(int x, int y);
@@ -70,5 +68,7 @@ public:
 	void addNeighbourNodes(std::vector<Node>& nodes, Node self);
 
 	int hueristic(Node n, Node e);
+
+	bool isInVector(std::vector<Node> nodes, Node self);
 };
 
