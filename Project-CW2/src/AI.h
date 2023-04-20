@@ -18,7 +18,8 @@ struct Node {
 	int x; // literal x position of node
 	int y; // literal y position of node
 	bool valid; // says if tile can be walked on or not 
-
+	Node* previous;
+	std::vector<Node> neighbour_nodes;
 
 };
 
@@ -30,14 +31,44 @@ protected:
 
 	std::vector<std::vector<Node>> m_nodes; // <- this is the set of nodes for the tilemap but in the context of a* (maybe change this since tilemap has x and y)
 
+	std::vector<Node> m_openSet;
+
+	std::vector<Node> m_closedSet;
+
+	Node m_start; //start < -where enemy is currently
+
+	Node m_end;	  // end   <- where player is 
+
+	std::pair<int, int> m_playerPosition;
+
+	// grid is 25x25, for better code, this would want to be set via some function
+	const int m_w = 25;
+	const int m_h = 25;
 
 public:
 
 
-	void AIProc(std::shared_ptr<LevelLoader> LL); // ai processing
+
+	bool AIProc(); // ai processing
+
+	bool AIProc(BaseEngine* engine); // ai processing with debugging
 
 	std::vector<std::vector<Node>> generateNodes(std::vector<std::shared_ptr<TileMap>> TM);
 
+	void setFirstOpenNode(int x, int y);
 
+	void setFirstOpenNode(int x, int y, BaseEngine* engine); // for testing
+
+	void setPlayerNode(int x, int y);
+
+	void setPlayerNode(int x, int y, BaseEngine* engine); // for testing
+
+	std::vector<std::vector<Node>> AI::generateNodes(std::vector<std::shared_ptr<TileMap>> TM, BaseEngine* engine);
+
+	void removeNode(Node node, std::vector<Node> nodes);
+
+	void addNeighbourNodes(std::vector<Node>& nodes, Node self);
+
+	int hueristic(Node n, Node e);
 };
 

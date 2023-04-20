@@ -4,6 +4,7 @@
 #include "Office_Apocalypse.h"
 #include "Projectile.h"
 #include <vector>
+#include "Enemy.h"
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running) : Person(pEngine,  iWidth,iHeight, useTopLeftFor00, objX,  objY, idle, running){
 
@@ -240,7 +241,7 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 		break;
 
 	case SDLK_4:
-		/*std::cout << getImgXY().first << " " << getImgXY().second << std::endl;*/
+
 		break;
 
 	case 1073741903:
@@ -405,7 +406,11 @@ bool Player::internalUpdate() {
 
 
 
+std::pair<int, int> Player::getCoords() {
 
+	return std::make_pair(m_xPos, m_yPos);
+
+}
 
 
 

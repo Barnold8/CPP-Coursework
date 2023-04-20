@@ -40,6 +40,8 @@ public:
 
 	bool internalUpdate() override;
 
+	std::pair<int, int> getCoords();
+
 
 
 };

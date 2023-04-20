@@ -84,11 +84,24 @@ Enemy::Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00,
 	ID = 2;
 	m_levelLoader = LL;
 	m_player = player;
-	m_nodes = generateNodes(LL->getMaps()); // generate notes for enemy object 
-											// (might be a good idea to generate this 
-											// at startup of game state so each enemy 
-											// can have a pointer of this and not have to generate it on creation)
-	std::cout << "Enemy" << std::endl;
+	m_nodes = generateNodes(LL->getMaps(), m_pEngine);	// generate notes for enemy object 
+	// (might be a good idea to generate this 
+	// at startup of game state so each enemy 
+	// can have a pointer of this and not have to generate it on creation)
+
+	// add neighbour nodes to parent node 
+	for (int i = 0; i < m_h - 1; i++) {
+		for (int j = 0; j < m_w - 1; j++) {
+			Node test = Node{};
+			//addNeighbourNodes(m_nodes[i][j].neighbour_nodes, m_nodes[i][j] );  /. THIS ALLOCS GIGS OF DATA :( FIX THIS
+		}
+	}
+	// add neighbour nodes to parent node 
+	m_playerPosition = m_player->getCoords();
+
+	setFirstOpenNode(m_xPos, m_yPos, pEngine);
+	setPlayerNode(m_playerPosition.first, m_playerPosition.second, m_pEngine);
+
 
 }
 
@@ -98,6 +111,11 @@ void Enemy::virtKeyDown(int iKeyCode) {
 	// COULD add stuff here so the enemy can read user input for predictions on things (most likely wont do but cool idea)
 
 	// ENABLE THE KEYPRESSES TO TEST THE ENEMY MOVEMENT WITHOUT AI
+	//setFirstOpenNode(m_xPos, m_yPos, m_pEngine);
+
+	//setPlayerNode(m_player->getCoords().first, m_player->getCoords().second, m_pEngine);
+	
+	//AIProc();
 
 	switch (iKeyCode) {
 
@@ -136,7 +154,7 @@ bool Enemy::internalUpdate() {
 	//	m_runTimer = 0;
 	//
 	//}
-
+	//if (AIProc()) { std::cout << "ENDDDD" << std::endl; };
 
 	return false;
 

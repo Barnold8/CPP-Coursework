@@ -290,7 +290,21 @@ void Game::setup() {
 	std::cout << "Game setup" << std::endl;
 }
 
-void Game::KeyListener(int keyCode) {}
+void Game::KeyListener(int keyCode) {
+	switch (keyCode)
+	{
+	case SDLK_SPACE:
+		m_pEngine->appendObjectToArray(new Enemy(m_pEngine, 800, 800, true, 10, 10,
+			"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+			100, 400, "ENEMY", 5,
+			m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))));
+		break;
+
+	default:
+		break;
+	}
+
+}
 // GAME
 
 

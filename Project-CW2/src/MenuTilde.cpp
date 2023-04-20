@@ -48,7 +48,7 @@ MenuTilde::MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLe
 			m_widths[i] = widths[i];
 		}
 		
-		std::cout << "First menu tilde constructor" << std::endl;
+		//std::cout << "First menu tilde constructor" << std::endl;
 }
 
 
@@ -66,5 +66,5 @@ MenuTilde::MenuTilde(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLe
 	}
 	
 
-	std::cout << "Second menu tilde constructor" << std::endl;
+
 }
