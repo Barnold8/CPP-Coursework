@@ -9,6 +9,8 @@ private:
 
 	Player* m_player; // needed so AI can track player
 
+	std::pair<int, int> m_lastKnownLocation;
+
 public:
 
 	Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running);

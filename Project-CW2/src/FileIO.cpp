@@ -22,3 +22,31 @@ std::vector<std::string> FileIO::loadFileToLines(std::string filePath) {
     }
 
 }
+
+void FileIO::writeToFile(bool update, std::string path,std::string data) {
+
+   
+    if (update) {
+        std::ofstream myfile;
+        myfile.open(path, std::ios::out | std::ios::app);
+        myfile << data;
+        myfile.close();
+    }
+    else {
+        std::ofstream ofs(path, std::ofstream::trunc);
+        ofs << data;
+
+        ofs.close();
+    
+    }
+
+}
+
+bool FileIO::isFile(std::string path) {
+    std::ifstream file;
+    file.open(path);
+    if (file) { std::cout << "File exists" << std::endl;return true;file.close(); }
+    else {
+        return true;
+    }
+}

@@ -1,6 +1,10 @@
 #include "header.h"
 #include "Main_Menu.h"
 #include "Office_Apocalypse.h"
+#include "Player.h"
+#include "Enemy.h"
+#include "Projectile.h"
+
 //#include "State.h"
 
 void Office_Apocalypse::virtSetupBackgroundBuffer() // func has no effect if called after program starts first state
@@ -113,3 +117,151 @@ std::shared_ptr<State_Master> Office_Apocalypse::getStateMaster() { return m_sta
 std::string Office_Apocalypse::getUserName() { return m_userName; }
 
 void Office_Apocalypse::setUserName(std::string name) { m_userName = name; }
+
+
+void Office_Apocalypse::saveGame() {
+
+	Player* player;
+	Projectile* projectile;
+	Enemy* enemy;
+	bool write = true;
+
+	if (FileIO::isFile("resources/SaveData/" + m_userName + ".DAT")) {
+		std::cout << "Are you sure you want to overwrite?" << std::endl;  // << add proper implementation for this 
+	}
+
+	if (write) {
+		std::string equals = "===============================\n";
+
+		FileIO::writeToFile(false, "resources/SaveData/" + m_userName + ".DAT", "Save: " + getUserName() + "\n" + equals);
+
+		for (int i = 0; i < m_vecDisplayableObjects.size();i++) { // deffo could just check for nullptr on dynamic cast rather than just nulptr THEN dynamic cast but oh well
+
+			if (i == 0 && m_vecDisplayableObjects[i] != nullptr) { // player
+
+				if ((player = dynamic_cast<Player*>(m_vecDisplayableObjects[i])) != nullptr) {
+					DATA player_DAT = player->getData();
+
+
+					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(player_DAT,0));
+
+				}
+				else {
+					std::cout << "FATAL ERROR: PLAYER NON EXISTANT. NULLPTR AT PLAYER OBJ " << i << std::endl;
+				}
+			}
+			else if (i > 0 && i < 12 && m_vecDisplayableObjects[i] != nullptr) { // projectile
+				if ((projectile = dynamic_cast<Projectile*>(m_vecDisplayableObjects[i])) != nullptr) {
+					DATA projectile_DAT = projectile->getData();
+					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(projectile_DAT, 0));
+
+				}
+				else {
+					std::cout << "FATAL ERROR: PROJECTILE NON EXISTANT. NULLPTR AT PLAYER OBJ " << i << std::endl;
+
+				}
+
+			}
+			else if (m_vecDisplayableObjects[i] != nullptr) { // enemy
+				if ((enemy = dynamic_cast<Enemy*>(m_vecDisplayableObjects[i])) != nullptr) {
+					DATA enemy_DAT = enemy->getData();
+					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(enemy_DAT, 1));
+				}
+				else {
+					std::cout << "FATAL ERROR: ENEMY NON EXISTANT. NULLPTR AT PLAYER OBJ " << i << std::endl;
+				}
+			}
+		}
+		FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", "EOF");
+	}
+}
+
+//struct DATA {
+//
+//	// BOTH
+//	int _m_xPos;
+//	int _m_yPos;
+//	int _m_speed;
+//	bool _m_collided; // May not even be used lol
+//	int	 _m_collisionCoolDown;
+//	// BOTH
+//
+//	// Person
+//	std::string _m_personName;									 // Allows name above person to be different
+//	Movement	_m_direction;									 // enum for the player looking direction
+//	animState	_m_animState;									 // enum for the animation state
+//	int			_m_runTimer;										 // time after last key update
+//	int			_m_runCycle;										 // number counted to tick over next anim frame
+//	int			_m_runTick;										 // number to use in animation frame formula
+//	int			_m_healthAmount;									 // amount of health user has
+//	int			_m_spriteOffset;
+//	int			_m_collisionMask;								 // the colour used to say what is a valid pixel for collision
+//	bool		_m_renderHealth;
+//	// Person
+//
+//	// Projectile
+//	Projectile* _m_prev; // cant reference this, ignore it 
+//	int			_m_tick;
+//	// Projectile
+//};
+
+std::string Office_Apocalypse::DATAstr(DATA data, int type) {
+
+	std::string fileData = "";
+	std::string equals = "===============================\n";
+
+	fileData += "Type: " + std::to_string(type) + "\n";
+	fileData += "xPos: " + std::to_string(data._m_xPos) + "\n";
+	fileData += "yPos: " + std::to_string(data._m_yPos) + "\n";
+	fileData += "speed: " + std::to_string(data._m_speed) + "\n";
+	fileData += "collided: " + std::to_string(data._m_collided) + "\n";
+	fileData += "collisionCoolDown: " + std::to_string(data._m_collisionCoolDown) + "\n";
+
+	switch (type) {
+	
+	case 0:
+		if (data._m_personName.size() < 1) {
+			fileData += "Name: Enemy\n";
+		}
+		else {
+			fileData += "Name: " + data._m_personName + "\n";
+		}
+		//	std::string _m_personName;									 // Allows name above person to be different
+		fileData += "Direction: " + std::to_string(data._m_direction) + "\n";
+		//	Movement	_m_direction;									 // enum for the player looking direction
+		fileData += "animState: " + std::to_string(data._m_animState) + "\n";
+		//	animState	_m_animState;									 // enum for the animation state
+		fileData += "RunTimer: " + std::to_string(data._m_runTimer) + "\n";
+		//	int			_m_runTimer;										 // time after last key update
+		fileData += "RunCycle: " + std::to_string(data._m_runCycle) + "\n";
+		//	int			_m_runCycle;										 // number counted to tick over next anim frame
+		fileData += "RunTick: " + std::to_string(data._m_runTick) + "\n";
+		//	int			_m_runTick;										 // number to use in animation frame formula
+		fileData += "HealthAmount: " + std::to_string(data._m_healthAmount) + "\n";
+		//	int			_m_healthAmount;									 // amount of health user has
+		fileData += "SpriteOffset: " + std::to_string(data._m_spriteOffset) + "\n";
+		//	int			_m_spriteOffset;
+		fileData += "CollisionMask: " + std::to_string(data._m_collisionMask) + "\n";
+		//	int			_m_collisionMask;								 // the colour used to say what is a valid pixel for collision
+		fileData += "RenderHealth: " + std::to_string(data._m_renderHealth) + "\n";
+		//	bool		_m_renderHealth;
+
+
+		break;
+
+	case 1:
+		fileData += "tick: " + std::to_string(data._m_tick) + "\n";
+		break;
+	default:
+
+		break;
+	
+	}
+
+	fileData += equals;
+
+
+
+
+	return fileData;
+}

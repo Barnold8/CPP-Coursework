@@ -17,7 +17,8 @@ struct Node {
 	int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
 	int x; // literal x position of node
 	int y; // literal y position of node
-	bool valid; // says if tile can be walked on or not 
+	bool valid; // says if tile can be walked on or not
+	int distance;
 	Node* previous;
 	std::vector<Node> neighbour_nodes;
 
@@ -48,27 +49,17 @@ protected:
 public:
 
 
-
-	bool AIProc(); // ai processing
-
 	std::vector<std::vector<Node>> generateNodes(std::vector<std::shared_ptr<TileMap>> TM);
 
-	void setFirstOpenNode(int x, int y);
-
-	void setFirstOpenNode(int x, int y, BaseEngine* engine); // for testing
+	void setFirstNode(int x, int y);
 
 	void setPlayerNode(int x, int y);
 
-	void setPlayerNode(int x, int y, BaseEngine* engine); // for testing
-
-	std::vector<std::vector<Node>> AI::generateNodes(std::vector<std::shared_ptr<TileMap>> TM, BaseEngine* engine);
+	void addNeighbourNodes(std::vector<Node>& nodes, Node self);
 
 	void removeNode(Node node, std::vector<Node> nodes);
 
-	void addNeighbourNodes(std::vector<Node>& nodes, Node self);
+	void djikstra(Node start, Node end);
 
-	int hueristic(Node n, Node e);
-
-	bool isInVector(std::vector<Node> nodes, Node self);
 };
 

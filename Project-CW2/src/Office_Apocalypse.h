@@ -7,6 +7,7 @@
 
 class State_Master; 
 
+struct DATA;
 
 class Office_Apocalypse : public BaseEngine{
 
@@ -19,7 +20,9 @@ private:
 	std::string m_userName;
 	bool m_customRender = false;
 
-	std::shared_ptr<State_Master> m_state_master = std::make_shared<State_Master>(this);;
+	std::shared_ptr<State_Master> m_state_master = std::make_shared<State_Master>(this);
+
+	int m_currentLevel = -1; // <--- needed for what current level we are on for save data (-1 means no current level)
 
 public:
 
@@ -62,8 +65,11 @@ public:
 
 	int getUpdates();
 
+	void saveGame();
+
+	std::string DATAstr(DATA data, int type);
 
 	std::shared_ptr<State_Master> getStateMaster();
 
 };
-
+ 

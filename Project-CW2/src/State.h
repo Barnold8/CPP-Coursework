@@ -86,6 +86,8 @@ public:
 
 	virtual void KeyListener(int keyCode) override;
 
+
+
 };
 
 class Load : public State {
@@ -111,9 +113,14 @@ class Game : public State {
 public:
 
 	std::shared_ptr<LevelLoader> m_level_loader;
+
+	bool m_isPaused = false;
+
 public:
 
 	Game(BaseEngine* engine);
+
+	Game(BaseEngine* engine, int level);
 
 	~Game();
 
@@ -124,6 +131,8 @@ public:
 	virtual void setup();
 
 	virtual void KeyListener(int keyCode);
+
+
 
 };
 

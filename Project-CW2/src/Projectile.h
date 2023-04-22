@@ -35,7 +35,7 @@ public:
 
 	rect getRect() override;
 
-
+	virtual DATA getData() override;
 
 };
 

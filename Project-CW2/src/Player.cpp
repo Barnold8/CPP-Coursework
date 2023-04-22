@@ -21,7 +21,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_projSize = 0;
 	m_replace = false;
 	ID = 1;
-
+	m_collisionMask = 0x00FF00;
 	m_renderHealth = false;
 }
 
@@ -43,7 +43,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_projSize = 0;
 	m_replace = false;
 	ID = 1;
-
+	m_collisionMask = 0x00FF00;
 	m_renderHealth = false;
 }
 
@@ -66,7 +66,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 
 	m_renderHealth = false;
-
+	m_collisionMask = 0x00FF00;
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -89,7 +89,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 
 	m_renderHealth = false;
-
+	m_collisionMask = 0x00FF00;
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, bool renderHealth) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -113,7 +113,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 
 	m_renderHealth = renderHealth;
-
+	m_collisionMask = 0x00FF00;
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -137,7 +137,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 
 	m_renderHealth = renderHealth;
-
+	m_collisionMask = 0x00FF00;
 
 
 }
@@ -163,6 +163,7 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 	m_levelLoader = LL;
 	m_renderHealth = renderHealth;
+	m_collisionMask = 0x00FF00;
 
 
 }
@@ -171,102 +172,112 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 255
 
 	int x, y, x_copy, y_copy;
+	Office_Apocalypse* engine = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 	x = m_xPos;
 	y = m_yPos;
 	x_copy = m_xPos;
 	y_copy = m_yPos;
 
 
-	switch (iKeyCode) {
+	if (!(m_pEngine->isPaused())) {
+		switch (iKeyCode) {
 
-	case 100:
-		m_xPos += m_speed;
-		m_direction = RIGHT;
-		m_runTimer = 0;
-		x = m_xPos - 10;
-		if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
-			m_xPos = x_copy;
-			m_yPos = y_copy;
-		}
+		case 100:
+			m_xPos += m_speed;
+			m_direction = RIGHT;
+			m_runTimer = 0;
+			x = m_xPos - 10;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				m_xPos = x_copy;
+				m_yPos = y_copy;
+			}
 
-		break;
-	case 97:
-		m_xPos -= m_speed;
-		m_direction = LEFT;
-		m_runTimer = 0;
-		x = m_xPos - 20;
-		if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
-			{
+			break;
+		case 97:
+			m_xPos -= m_speed;
+			m_direction = LEFT;
+			m_runTimer = 0;
+			x = m_xPos - 20;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				{
+					m_xPos = x_copy;
+					m_yPos = y_copy;
+				}
+				break;
+		case 115:
+			m_yPos += m_speed;
+			m_direction = DOWN;
+			m_runTimer = 0;
+			y = m_yPos + 20;
+			x = m_xPos - 10;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
 				m_xPos = x_copy;
 				m_yPos = y_copy;
 			}
 			break;
-	case 115:
-		m_yPos += m_speed;
-		m_direction = DOWN;
-		m_runTimer = 0;
-		y = m_yPos + 20;
-		x = m_xPos - 10;
-		if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
-			m_xPos = x_copy;
-			m_yPos = y_copy;
+		case 119:
+			m_yPos -= m_speed;
+			m_direction = UP;
+			m_runTimer = 0;
+			y = m_yPos + 30;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				m_xPos = x_copy;
+				m_yPos = y_copy;
+			}
+			break;
+			}
 		}
-		break;
-	case 119:
-		m_yPos -= m_speed;
-		m_direction = UP;
-		m_runTimer = 0;
-		y = m_yPos + 30;
-		if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
-			m_xPos = x_copy;
-			m_yPos = y_copy;
-		}
-		break;
-		}
-	}
 		//Projectile(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string sprite, Movement dir, int pX, int pY, int speed);
 
-	switch (iKeyCode) {
+		switch (iKeyCode) {
 
-	case SDLK_1:
-		setHealth(getHealth() - 1);
-		break;
+		case SDLK_1:
+			setHealth(getHealth() - 1);
+			break;
 
-	case SDLK_2:
-		setHealth(getHealth() + 1);
-		break;
+		case SDLK_2:
+			setHealth(getHealth() + 1);
+			break;
 
-	case SDLK_3:
-		isCollided(m_pEngine);
-		break;
+		case SDLK_3:
+			isCollided(m_pEngine);
+			break;
 
-	case SDLK_4:
+		case SDLK_4:
 
-		break;
+			break;
 
-	case 1073741903:
-		addProjectile(RIGHT);
-		break;
+		case 1073741903:
+			addProjectile(RIGHT);
+			break;
 
-	case 1073741905:
-		addProjectile(DOWN);
-		break;
+		case 1073741905:
+			addProjectile(DOWN);
+			break;
 
-	case 1073741904:
-		addProjectile(LEFT);
-		break;
+		case 1073741904:
+			addProjectile(LEFT);
+			break;
 
-	case 1073741906:
-		addProjectile(UP);
-		break;
-	default:
-		break;
-	}
+		case 1073741906:
+			addProjectile(UP);
+			break;
+		default:
+			break;
+		}
 
 		//if (canMove(m_levelLoader, m_xPos, m_yPos,m_pEngine)) {
 		//	m_xPos = x;
 		//	m_yPos = y;
 		//}
+	}
+	else {
+	
+		if (iKeyCode == SDLK_s) {
+			engine->saveGame();
+		}
+	}
+	
 
 }
 
@@ -375,7 +386,7 @@ bool Player::internalUpdate() {
 		m_healthAmount -= 1;
 		m_collisionCoolDown = 0;
 
-		std::cout << "Collided with " << collidedID << std::endl;
+		//std::cout << "Collided with " << collidedID << std::endl;
 		//switch
 	}
 
@@ -399,6 +410,7 @@ bool Player::internalUpdate() {
 
 
 	}
+
 
 	return true;
 }
