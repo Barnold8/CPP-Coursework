@@ -21,6 +21,7 @@ void Projectile::virtDraw() {
 
 	if (!(M->isPaused())) {
 
+		
 
 		m_projectileSprite.renderImageWithMask(m_pEngine->getForegroundSurface(), 0, 0, m_xPos, m_yPos, m_projectileSprite.getWidth(), m_projectileSprite.getHeight(), 0x00FF00);
 
@@ -140,7 +141,7 @@ DATA Projectile::getData() {
 		m_collided,
 		m_collisionCoolDown,
 		"",
-		NONE,
+		m_direction,
 		IDLE,
 		0,0,0,0,0,0,0,
 		m_prev,
@@ -150,3 +151,5 @@ DATA Projectile::getData() {
 	};
 	return d;
 }
+
+Movement Projectile::getDirection() { return m_direction; }

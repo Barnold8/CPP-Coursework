@@ -90,24 +90,6 @@ public:
 
 };
 
-class Load : public State {
-
-private:
-
-public:
-
-	Load(BaseEngine* engine);
-
-	virtual void copyAllBackgroundBuffer() override;
-
-	virtual void update() override;
-
-	void setup();
-
-	virtual void KeyListener(int keyCode) override;
-
-};
-
 class Game : public State {
 
 public:
@@ -118,9 +100,7 @@ public:
 
 public:
 
-	Game(BaseEngine* engine);
-
-	Game(BaseEngine* engine, int level);
+	Game(BaseEngine* engine, int level, bool loading);
 
 	~Game();
 

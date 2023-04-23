@@ -333,3 +333,20 @@ DATA Person::getData() {
 
 
 }
+
+
+void Person::setDirection(Movement dir) { m_direction = dir; }
+
+void Person::setAnimState(animState animstate) { m_animState = animstate; }
+
+void Person::setRunTimer(int timer) { m_runTimer = timer; }
+
+void Person::setRunCycle(int cycle) { m_runCycle = cycle; }
+
+void Person::setRunTick(int tick) { m_runTick = tick; }
+
+void Person::setHealth(int health) { m_healthAmount = health; }
+
+void Person::setSpeed(int speed) { m_speed = speed; }
+
+void Person::setCollCoolDown(int cooldown) { m_collisionCoolDown = cooldown; }

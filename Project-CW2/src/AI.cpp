@@ -89,15 +89,15 @@ std::vector<std::vector<Node>> AI::generateNodes(std::vector<std::shared_ptr<Til
 
 
     // set node data 
-    std::cout << "======= AI GRID =======\n" << std::endl;
+    //std::cout << "======= AI GRID =======\n" << std::endl;
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             temp[i][j].valid = !tiles[i][j];
             temp[i][j].x = i;
             temp[i][j].y = j;
-            std::cout << temp[i][j].valid;
+            //std::cout << temp[i][j].valid;
         }
-        std::cout << "\n";
+        //std::cout << "\n";
     
     }
     // set node data 

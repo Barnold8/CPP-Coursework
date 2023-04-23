@@ -71,5 +71,7 @@ public:
 
 	std::shared_ptr<State_Master> getStateMaster();
 
+	void changeLevel(int level);
+
 };
  

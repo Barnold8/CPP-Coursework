@@ -50,7 +50,6 @@ Office_Apocalypse::Office_Apocalypse() {
 
 	m_fgSurfaceCopy = getFgSurface();
 	m_bgSurfaceCopy = getBgSurface();
-
 }
 
 void Office_Apocalypse::setSurfacesToCopies() { // Acts as a reset to original surfaces
@@ -126,14 +125,19 @@ void Office_Apocalypse::saveGame() {
 	Enemy* enemy;
 	bool write = true;
 
-	if (FileIO::isFile("resources/SaveData/" + m_userName + ".DAT")) {
+	if (FileIO::isFile("resources/SaveData/SAVE.DAT")) {
 		std::cout << "Are you sure you want to overwrite?" << std::endl;  // << add proper implementation for this 
 	}
 
 	if (write) {
+
 		std::string equals = "===============================\n";
 
-		FileIO::writeToFile(false, "resources/SaveData/" + m_userName + ".DAT", "Save: " + getUserName() + "\n" + equals);
+		FileIO::writeToFile(false, "resources/SaveData/SAVE.DAT", "Level: " + std::to_string(m_currentLevel) +"\n"+equals);
+
+		
+
+		FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", "Save: " + getUserName() + "\n" + equals);
 
 		for (int i = 0; i < m_vecDisplayableObjects.size();i++) { // deffo could just check for nullptr on dynamic cast rather than just nulptr THEN dynamic cast but oh well
 
@@ -143,7 +147,7 @@ void Office_Apocalypse::saveGame() {
 					DATA player_DAT = player->getData();
 
 
-					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(player_DAT,0));
+					FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", DATAstr(player_DAT,0));
 
 				}
 				else {
@@ -153,8 +157,8 @@ void Office_Apocalypse::saveGame() {
 			else if (i > 0 && i < 12 && m_vecDisplayableObjects[i] != nullptr) { // projectile
 				if ((projectile = dynamic_cast<Projectile*>(m_vecDisplayableObjects[i])) != nullptr) {
 					DATA projectile_DAT = projectile->getData();
-					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(projectile_DAT, 0));
-
+					FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", DATAstr(projectile_DAT, 1));
+					std::cout << i << "is projectile" << std::endl;
 				}
 				else {
 					std::cout << "FATAL ERROR: PROJECTILE NON EXISTANT. NULLPTR AT PLAYER OBJ " << i << std::endl;
@@ -165,14 +169,14 @@ void Office_Apocalypse::saveGame() {
 			else if (m_vecDisplayableObjects[i] != nullptr) { // enemy
 				if ((enemy = dynamic_cast<Enemy*>(m_vecDisplayableObjects[i])) != nullptr) {
 					DATA enemy_DAT = enemy->getData();
-					FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", DATAstr(enemy_DAT, 1));
+					FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", DATAstr(enemy_DAT, 0));
 				}
 				else {
 					std::cout << "FATAL ERROR: ENEMY NON EXISTANT. NULLPTR AT PLAYER OBJ " << i << std::endl;
 				}
 			}
 		}
-		FileIO::writeToFile(true, "resources/SaveData/" + m_userName + ".DAT", "EOF");
+		FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", "EOF");
 	}
 }
 
@@ -251,6 +255,7 @@ std::string Office_Apocalypse::DATAstr(DATA data, int type) {
 
 	case 1:
 		fileData += "tick: " + std::to_string(data._m_tick) + "\n";
+		fileData += "Direction: " + std::to_string(data._m_direction) + "\n";
 		break;
 	default:
 
@@ -264,4 +269,11 @@ std::string Office_Apocalypse::DATAstr(DATA data, int type) {
 
 
 	return fileData;
+}
+
+
+
+void Office_Apocalypse::changeLevel(int level) {
+
+	m_currentLevel = level;
 }

@@ -45,8 +45,5 @@ void FileIO::writeToFile(bool update, std::string path,std::string data) {
 bool FileIO::isFile(std::string path) {
     std::ifstream file;
     file.open(path);
-    if (file) { std::cout << "File exists" << std::endl;return true;file.close(); }
-    else {
-        return true;
-    }
+    return file.good();
 }

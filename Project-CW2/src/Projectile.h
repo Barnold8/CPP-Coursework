@@ -37,5 +37,7 @@ public:
 
 	virtual DATA getData() override;
 
+	Movement getDirection();
+
 };
 

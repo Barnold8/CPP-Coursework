@@ -56,6 +56,22 @@ public:
 
 	virtual DATA getData() override;
 
+	void setDirection(Movement dir);
+
+	void setAnimState(animState animstate);
+
+	void setRunTimer(int timer);
+
+	void setRunCycle(int cycle);
+
+	void setRunTick(int tick);
+
+	void setHealth(int health);
+
+	void setSpeed(int speed);
+
+	void setCollCoolDown(int cooldown);
+
 
 };
 

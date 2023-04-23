@@ -7,10 +7,30 @@
 #include "Person.h"
 #include "Enemy.h"
 #include "Plate.h"
+#include "FileIO.h"
+#include "Enemy.h"
+#include "Projectile.h"
+
 
 
 
 //NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
+
+std::string splitByDelim(std::string s, char c) {
+
+	std::string f;
+	bool process = false;
+
+	for (int i = 0; i < s.length(); i++) {
+		if (process) {
+			f += s[i];
+		}
+		if (s[i] == ':') {
+			process = true;
+		}
+	}
+	return f;
+}
 
 
 // MENU
@@ -105,7 +125,7 @@ void Menu::KeyListener(int keyCode) {
 				break;
 				case 2:
 					//std::cout << "IMPLEMENT Loading save data brandon!!!" << std::endl;
-					M->getStateMaster()->changeState(std::make_shared<Load>(m_pEngine));
+					M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine, 1, true));
 					break;
 				case 3:
 					m_pEngine->setExitWithCode(0);
@@ -172,7 +192,7 @@ void SignAway::KeyListener(int keyCode) {
 		}
 		else {
 			M->setUserName(t->getText());
-			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,1));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,1, false));
 			
 		}
 	}
@@ -183,43 +203,6 @@ void SignAway::KeyListener(int keyCode) {
 }
 // SIGN AWAY
 
-// LOAD
-
-Load::Load(BaseEngine* engine) : State(engine) {
-
-	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-
-	M->objectClearer();
-	M->setSurfacesToCopies();
-	M->customRendering(false);
-
-	SimpleImage x = ImageManager::loadImage("resources/Test/Test1.png");
-
-	m_pEngine->lockBackgroundForDrawing();
-	x.renderImage(M->getBgSurface(), 0, 0, 0, 0, 800, 800);
-	m_pEngine->unlockBackgroundForDrawing();
-
-}
-
-void Load::copyAllBackgroundBuffer() {}
-
-void Load::update() {
-
-}
-
-void Load::setup() {}
-
-void Load::KeyListener(int keyCode) {
-
-	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
-
-	if (keyCode == SDLK_ESCAPE) {
-		
-		M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine));
-	}
-}
-
-// LOAD
 
 // STATE 
 State::State(BaseEngine* engine) {
@@ -232,8 +215,9 @@ void State::set_master(std::shared_ptr<State_Master*> state) { // Changes
 // STATE
 
 // GAME
-Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear public methods of state master class object
-	
+
+Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont let me access clear public methods of state master class object
+
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 
 	M->objectClearer();
@@ -241,61 +225,141 @@ Game::Game(BaseEngine* engine) : State(engine) { // Wont let me access clear pub
 
 	std::vector<std::string> sPaths = { "resources/LevelImages/walls_and_floor.png","resources/LevelImages/furniture.png" };
 
-	m_level_loader = std::make_shared<LevelLoader>(m_pEngine,sPaths,"resources/Levels/Level1.tmj", 32, 32, 800, 800);
+	if (loading) {
+		int objCurrent = 0;
+		std::vector<std::string> fileLines = FileIO::loadFileToLines("resources/SaveData/SAVE.DAT");
 
-	m_pEngine->storeObjectInArray(
+		int level = std::atoi(splitByDelim(fileLines[0], ':').c_str());
+		//std::cout << "Level : " << level << std::endl;
+
+		m_level_loader = std::make_shared<LevelLoader>(m_pEngine, sPaths, "resources/Levels/Level" + std::to_string(level) + ".tmj", 32, 32, 800, 800);
+		
+		M->changeLevel(level);
+
+		// LOAD PLAYER - following elems can be assumed since player is saved first ALWAYS
+
+		M->setUserName(splitByDelim(fileLines[2], ':'));
+	
+		m_pEngine->storeObjectInArray(
+			
+			0, new Player(
+				m_pEngine, 800, 800, true, 800, 800,
+				"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
+
+				std::atoi(splitByDelim(fileLines[5], ':').c_str()),
+				std::atoi(splitByDelim(fileLines[6], ':').c_str()),
+
+				M->getUserName(),
+				std::atoi(splitByDelim(fileLines[16], ':').c_str()),
+				7, 
+				true, 
+				m_level_loader)
+
+		);
+		objCurrent++;
+
+
+		Player* player = dynamic_cast<Player*>(M->getDisplayableObject(0));
+		player->setDirection(Movement(std::atoi(splitByDelim(fileLines[11], ':').c_str())));
+		player->setAnimState(animState(std::atoi(splitByDelim(fileLines[12], ':').c_str())));
+		player->setRunTick(std::atoi(splitByDelim(fileLines[15], ':').c_str()));
+		player->setRunCycle(std::atoi(splitByDelim(fileLines[14], ':').c_str()));
+		player->setRunTimer(std::atoi(splitByDelim(fileLines[13], ':').c_str()));
+		player->setSpeed(std::atoi(splitByDelim(fileLines[7], ':').c_str()));
+		player->setCollCoolDown(std::atoi(splitByDelim(fileLines[9], ':').c_str()));
+
+		// LOAD PLAYER - following elems can be assumed since player is saved first ALWAYS
+
+		std::cout << fileLines.size() << std::endl;
+
+		for (int i = 21; i < fileLines.size();i++) {
+	
+			if (fileLines[i][0] != '=' && fileLines[i][0] == 'T' && std::atoi(splitByDelim(fileLines[i], ':').c_str()) == 0) {
+
+				m_pEngine->storeObjectInArray(
+
+					objCurrent+15, new Enemy(
+						m_pEngine, 800, 800, true, 800, 800,
+						"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+
+						std::atoi(splitByDelim(fileLines[i+1], ':').c_str()),
+						std::atoi(splitByDelim(fileLines[i+2], ':').c_str()),
+						"ENEMY",
+						5,
+						m_level_loader, 
+						dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+					)
+
+				);
+				//std::cout << fileLines[i] << std::endl;
+				
+
+				Enemy* enemy = dynamic_cast<Enemy*>(M->getDisplayableObject(objCurrent+15));
+				enemy->setDirection(Movement(std::atoi(splitByDelim(fileLines[i+7], ':').c_str())));
+				enemy->setAnimState(animState(std::atoi(splitByDelim(fileLines[i+8], ':').c_str())));
+				enemy->setRunTick(std::atoi(splitByDelim(fileLines[i + 10], ':').c_str()));
+				enemy->setRunCycle(std::atoi(splitByDelim(fileLines[i + 9], ':').c_str()));
+				enemy->setRunTimer(std::atoi(splitByDelim(fileLines[i + 8], ':').c_str()));
+				enemy->setSpeed(std::atoi(splitByDelim(fileLines[i + 3], ':').c_str()));
+				enemy->setCollCoolDown(std::atoi(splitByDelim(fileLines[i + 5], ':').c_str()));
+				enemy->setHealth(std::atoi(splitByDelim(fileLines[i + 12], ':').c_str()));
+			
+				i += 16;
+				objCurrent++;
+			}
+
+
+			else if (fileLines[i][0] != '=' && fileLines[i][0] == 'T' && std::atoi(splitByDelim(fileLines[i], ':').c_str()) == 1) {
+
+				//Projectile(BaseEngine * pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, 
+				/*std::string sprite, Movement dir, int pX, int pY, int speed);*/
+
+				
+				m_pEngine->storeObjectInArray(objCurrent,
+					new Projectile(m_pEngine, 800, 800, true, 0, 0,
+						"resources/Projectiles/Keyboard.png",
+						Movement(std::atoi(splitByDelim(fileLines[i + 7], ':').c_str())),  // dir
+						std::atoi(splitByDelim(fileLines[i + 1], ':').c_str()) + 50, // x
+						std::atoi(splitByDelim(fileLines[i + 2], ':').c_str()), // y
+						std::atoi(splitByDelim(fileLines[i + 3], ':').c_str())  // speed
+					));
+
+				i += 8;
+				objCurrent++;
+			}
+		}
+
+
+	}
+	else {
+	
+
+		m_level_loader = std::make_shared<LevelLoader>(m_pEngine, sPaths, "resources/Levels/Level" + std::to_string(level) + ".tmj", 32, 32, 800, 800);
+		
+		M->changeLevel(1);
+		
+		m_pEngine->storeObjectInArray(
 
 			0, new Player(
 				m_pEngine, 800, 800, true, 800, 800,
 				"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
-				90,100,M->getUserName(),10,7,true,m_level_loader)
-	
-			);
+				90, 100, M->getUserName(), 10, 7, true, m_level_loader)
 
-	m_pEngine->storeObjectInArray(
-		
+		);
+
+		m_pEngine->storeObjectInArray(
+
 			15, new Enemy(
-				m_pEngine, 800, 800, true, 800, 800, 
+				m_pEngine, 800, 800, true, 800, 800,
 				"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
-				100,400,"ENEMY",5,
-				m_level_loader,dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
-		)
-	);
-
-	setup();
-}
-
-
-Game::Game(BaseEngine* engine,int level) : State(engine) { // Wont let me access clear public methods of state master class object
-
-	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+				100, 400, "ENEMY", 5,
+				m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+			)
+		);
+	
+	}
 
 
-	M->objectClearer();
-	M->setSurfacesToCopies();
-
-	std::vector<std::string> sPaths = { "resources/LevelImages/walls_and_floor.png","resources/LevelImages/furniture.png" };
-
-	m_level_loader = std::make_shared<LevelLoader>(m_pEngine, sPaths, "resources/Levels/Level"+std::to_string(level) + ".tmj", 32, 32, 800, 800);
-
-	//m_pEngine->storeObjectInArray(
-
-	//	0, new Player(
-	//		m_pEngine, 800, 800, true, 800, 800,
-	//		"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
-	//		90, 100, M->getUserName(), 10, 7, true, m_level_loader)
-
-	//);
-
-	//m_pEngine->storeObjectInArray(
-
-	//	15, new Enemy(
-	//		m_pEngine, 800, 800, true, 800, 800,
-	//		"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
-	//		100, 400, "ENEMY", 5,
-	//		m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
-	//	)
-	//);
 
 	setup();
 }
@@ -326,6 +390,7 @@ void Game::setup() {
 }
 
 void Game::KeyListener(int keyCode) {
+	std::cout << keyCode << std::endl;
 	switch (keyCode)
 	{
 	case SDLK_ESCAPE:
@@ -412,7 +477,7 @@ void Lose::KeyListener(int keyCode) {
 			M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
 			break;
 		case 2:
-			M->getStateMaster()->changeState(std::make_shared<Load>(m_pEngine));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine, 1, true));
 			break;
 		case 3:
 			m_pEngine->setExitWithCode(0);
@@ -523,7 +588,7 @@ void Win::KeyListener(int keyCode) {
 			M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
 			break;
 		case 2:
-			M->getStateMaster()->changeState(std::make_shared<Load>(m_pEngine));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine, 1, true));
 			break;
 		case 3:
 			m_pEngine->setExitWithCode(0);
