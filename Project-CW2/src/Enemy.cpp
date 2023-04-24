@@ -153,7 +153,7 @@ void Enemy::virtKeyDown(int iKeyCode) {
 		break;
 
 	case SDLK_1:
-		
+		djikstra(m_start, m_end);
 		break;
 
 	default:
@@ -183,6 +183,9 @@ bool Enemy::internalUpdate() {
 
 	m_playerPosition = m_player->getCoords();
 	int distance = std::abs(m_xPos - m_playerPosition.first) + std::abs(m_yPos - m_playerPosition.second);
+	
+
+
 
 	//std::cout << distance << std::endl;
 	if (m_runTimer > 10 && distance < 180) {
@@ -232,7 +235,7 @@ bool Enemy::internalUpdate() {
 
 			m_pEngine->unlockBackgroundForDrawing();
 
-			djikstra(m_start, m_end);
+			
 
 			return false;
 		}

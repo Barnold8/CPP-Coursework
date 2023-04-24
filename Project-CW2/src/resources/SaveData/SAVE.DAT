@@ -1,17 +1,17 @@
 Level: 1
 ===============================
-Save:  ASD
+Save:  SAD
 ===============================
 Type: 0
-xPos: 90
-yPos: 110
+xPos: 150
+yPos: 210
 speed: 10
 collided: 0
-collisionCoolDown: 10545
-Name:  ASD
-Direction: 3
+collisionCoolDown: 3881
+Name:  SAD
+Direction: 0
 animState: 0
-RunTimer: 10235
+RunTimer: 270
 RunCycle: 0
 RunTick: 0
 HealthAmount: 10
@@ -19,149 +19,16 @@ SpriteOffset: 6
 CollisionMask: 65280
 RenderHealth: 1
 ===============================
-Type: 1
-xPos: 1600
-yPos: 110
-speed: 0
-collided: 205
-collisionCoolDown: -842150451
-tick: 7210
-Direction: 0
-===============================
-Type: 1
-xPos: 1600
-yPos: 110
-speed: 0
-collided: 205
-collisionCoolDown: -842150451
-tick: 6950
-Direction: 0
-===============================
-Type: 1
-xPos: 1600
-yPos: 110
-speed: 0
-collided: 205
-collisionCoolDown: -842150451
-tick: 6640
-Direction: 0
-===============================
-Type: 1
-xPos: 460
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 6310
-Direction: 0
-===============================
-Type: 1
-xPos: 90
-yPos: 340
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 3230
-Direction: 3
-===============================
-Type: 1
-xPos: 3745
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 72070
-Direction: 0
-===============================
-Type: 1
-xPos: 1600
-yPos: 390
-speed: 0
-collided: 205
-collisionCoolDown: -842150451
-tick: 24440
-Direction: 3
-===============================
-Type: 1
-xPos: 1100
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 19110
-Direction: 0
-===============================
-Type: 1
-xPos: 940
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 15960
-Direction: 0
-===============================
-Type: 1
-xPos: 675
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 10640
-Direction: 0
-===============================
-Type: 1
-xPos: 520
-yPos: 110
-speed: 5
-collided: 205
-collisionCoolDown: -842150451
-tick: 7510
-Direction: 0
-===============================
 Type: 0
-xPos: 740
-yPos: 420
+xPos: 100
+yPos: 400
 speed: 10
 collided: 0
-collisionCoolDown: 10544
+collisionCoolDown: 3880
 Name: ENEMY
-Direction: 3
+Direction: 0
 animState: 0
-RunTimer: 323
-RunCycle: 0
-RunTick: 0
-HealthAmount: 3
-SpriteOffset: 5
-CollisionMask: 65280
-RenderHealth: 0
-===============================
-Type: 0
-xPos: 550
-yPos: 420
-speed: 10
-collided: 0
-collisionCoolDown: 8341
-Name: ENEMY
-Direction: 3
-animState: 0
-RunTimer: 323
-RunCycle: 0
-RunTick: 0
-HealthAmount: 3
-SpriteOffset: 5
-CollisionMask: 65280
-RenderHealth: 0
-===============================
-Type: 0
-xPos: 360
-yPos: 420
-speed: 10
-collided: 0
-collisionCoolDown: 6874
-Name: ENEMY
-Direction: 3
-animState: 0
-RunTimer: 323
+RunTimer: 3881
 RunCycle: 0
 RunTick: 0
 HealthAmount: 3

@@ -192,7 +192,7 @@ void SignAway::KeyListener(int keyCode) {
 		}
 		else {
 			M->setUserName(t->getText());
-			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,1, false));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,2, false));
 			
 		}
 	}
@@ -226,6 +226,7 @@ Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont 
 	std::vector<std::string> sPaths = { "resources/LevelImages/walls_and_floor.png","resources/LevelImages/furniture.png" };
 
 	if (loading) {
+
 		int objCurrent = 0;
 		std::vector<std::string> fileLines = FileIO::loadFileToLines("resources/SaveData/SAVE.DAT");
 
@@ -477,7 +478,7 @@ void Lose::KeyListener(int keyCode) {
 			M->getStateMaster()->changeState(std::make_shared<Menu>(m_pEngine)); // <--- THIS needs to work to change the state to game state or some other state depending on what m_menu_select is 
 			break;
 		case 2:
-			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine, 1, true));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine, 2, true));
 			break;
 		case 3:
 			m_pEngine->setExitWithCode(0);

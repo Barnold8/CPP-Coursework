@@ -7,13 +7,13 @@ bool operator==(const Node& lhs, const Node& rhs) // check equivalence between n
 {
 
     return (
-        lhs.f == rhs.f          &&
-        lhs.g == rhs.g          &&
-        lhs.h == rhs.h          &&
+        //lhs.f == rhs.f          &&
+        //lhs.g == rhs.g          &&
+        //lhs.h == rhs.h          &&
         lhs.x == rhs.x          &&
-        lhs.y == rhs.y          &&
-        lhs.valid == rhs.valid  &&
-        lhs.neighbour_nodes == rhs.neighbour_nodes
+        lhs.y == rhs.y         /* &&*/
+        //lhs.valid == rhs.valid  &&
+        //lhs.neighbour_nodes == rhs.neighbour_nodes
         );
 }
 
@@ -147,7 +147,21 @@ void AI::removeNode(Node node, std::vector<Node> nodes) {
     }
 }
 
-
+//struct Node {
+//
+//    //int f; // f(n) = g(n) + h(n) 
+//    //int g; // g(n) is the cost of the path from the start node to n
+//    //int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
+//    int x; // literal x position of node
+//    int y; // literal y position of node
+//    int dist;
+//    bool visited;
+//    bool valid; // says if tile can be walked on or not
+//
+//    Node* previous;
+//    std::vector<Node> neighbour_nodes;
+//
+//};
 void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) { 
     
     //std::cout << "Self.x: " << self.x << " | Self.y: " << self.y << std::endl;
@@ -159,12 +173,12 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
     
         neighbour = m_nodes[self.x + 1][self.y];
         nNeighbour = Node{
-            neighbour.f,
-            neighbour.g,
-            neighbour.h,
             neighbour.x,
             neighbour.y,
+            INT_MAX,
+            false,
             neighbour.valid
+            
 
         };
         nodes.push_back(nNeighbour);
@@ -172,11 +186,10 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
     if (self.x > 0) { 
      
         nNeighbour = Node{
-            neighbour.f,
-            neighbour.g,
-            neighbour.h,
             neighbour.x,
             neighbour.y,
+            INT_MAX,
+            false,
             neighbour.valid
 
         };
@@ -188,11 +201,10 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
     if (self.y < m_w-1) {
       
         nNeighbour = Node{
-            neighbour.f,
-            neighbour.g,
-            neighbour.h,
             neighbour.x,
             neighbour.y,
+            INT_MAX,
+            false,
             neighbour.valid
 
         };
@@ -204,11 +216,10 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
     if (self.y > 0) { 
     
         nNeighbour = Node{
-            neighbour.f,
-            neighbour.g,
-            neighbour.h,
             neighbour.x,
             neighbour.y,
+            INT_MAX,
+            false,
             neighbour.valid
 
         };
@@ -240,18 +251,48 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
 void AI::djikstra(Node start, Node end) {
 
 
-    std::vector<std::vector<bool>> visit(25,std::vector<bool>(25,false));
-    std::vector<std::vector<int>> distances(25, std::vector<int>(25, INT_MAX));
+    //std::vector<std::vector<bool>> visit(25,std::vector<bool>(25,false));
+    //std::vector<std::vector<int>> distances(25, std::vector<int>(25, INT_MAX));
 
-    distances[start.x][start.y] = 0;
+    //distances[start.x][start.y] = 0;
 
 
-    for (int i = 0; i < distances.size(); i++) {
-        
-    
+    //for (int i = 0; i < distances.size(); i++) {
+    //    
+    //
+    //}
+
+    std::cout << "Pathfinding babyyyy" << std::endl;
+    for (int i = 0; i < m_nodes.size(); i++) {
+        for (int j = 0; j < m_nodes[i].size(); j++) {
+
+            for (int k = 0; k < m_nodes[i][j].neighbour_nodes.size(); k++) {
+                Node* nn = &m_nodes[i][j];
+
+                // if NOT if the node is already visited or isnt valid
+                if (!(m_nodes[i][j].neighbour_nodes[k].visited || m_nodes[i][j].neighbour_nodes[k].valid == false)) 
+                {
+                    //std::cout << "sadsadas" << std::endl;
+                    Node* nn = &m_nodes[i][j];
+                    m_nodes[i][j].neighbour_nodes[k].previous = nn;
+                    m_nodes[i][j].neighbour_nodes[k].visited = true;
+                    //std::cout << "sadsadas" << std::endl;
+                }
+
+
+            }
+        }
+
     }
 
-
-
+    Node e = m_nodes[end.x][end.y];
+    Node* previous = e.previous;
+    
+    while (previous != nullptr) {
+        
+        e = *previous;
+        std::cout << "x : " << e.x << " | y: " << e.y << std::endl;
+        previous = e.previous;
+    }
 
 }

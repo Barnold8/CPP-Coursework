@@ -12,13 +12,15 @@
 
 struct Node {
 
-	int f; // f(n) = g(n) + h(n) 
-	int g; // g(n) is the cost of the path from the start node to n
-	int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
+	//int f; // f(n) = g(n) + h(n) 
+	//int g; // g(n) is the cost of the path from the start node to n
+	//int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
 	int x; // literal x position of node
 	int y; // literal y position of node
+	int dist;
+	bool visited;
 	bool valid; // says if tile can be walked on or not
-	int distance;
+
 	Node* previous;
 	std::vector<Node> neighbour_nodes;
 
