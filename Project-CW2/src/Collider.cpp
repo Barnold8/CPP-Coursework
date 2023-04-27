@@ -70,12 +70,15 @@ bool Collider::canMove(std::shared_ptr<LevelLoader> LL, int x, int y, bool isFlo
         case 32:
             return true;
         default:
-            //std::cout << F->getMapValue(x_t, y_t) << std::endl;
+            
             break;
         }
     }
     else if(tileValue != 0) {
         return true;
+    }
+    else {
+        //std::cout << F->getMapValue(x_t, y_t) << std::endl;
     }
 
 

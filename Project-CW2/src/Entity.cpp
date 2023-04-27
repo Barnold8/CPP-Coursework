@@ -23,6 +23,11 @@ void Entity::virtKeyDown(int iKeyCode) {
 
 }
 
+void Entity::virtMouseDown(int iButton, int iX, int iY) {
+
+
+}
+
 bool Entity::internalUpdate() {
 
 	return false;

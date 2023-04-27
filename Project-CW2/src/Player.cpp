@@ -23,6 +23,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 	m_collisionMask = 0x00FF00;
 	m_renderHealth = false;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 }
 
 
@@ -45,6 +48,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	ID = 1;
 	m_collisionMask = 0x00FF00;
 	m_renderHealth = false;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -67,6 +73,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_renderHealth = false;
 	m_collisionMask = 0x00FF00;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -90,6 +99,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_renderHealth = false;
 	m_collisionMask = 0x00FF00;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, bool renderHealth) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -114,6 +126,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_renderHealth = renderHealth;
 	m_collisionMask = 0x00FF00;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 }
 
 Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int health, int offset, bool renderHealth) : Person(pEngine, iWidth, iHeight, useTopLeftFor00, objX, objY, idle, running, pX, pY) {
@@ -138,7 +153,9 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 
 	m_renderHealth = renderHealth;
 	m_collisionMask = 0x00FF00;
-
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 
 }
 
@@ -164,8 +181,84 @@ Player::Player(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor0
 	m_levelLoader = LL;
 	m_renderHealth = renderHealth;
 	m_collisionMask = 0x00FF00;
+	m_charged = true;
+	m_sprintTimer = 0;
+	m_sprintIcon = ImageManager::loadImage("resources/PlayerSprites/sprint.png");
 
+}
 
+void Player::virtMouseDown(int iButton, int iX, int iY) {
+	
+	int x_copy = m_xPos;
+	int y_copy = m_yPos;
+	int x = m_xPos;
+	int y = m_yPos;
+
+	const int SPRINT = 100;
+
+	if (m_charged) {
+		
+		switch (m_direction) {
+		
+		case RIGHT:
+
+			m_xPos += SPRINT;
+			m_direction = RIGHT;
+			m_runTimer = 0;
+			x = m_xPos - 10;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				m_xPos = x_copy;
+				m_yPos = y_copy;
+			}
+
+			break;
+
+		case LEFT:
+
+			m_xPos -= SPRINT;
+			m_direction = LEFT;
+			m_runTimer = 0;
+			x = m_xPos - 20;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+					m_xPos = x_copy;
+					m_yPos = y_copy;
+				}
+			
+			break;
+		case UP:
+
+			m_yPos -= SPRINT;
+			m_direction = UP;
+			m_runTimer = 0;
+			y = m_yPos + 30;
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				m_xPos = x_copy;
+				m_yPos = y_copy;
+			}
+			break;
+
+		case DOWN:
+
+			m_yPos += SPRINT;
+			m_direction = DOWN;
+			m_runTimer = 0;
+			y = m_yPos + 20;
+			x = m_xPos - 10;
+
+			if (canMove(m_levelLoader, x, y, true) || canMove(m_levelLoader, x, y, false)) {
+				m_xPos = x_copy;
+				m_yPos = y_copy;
+			}
+
+			break;
+
+		default:
+
+			break;
+		}
+	
+	}
+	m_charged = false;
 }
 
 
@@ -240,7 +333,7 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 			break;
 
 		case SDLK_3:
-			isCollided(m_pEngine);
+			
 			break;
 
 		case SDLK_4:
@@ -266,10 +359,6 @@ void Player::virtKeyDown(int iKeyCode) { // error occurs when obj count goes > 2
 			break;
 		}
 
-		//if (canMove(m_levelLoader, m_xPos, m_yPos,m_pEngine)) {
-		//	m_xPos = x;
-		//	m_yPos = y;
-		//}
 	}
 	else {
 	
@@ -303,15 +392,19 @@ void Player::addProjectile( Movement direction) { // Need to have switch case fo
 			{
 			case RIGHT:
 				m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos+50, m_yPos, 5));
+				m_pEngine->drawableObjectsChanged();
 				break;
 			case UP:
 				m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos - 60, 5));
+				m_pEngine->drawableObjectsChanged();
 				break;
 			case LEFT:
 				m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos - 65, m_yPos, 5));
+				m_pEngine->drawableObjectsChanged();
 				break;
 			case DOWN:
 				m_pEngine->storeObjectInArray(m_projStart + m_projSize, new Projectile(m_pEngine, 800, 800, true, 0, 0, "resources/Projectiles/Keyboard.png", direction, m_xPos, m_yPos + 65, 5));
+				m_pEngine->drawableObjectsChanged();
 				break;
 			default:
 				break;
@@ -349,8 +442,6 @@ void Player::addProjectile( Movement direction) { // Need to have switch case fo
 			break;
 		}
 
-		
-
 		m_projSize++;
 
 		if (m_projSize > m_projCap) { m_projSize = 0; }
@@ -359,7 +450,6 @@ void Player::addProjectile( Movement direction) { // Need to have switch case fo
 
 
 }
-
 
 void Player::setHealth(int h) {
 
@@ -380,6 +470,13 @@ bool Player::internalUpdate() {
 	const int COLLIDEMAX = 400;
 	int collidedID = isCollided(m_pEngine);
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
+	m_sprintTimer++;
+
+	if (m_sprintTimer % 5000 == 0) {
+		m_charged = true;
+		m_sprintTimer = 0;
+	}
+
 
 	if (collidedID && m_collisionCoolDown % COLLIDEMAX == 0) {
 
@@ -415,151 +512,9 @@ bool Player::internalUpdate() {
 	return true;
 }
 
-
-
-
 std::pair<int, int> Player::getCoords() {
 
 	return std::make_pair(m_xPos, m_yPos);
 
 }
 
-
-
-
-
-
-
-// DONT GO DOWN THERE........... :(
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//void Player::setCollisionCoords() { // need a way to make sure the collider map lines up properly 
-//
-//	SimpleImage img = (m_animState == IDLE) ? m_personIdle : m_personRunning;
-//	int offset = (m_animState == IDLE) ? 1 : 6;
-//	int a = (m_animState == IDLE) ? 32 * m_direction : ((32 * m_direction) * 6) + (m_runTick * 32);
-//	std::vector<std::pair<int, int>> pairs;
-//
-//	//std::cout << "X: " << ((32 * m_direction) * offset) + (m_runTick * 32) << " | Y: " << 64 << std::endl;
-//
-//	//if (m_animState == IDLE) {
-//
-//	//	m_personIdle.renderImageWithMask(
-//	//		m_pEngine->getForegroundSurface(),
-//	//		32 * m_direction,
-//	//		1,
-//	//		m_xPos,
-//	//		m_yPos,
-//	//		31, 64,
-//	//		0x00FF00
-//	//	);
-//
-//	//}
-//	//else if (m_animState == RUNNING) {
-//
-//	//	m_personRunning.renderImageWithMask(
-//	//		m_pEngine->getForegroundSurface(),
-//	//		((32 * m_direction) * 6) + (m_runTick * 32),
-//	//		1,
-//	//		m_xPos,
-//	//		m_yPos,
-//	//		31, 64,
-//	//		0x00FF00
-//	//	);
-//
-//	//}
-//	//((32 * m_direction) * 6) + (m_runTick * 32)
-//
-//	for (int i = a; i < (a) + 32; i++) {
-//		for (int y = 1; y < 64; y++) {
-//			if (img.getPixelColour(i, y) != 0x00FF00) {
-//			
-//				pairs.push_back(std::make_pair(i, y+m_yPos));
-//			}	
-//		}
-//	}
-//	m_collisionCoords = pairs;
-//
-//	//
-//
-//	// TESTING
-//	for (int i = 0; i < m_collisionCoords.size(); i++) { // go through all coords and render for testing
-//		m_pEngine->lockBackgroundForDrawing();
-//		//m_pEngine->rawSetBackgroundPixel(m_collisionCoords[i].first, m_collisionCoords[i].second, 0xFFFFFF);
-//		m_pEngine->rawSetForegroundPixel((m_collisionCoords[i].first + m_xPos - ((32 * m_direction) * offset) + (m_runTick * 32))
-//			- (32 * m_runTick) - 32 * m_runTick,
-//			
-//			
-//			m_collisionCoords[i].second, 0x00CCFF);
-//		m_pEngine->unlockBackgroundForDrawing();
-//	}
-//	// TESTING
-//		
-//}
-//
-//
-//void Player::internalUpdate() {
-//
-//	setCollisionCoords(); // this may be causing frame stuttering? See entity definition for more details on overall impact
-//}
-
-
-
-
-//int sprite = 96 / 3;
-
-//std::cout << "FFF" << std::endl;
-
-//std::vector<std::vector<std::vector<std::pair<int, int>>>> validSpriteSheet;
-
-//for (int sp = 0; sp < 4; sp++) { // 4 sprites for idle animation
-//	std::vector<std::vector<std::pair<int, int>>> validSprite;
-
-//	for (int i = 96 / 3 * sp; i < m_personIdle.getWidth(); i++) {
-//		std::vector<std::pair<int, int>> validCoords;
-//		for (int y = 0; y < m_personIdle.getHeight(); y++)
-//		{
-//			if (m_personIdle.getPixelColour(i, y) == m_collisionMask) {
-
-//				
-//				validCoords.push_back(std::make_pair(i,y));
-
-//			}
-//		}
-//		validSprite.push_back(validCoords);
-
-//	}
-//	validSpriteSheet.push_back(validSprite);
-//	m_validPixels.push_back(validSprite);
-//}

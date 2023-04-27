@@ -98,6 +98,9 @@ public:
 
 	bool m_isPaused = false;
 
+	int m_enemyDeathCount = 0;
+
+
 public:
 
 	Game(BaseEngine* engine, int level, bool loading);
@@ -112,6 +115,9 @@ public:
 
 	virtual void KeyListener(int keyCode);
 
+	int getDeathCount();
+
+	void setDeathCount(int deaths);
 
 
 };

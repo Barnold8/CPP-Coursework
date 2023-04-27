@@ -159,6 +159,11 @@ void Person::virtDraw() {
 		m_collisionCoolDown += 1;
 
 		m_pEngine->drawForegroundString(m_xPos - m_personName.length() * 6, m_yPos - 20, m_personName.c_str(), 0xFFFFFF, M->getFont("resources/Fonts/Monocraft.ttf", 24));
+		m_pEngine->drawForegroundString(m_xPos - m_expression.length() * 6, m_yPos - 60, m_expression.c_str(), 0x3b3a3a, M->getFont("resources/Fonts/Monocraft.ttf", 28));
+		m_pEngine->drawForegroundString(m_xPos - m_expression.length() * 6, m_yPos - 60, m_expression.c_str(), 0x242222, M->getFont("resources/Fonts/Monocraft.ttf", 30));
+		m_pEngine->drawForegroundString(m_xPos - m_expression.length() * 6, m_yPos - 60, m_expression.c_str(), 0xc92d18, M->getFont("resources/Fonts/Monocraft.ttf", 24));
+
+
 		if (m_runTimer > 200) {
 			m_animState = IDLE;
 			m_runCycle = 0;
@@ -194,6 +199,21 @@ void Person::virtDraw() {
 				M->getStateMaster()->changeState(std::make_shared<Lose>(m_pEngine));
 				return;
 			}
+
+			if (m_charged == false) {
+				m_sprintIcon.renderImageWithMask(
+					m_pEngine->getForegroundSurface(),
+					0, 0, 100, 10, 50, m_sprintTimer / 100, 0x00FF00
+				);
+
+			}
+			else {
+				m_sprintIcon.renderImageWithMask(
+					m_pEngine->getForegroundSurface(),
+					0, 0, 100, 10, 50, 50, 0x00FF00
+				);
+			}
+
 		}
 
 
@@ -260,6 +280,12 @@ void Person::virtKeyDown(int iKeyCode) {
 
 }
 
+void Person::virtMouseDown(int iButton, int iX, int iY) {
+
+
+}
+
+
 int Person::getColAtPixel(int x, int y) {
 
 	
@@ -275,34 +301,7 @@ rect Person::getRect() {
 }
 
 
-//struct DATA {
-//
-//	// BOTH
-//	int _m_xPos;
-//	int _m_yPos;
-//	int _m_speed;
-//	bool _m_collided; // May not even be used lol
-//	int	 _m_collisionCoolDown;
-//	// BOTH
-//
-//	// Person
-//	std::string _m_personName;									 // Allows name above person to be different
-//	Movement	_m_direction;									 // enum for the player looking direction
-//	animState	_m_animState;									 // enum for the animation state
-//	int			_m_runTimer;										 // time after last key update
-//	int			_m_runCycle;										 // number counted to tick over next anim frame
-//	int			_m_runTick;										 // number to use in animation frame formula
-//	int			_m_healthAmount;									 // amount of health user has
-//	int			_m_spriteOffset;
-//	int			_m_collisionMask;								 // the colour used to say what is a valid pixel for collision
-//	bool		_m_renderHealth;
-//	// Person
-//
-//	// Projectile
-//	Projectile* _m_prev;
-//	int			_m_tick;
-//	// Projectile
-//};
+
 
 DATA Person::getData() {
 
@@ -323,7 +322,7 @@ DATA Person::getData() {
 		m_spriteOffset,
 		m_collisionMask,
 		m_renderHealth,
-
+		m_deathCount,
 		nullptr,
 		0
 

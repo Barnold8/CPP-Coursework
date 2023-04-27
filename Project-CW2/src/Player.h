@@ -32,6 +32,8 @@ public:
 
 	void virtKeyDown(int iKeyCode) override;
 
+	void virtMouseDown(int iButton, int iX, int iY) override;
+
 	void addProjectile(Movement direction);
 
 	void setHealth(int h);

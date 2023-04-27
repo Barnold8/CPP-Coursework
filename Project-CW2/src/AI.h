@@ -9,6 +9,13 @@
 
 // f(n) = g(n) + h(n) 
 
+struct leeNode {
+
+	int x;
+	int y;
+	int distance; 
+};
+
 
 struct Node {
 
@@ -22,6 +29,7 @@ struct Node {
 	bool valid; // says if tile can be walked on or not
 
 	Node* previous;
+
 	std::vector<Node> neighbour_nodes;
 
 };
@@ -61,7 +69,7 @@ public:
 
 	void removeNode(Node node, std::vector<Node> nodes);
 
-	void djikstra(Node start, Node end);
+	std::vector<std::pair<int, int>> pathing(Node start, Node end);
 
 };
 

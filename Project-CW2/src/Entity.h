@@ -46,12 +46,16 @@ struct DATA {
 	int			_m_spriteOffset;
 	int			_m_collisionMask;								 // the colour used to say what is a valid pixel for collision
 	bool		_m_renderHealth;
+	int			_m_deathCount;
 	// Person
 
 	// Projectile
 	Projectile* _m_prev;
 	int			_m_tick;
 	// Projectile
+
+
+
 };
 
 
@@ -74,6 +78,8 @@ public:
 	virtual void virtDraw() override;
 
 	virtual void virtKeyDown(int iKeyCode) override;
+
+	virtual void virtMouseDown(int iButton, int iX, int iY) override;
 
 	virtual bool internalUpdate();
 

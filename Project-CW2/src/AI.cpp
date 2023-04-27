@@ -1,6 +1,7 @@
 #include "AI.h"
 #include <algorithm>
 #include <cstdlib>
+#include <queue>
 
 
 bool operator==(const Node& lhs, const Node& rhs) // check equivalence between nodes
@@ -89,15 +90,15 @@ std::vector<std::vector<Node>> AI::generateNodes(std::vector<std::shared_ptr<Til
 
 
     // set node data 
-    //std::cout << "======= AI GRID =======\n" << std::endl;
+    std::cout << "======= AI GRID =======\n" << std::endl;
     for (int i = 0; i < cols; i++) {
         for (int j = 0; j < rows; j++) {
             temp[i][j].valid = !tiles[i][j];
             temp[i][j].x = i;
             temp[i][j].y = j;
-            //std::cout << temp[i][j].valid;
+            std::cout << temp[i][j].valid;
         }
-        //std::cout << "\n";
+        std::cout << "\n";
     
     }
     // set node data 
@@ -110,8 +111,14 @@ void AI::setFirstNode(int x, int y) {
 
     // What tile we are actually on 
     int x_t = x / 32 + 1;
-    int y_t = y / 32 + 1;
+    int y_t = y / 32 + 2; //  + 1
 
+    if (x_t > 24) {
+        x_t = 24;
+    }
+    if (y_t > 24) {
+        y_t = 24;
+    }
 
     Node self = m_nodes[x_t][y_t];
 
@@ -124,6 +131,13 @@ void AI::setPlayerNode(int x, int y) {
     // What tile we are actually on 
     int x_t = x / 32 + 1;
     int y_t = y / 32 + 1;
+
+    if (x_t > 24) {
+        x_t = 24;
+    }
+    if (y_t > 24) {
+        y_t = 24;
+    }
 
     Node enemy = m_nodes[x_t][y_t];
 
@@ -147,21 +161,7 @@ void AI::removeNode(Node node, std::vector<Node> nodes) {
     }
 }
 
-//struct Node {
-//
-//    //int f; // f(n) = g(n) + h(n) 
-//    //int g; // g(n) is the cost of the path from the start node to n
-//    //int h; // hueristic (estimates the cost of the cheapest path from n to the goal)
-//    int x; // literal x position of node
-//    int y; // literal y position of node
-//    int dist;
-//    bool visited;
-//    bool valid; // says if tile can be walked on or not
-//
-//    Node* previous;
-//    std::vector<Node> neighbour_nodes;
-//
-//};
+
 void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) { 
     
     //std::cout << "Self.x: " << self.x << " | Self.y: " << self.y << std::endl;
@@ -228,71 +228,103 @@ void AI::addNeighbourNodes(std::vector<Node>& nodes, Node self) {
         nodes.push_back(nNeighbour);
     }
  
-    //std::cout << "adsasd" << std::endl;
+
 
 }
 
-//int miniDist() // finding minimum distance
-//{
-//    int minimum = INT_MAX, ind;
-//
-//    for (int k = 0;k < 6;k++)
-//    {
-//        if (Tset[k] == false && distance[k] <= minimum)
-//        {
-//            minimum = distance[k];
-//            ind = k;
-//        }
-//    }
-//    return ind;
-//}
+
+std::vector<std::pair<int, int>> getPath(std::vector<leeNode> path) {
+    
+    std::vector<std::pair<int, int>> _path;
+
+    for (int i = 0; i < path.size(); i++) {
+        _path.push_back(std::make_pair(path[i].x, path[i].y));
+    }
+
+    return _path;
+
+}
 
 
-void AI::djikstra(Node start, Node end) {
 
+std::vector<std::pair<int, int>> AI::pathing(Node start, Node end) {
 
-    //std::vector<std::vector<bool>> visit(25,std::vector<bool>(25,false));
-    //std::vector<std::vector<int>> distances(25, std::vector<int>(25, INT_MAX));
+    int dl[] = { -1, 0, 1, 0 }; // these arrays will help you travel in the 4 directions more easily
+    int dc[] = { 0, 1, 0, -1 };
 
-    //distances[start.x][start.y] = 0;
+    bool visited[25][25] = { false };
+    int  distances[25][25] = { 0 };
 
+    std::vector<std::pair<int, int>> uninit(1,std::make_pair<int,int>(-100,-100));
 
-    //for (int i = 0; i < distances.size(); i++) {
-    //    
-    //
-    //}
+    std::queue<leeNode> queue; 
 
-    std::cout << "Pathfinding babyyyy" << std::endl;
-    for (int i = 0; i < m_nodes.size(); i++) {
-        for (int j = 0; j < m_nodes[i].size(); j++) {
+    visited[start.x][start.y] = true;
+    
+    queue.push(leeNode{ start.x,start.y,0 });
+    std::vector<leeNode> steps;
+    std::vector<leeNode> steps2;
 
-            for (int k = 0; k < m_nodes[i][j].neighbour_nodes.size(); k++) {
-                Node* nn = &m_nodes[i][j];
+    while (!(queue.empty())) 
+    {
+        int px, py;
+        leeNode current = queue.front();
+        queue.pop();
+        px = current.x;
+        py = current.y;
+        
 
-                // if NOT if the node is already visited or isnt valid
-                if (!(m_nodes[i][j].neighbour_nodes[k].visited || m_nodes[i][j].neighbour_nodes[k].valid == false)) 
-                {
-                    //std::cout << "sadsadas" << std::endl;
-                    Node* nn = &m_nodes[i][j];
-                    m_nodes[i][j].neighbour_nodes[k].previous = nn;
-                    m_nodes[i][j].neighbour_nodes[k].visited = true;
-                    //std::cout << "sadsadas" << std::endl;
+        if (px == end.x && py == end.y) {
+
+            for (int i = 0; i < steps.size(); i++) {
+
+                int sx = steps[i].x;
+                int sy = steps[i].y;
+
+                if (std::abs(sx - current.x) <= 1 && std::abs(sy - current.y) <= 1 && steps[i].distance ==  current.distance - 1) {
+                    steps2.push_back(steps[i]);
+                    current = steps[i];
+                   
+                    if (steps[i].distance == 1) {
+                        
+                        break;
+                    }
+                    i = 0;
                 }
+              
 
 
             }
+
+            return getPath(steps2);
         }
 
+        for (int i = 0; i < 4; i++) {
+            int row = px + dl[i];
+            int col = py + dc[i];
+        
+            if (
+                row >= 0 && row < m_h
+                && col >= 0 && col < m_w 
+                && m_nodes[col][row].valid
+                && visited[row][col] == false) {
+
+
+                visited[row][col] = true;
+                distances[row][col] = current.distance + 1;
+
+
+                queue.push(leeNode{ row,col,current.distance + 1 });
+                steps.push_back(current);
+
+
+            }
+
+        }
+
+
     }
 
-    Node e = m_nodes[end.x][end.y];
-    Node* previous = e.previous;
-    
-    while (previous != nullptr) {
-        
-        e = *previous;
-        std::cout << "x : " << e.x << " | y: " << e.y << std::endl;
-        previous = e.previous;
-    }
+    return uninit;
 
 }

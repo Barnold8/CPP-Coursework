@@ -135,8 +135,6 @@ void Office_Apocalypse::saveGame() {
 
 		FileIO::writeToFile(false, "resources/SaveData/SAVE.DAT", "Level: " + std::to_string(m_currentLevel) +"\n"+equals);
 
-		
-
 		FileIO::writeToFile(true, "resources/SaveData/SAVE.DAT", "Save: " + getUserName() + "\n" + equals);
 
 		for (int i = 0; i < m_vecDisplayableObjects.size();i++) { // deffo could just check for nullptr on dynamic cast rather than just nulptr THEN dynamic cast but oh well
@@ -249,6 +247,7 @@ std::string Office_Apocalypse::DATAstr(DATA data, int type) {
 		//	int			_m_collisionMask;								 // the colour used to say what is a valid pixel for collision
 		fileData += "RenderHealth: " + std::to_string(data._m_renderHealth) + "\n";
 		//	bool		_m_renderHealth;
+		fileData += "DeathCount: " + std::to_string(data._m_deathCount) + "\n";
 
 
 		break;
@@ -276,4 +275,8 @@ std::string Office_Apocalypse::DATAstr(DATA data, int type) {
 void Office_Apocalypse::changeLevel(int level) {
 
 	m_currentLevel = level;
+
 }
+
+
+int Office_Apocalypse::getLevel() { return m_currentLevel; }

@@ -26,7 +26,12 @@ protected:
 	int			m_spriteOffset;
 	int			m_collisionMask;								 // the colour used to say what is a valid pixel for collision
 	bool		m_renderHealth;
-	
+	std::string m_expression = " ";
+	int			m_deathCount;
+	int			m_sprintTimer;
+	int			m_charged = true;
+
+	SimpleImage m_sprintIcon;
 
 public:
 
@@ -49,6 +54,8 @@ public:
 	virtual bool internalUpdate();
 
 	void virtKeyDown(int iKeyCode) override;
+
+	void virtMouseDown(int iButton, int iX, int iY) override;
 
 	int getColAtPixel(int x, int y) override;
 

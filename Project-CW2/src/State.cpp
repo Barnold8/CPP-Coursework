@@ -11,9 +11,6 @@
 #include "Enemy.h"
 #include "Projectile.h"
 
-
-
-
 //NOTE: displayable object container vector has a hissy fit if i destroy all objects on menu destructor. 
 
 std::string splitByDelim(std::string s, char c) {
@@ -46,6 +43,7 @@ Menu::Menu(BaseEngine* engine) : State(engine) {
 
 	M->customRendering(false);
 	m_pEngine->notifyObjectsAboutKeys(true);
+	m_pEngine->notifyObjectsAboutMouse(true);
 
 }
 
@@ -192,7 +190,7 @@ void SignAway::KeyListener(int keyCode) {
 		}
 		else {
 			M->setUserName(t->getText());
-			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,2, false));
+			M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,1, false));
 			
 		}
 	}
@@ -222,6 +220,7 @@ Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont 
 
 	M->objectClearer();
 	M->setSurfacesToCopies();
+	M->customRendering(false);
 
 	std::vector<std::string> sPaths = { "resources/LevelImages/walls_and_floor.png","resources/LevelImages/furniture.png" };
 
@@ -273,7 +272,7 @@ Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont 
 
 		std::cout << fileLines.size() << std::endl;
 
-		for (int i = 21; i < fileLines.size();i++) {
+		for (int i = 22; i < fileLines.size();i++) {
 	
 			if (fileLines[i][0] != '=' && fileLines[i][0] == 'T' && std::atoi(splitByDelim(fileLines[i], ':').c_str()) == 0) {
 
@@ -304,8 +303,9 @@ Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont 
 				enemy->setSpeed(std::atoi(splitByDelim(fileLines[i + 3], ':').c_str()));
 				enemy->setCollCoolDown(std::atoi(splitByDelim(fileLines[i + 5], ':').c_str()));
 				enemy->setHealth(std::atoi(splitByDelim(fileLines[i + 12], ':').c_str()));
+				enemy->setDeathCount(std::atoi(splitByDelim(fileLines[i + 16], ':').c_str()));
 			
-				i += 16;
+				i += 17;
 				objCurrent++;
 			}
 
@@ -334,29 +334,129 @@ Game::Game(BaseEngine* engine,int level,bool loading) : State(engine) { // Wont 
 	}
 	else {
 	
-
 		m_level_loader = std::make_shared<LevelLoader>(m_pEngine, sPaths, "resources/Levels/Level" + std::to_string(level) + ".tmj", 32, 32, 800, 800);
+			
+		if (level == 1) {
+			M->changeLevel(level);
+			m_pEngine->storeObjectInArray(
+
+				0, new Player(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
+					400, 400, M->getUserName(), 6, 7, true, m_level_loader)
+
+			);
+
+
+
+			//// enemies
+			m_pEngine->storeObjectInArray(
+
+				15, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					100, 400, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+			m_pEngine->storeObjectInArray(
+
+				16, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					150, 180, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+
+			m_pEngine->storeObjectInArray(
+
+				17, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					600, 400, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+			m_pEngine->storeObjectInArray(
+
+				18, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					500, 400, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+		}
+		else if (level == 2) {
+			M->changeLevel(level);
+
+			m_pEngine->storeObjectInArray(
+
+				0, new Player(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
+					400, 200, M->getUserName(), 6, 7, true, m_level_loader)
+
+			);
+			m_pEngine->storeObjectInArray(
+
+				15, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					400, 400, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+			m_pEngine->storeObjectInArray(
+
+				16, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					100, 60, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+			m_pEngine->storeObjectInArray(
+
+				17, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					100, 675, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+
+			m_pEngine->storeObjectInArray(
+
+				18, new Enemy(
+					m_pEngine, 800, 800, true, 800, 800,
+					"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+					100, 540, "ENEMY", 5,
+					m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+				)
+			);
+
+
+
+			//16, new Enemy(
+			//	m_pEngine, 800, 800, true, 800, 800,
+			//	"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
+			//	100, 10, "ENEMY", 5,
+			//	m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
+			//)
+			//	);
+
 		
-		M->changeLevel(1);
-		
-		m_pEngine->storeObjectInArray(
+		}
 
-			0, new Player(
-				m_pEngine, 800, 800, true, 800, 800,
-				"resources/PlayerSprites/Idle.png", "resources/PlayerSprites/Run.png",
-				90, 100, M->getUserName(), 10, 7, true, m_level_loader)
-
-		);
-
-		m_pEngine->storeObjectInArray(
-
-			15, new Enemy(
-				m_pEngine, 800, 800, true, 800, 800,
-				"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
-				100, 400, "ENEMY", 5,
-				m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))
-			)
-		);
 	
 	}
 
@@ -381,6 +481,68 @@ void Game::update() {
 
 	Office_Apocalypse* M = dynamic_cast<Office_Apocalypse*>(m_pEngine);
 	M->setUpdates(M->getUpdates() + 1);
+	int enemyCount = 0;
+	int x_pos = 12;
+	int y_pos = 12;
+
+	for (int i = 0; i < M->getContentCount();i++) {
+		Enemy* e = dynamic_cast<Enemy*>(M->getDisplayableObject(i));
+		if (e != nullptr && e->getIsDead() == false) {
+			enemyCount++;
+		}
+		
+	}
+
+	if (enemyCount == 0) {
+		
+
+
+		m_pEngine->lockBackgroundForDrawing();
+
+		m_pEngine->drawBackgroundRectangle(x_pos *32, x_pos *32, x_pos * 32 + 32, x_pos * 32 + 32, 0x2a2a36);
+
+		m_pEngine->drawBackgroundRectangle((x_pos * 32 ) + 2,
+											(x_pos * 32 ) + 2,
+											x_pos * 32 + 32 - 2,
+											x_pos * 32 + 32 - 2,
+											/*0x16161c*/0x2a2a29
+
+
+		);
+
+		m_pEngine->drawBackgroundRectangle((x_pos * 32) + 5,
+			(x_pos * 32) + 5,
+			x_pos * 32 + 32 - 5,
+			x_pos * 32 + 32 - 5,
+			0x101014
+		);
+
+		m_pEngine->unlockBackgroundForDrawing();
+		enemyCount = -1;
+	}
+	
+	if (enemyCount == -1) {
+
+
+		Player* p = dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0));
+		
+		int x = p->getCoords().first / 32 + 1;
+		int y = p->getCoords().second / 32 + 1;
+		if (x == x_pos && y == y_pos) {
+			
+			
+			if (M->getLevel() >= 2) {
+				M->getStateMaster()->changeState(std::make_shared<Win>(m_pEngine));
+				
+			}else{
+				M->changeLevel(2);
+				std::cout << "Level is " << M->getLevel() <<std::endl;
+				M->getStateMaster()->changeState(std::make_shared<Game>(m_pEngine,2,false));
+			}
+			
+		}
+	
+	}
 
 }
 
@@ -405,10 +567,7 @@ void Game::KeyListener(int keyCode) {
 	break;
 
 	case SDLK_SPACE:
-		m_pEngine->appendObjectToArray(new Enemy(m_pEngine, 800, 800, true, 10, 10,
-			"resources/PlayerSprites/Enemy_Idle.png", "resources/PlayerSprites/Enemy_Run.png",
-			100, 400, "ENEMY", 5,
-			m_level_loader, dynamic_cast<Player*>(m_pEngine->getDisplayableObject(0))));
+
 		break;
 
 	default:
@@ -416,6 +575,12 @@ void Game::KeyListener(int keyCode) {
 	}
 
 }
+
+
+
+
+
+
 // GAME
 
 

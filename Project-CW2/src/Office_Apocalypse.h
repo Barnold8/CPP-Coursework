@@ -73,5 +73,7 @@ public:
 
 	void changeLevel(int level);
 
+	int getLevel();
+
 };
  

@@ -2,6 +2,8 @@
 #include "Person.h"
 #include "AI.h"
 
+class Game;
+
 
 class Enemy : public Person, public AI {
 
@@ -9,7 +11,15 @@ private:
 
 	Player* m_player; // needed so AI can track player
 
-	std::pair<int, int> m_lastKnownLocation;
+	
+
+	Game* m_game;
+
+	int m_xPosCOPY;
+
+	int m_yPosCOPY;
+
+	bool m_isDead = false;
 
 public:
 
@@ -23,8 +33,19 @@ public:
 
 	Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, std::shared_ptr<LevelLoader> LL, Player* player);
 
+	Enemy(BaseEngine* pEngine, int iWidth, int iHeight, bool useTopLeftFor00, int objX, int objY, std::string idle, std::string running, int pX, int pY, std::string name, int offset, std::shared_ptr<LevelLoader> LL, Player* player, int index, Game* game);
+
 	void virtKeyDown(int iKeyCode) override;
 	
 	bool internalUpdate() override;
+
+	void updateExpression(std::string exp);
+
+	void setDeathCount(int death);
+
+	int getDeathCount();
+
+	bool getIsDead();
+
 };
 
